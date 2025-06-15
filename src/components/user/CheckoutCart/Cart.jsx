@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -10,13 +12,22 @@ const Cart = () => {
       price: 24000,
       oldPrice: 30000,
       quantity: 1,
-      image: "/book.png",
+      image: "/assets/book.png",
       selected: false,
     }).map((item, index) => ({ ...item, id: index }))
   );
   
   const [selectAll, setSelectAll] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // Check for order success message when component mounts
+  useEffect(() => {
+    const orderSuccess = sessionStorage.getItem("orderSuccess");
+    if (orderSuccess) {
+      toast.success("Đặt hàng thành công");
+      sessionStorage.removeItem("orderSuccess");
+    }
+  }, []);
 
   // Handle select all checkbox
   const handleSelectAll = () => {
@@ -37,7 +48,7 @@ const Cart = () => {
     ));
   };
 
-  // Update quantity
+  // Update quantity with buttons
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
     
@@ -46,10 +57,41 @@ const Cart = () => {
     ));
   };
 
+  // Handle direct quantity input
+  const handleQuantityChange = (id, e) => {
+    const value = parseInt(e.target.value);
+    
+    // Ensure the input is a positive number
+    if (!isNaN(value) && value > 0) {
+      setCartItems(cartItems.map(item => 
+        item.id === id ? { ...item, quantity: value } : item
+      ));
+    } else if (e.target.value === "") {
+      // Allow empty input while typing
+      setCartItems(cartItems.map(item => 
+        item.id === id ? { ...item, quantity: e.target.value } : item
+      ));
+    }
+  };
+
+  // Handle blur event to ensure valid quantity
+  const handleQuantityBlur = (id, e) => {
+    const value = parseInt(e.target.value);
+    
+    if (isNaN(value) || value < 1 || e.target.value === "") {
+      // Reset to 1 if invalid
+      setCartItems(cartItems.map(item => 
+        item.id === id ? { ...item, quantity: 1 } : item
+      ));
+    }
+  };
+
   // Calculate total based on selected items
   useEffect(() => {
     const total = cartItems.reduce((sum, item) => {
-      return item.selected ? sum + (item.price * item.quantity) : sum;
+      if (!item.selected) return sum;
+      const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
+      return sum + (item.price * quantity);
     }, 0);
     
     setTotalAmount(total);
@@ -72,6 +114,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60">
+      <ToastContainer position="top-right" autoClose={2000} />
       <h1 className="text-2xl font-bold mb-6">Giỏ hàng</h1>
 
       {cartItems.length > 0 ? (
@@ -129,16 +172,20 @@ const Cart = () => {
                       <div className="flex border border-gray-300 rounded">
                         <button 
                           className="px-3 py-1 border-r border-gray-300"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.id, Number(item.quantity) - 1)}
                         >
                           -
                         </button>
-                        <span className="px-3 py-1 min-w-[40px] text-center">
-                          {item.quantity}
-                        </span>
+                        <input
+                          type="text"
+                          value={item.quantity}
+                          onChange={(e) => handleQuantityChange(item.id, e)}
+                          onBlur={(e) => handleQuantityBlur(item.id, e)}
+                          className="px-3 py-1 w-12 text-center outline-none"
+                        />
                         <button 
                           className="px-3 py-1 border-l border-gray-300"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.id, Number(item.quantity) + 1)}
                         >
                           +
                         </button>
@@ -148,13 +195,13 @@ const Cart = () => {
 
                   <td className="p-4 text-right align-middle">
                     <p className="text-red-600 font-bold">
-                      {(item.price * item.quantity).toLocaleString()} đ
+                      {(item.price * (typeof item.quantity === 'number' ? item.quantity : 1)).toLocaleString()} đ
                     </p>
                   </td>
 
                   <td className="p-4 text-center align-middle">
                     <button onClick={() => removeItem(item.id)}>
-                      <img src="/delete.png" alt="delete" className="w-5 h-5" />
+                      <img src="/assets/delete.png" alt="delete" className="w-5 h-5" />
                     </button>
                   </td>
                 </tr>
