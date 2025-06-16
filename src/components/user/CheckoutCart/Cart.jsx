@@ -12,7 +12,7 @@ const Cart = () => {
       price: 24000,
       oldPrice: 30000,
       quantity: 1,
-      image: "/assets/book.png",
+      image: "/assets/user/book.png",
       selected: false,
     }).map((item, index) => ({ ...item, id: index }))
   );
@@ -201,7 +201,7 @@ const Cart = () => {
 
                   <td className="p-4 text-center align-middle">
                     <button onClick={() => removeItem(item.id)}>
-                      <img src="/assets/delete.png" alt="delete" className="w-5 h-5" />
+                      <img src="/assets/user/delete.png" alt="delete" className="w-5 h-5" />
                     </button>
                   </td>
                 </tr>

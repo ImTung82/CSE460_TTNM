@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SectionTitle from "../../layouts/SectionTitle";
+import SectionTitle from "../../layouts/user/SectionTitle";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
@@ -360,7 +360,7 @@ const PlaceOrder = () => {
       <div className="border border-[#cccccc]/80 rounded-lg p-4 bg-white shadow-md">
         <SectionTitle title="Kiểm tra lại đơn hàng" />
         <div className="flex gap-4">
-          <img src="/assets/book.png" alt="book" className="w-20 h-28 object-cover border rounded" />
+          <img src="/assets/user/book.png" alt="book" className="w-20 h-28 object-cover border rounded" />
           <div className="flex-1 grid grid-cols-5 gap-2 items-center">
             <p className="col-span-2 text-sm font-medium self-start">
               Thám Tử Lừng Danh Conan - Tập 43 (Tái Bản 2023)
@@ -581,10 +581,10 @@ const PlaceOrder = () => {
               {(selectedPaymentGateway === "vnpay" || selectedPaymentGateway === "zalopay" || selectedPaymentGateway === "momo") && (
                 <div className="text-center py-4">
                   <img 
-                    src={`/assets/${selectedPaymentGateway}-logo.png`}
+                    src={`/assets/user/${selectedPaymentGateway}-logo.png`}
                     alt={`${getPaymentGatewayName(selectedPaymentGateway)} Logo`} 
                     className="w-16 h-16 mx-auto mb-4"
-                    onError={(e) => { e.target.src = "/assets/qr.jpg"; }}
+                    onError={(e) => { e.target.src = "/assets/user/qr.jpg"; }}
                   />
                   <p className="text-sm">
                     Quét mã QR hoặc nhấn "Thanh toán" để tiếp tục

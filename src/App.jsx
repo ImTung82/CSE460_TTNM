@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/layouts/Navbar';
-import Subnav from './components/layouts/Subnav';
+import Navbar from './components/layouts/user/Navbar';
+import Subnav from './components/layouts/user/Subnav';
 import Cart from './components/user/CheckoutCart/Cart';
 import PlaceOrder from './components/user/CheckoutCart/PlaceOrder';
 
