@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SectionTitle from "../../layouts/user/SectionTitle";
-
+import Navbar from "../../layouts/user/Navbar";
+import Subnav from "../../layouts/user/Subnav";
 const PlaceOrder = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -200,6 +201,10 @@ const PlaceOrder = () => {
   };
 
   return (
+    <>
+      <Navbar />
+      <Subnav />
+    
     <div className="max-w-4xl mx-auto p-6 space-y-6 bg-white relative mb-32">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
       
@@ -614,6 +619,7 @@ const PlaceOrder = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
