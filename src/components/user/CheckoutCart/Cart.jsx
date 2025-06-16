@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Navbar from "../../layouts/user/Navbar";
+import Subnav from "../../layouts/user/Subnav";
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState(
@@ -113,6 +115,9 @@ const Cart = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <Subnav />
     <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
       <h1 className="text-2xl font-bold mb-6">Giỏ hàng</h1>
@@ -228,6 +233,7 @@ const Cart = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
