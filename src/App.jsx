@@ -1,34 +1,57 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+//import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminLayout  from './components/layouts/admin/AdminLayout';
+import OrderTable from './components/admin/orders/OrderTable';
+import AddOrder from './components/admin/orders/AddOrder';
+import EditOrder from './components/admin/orders/EditOrder';
+import DeleteOrderModal from './components/admin/orders/DeleteOrderModal';
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <Routes>
+        <Route
+          path="/admin/don-hang"
+          element={
+            <AdminLayout>
+              <OrderTable />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/don-hang/them-moi"
+          element={
+            <AdminLayout>
+              <AddOrder />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/don-hang/sua-don-hang"
+          element={
+            <AdminLayout>
+              <EditOrder />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/don-hang/xoa-don-hang"
+          element={
+            <AdminLayout>
+              <DeleteOrderModal />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminLayout>
+              <div>Đây là trang tổng quan của Bảng điều khiển dành cho quản lý</div>
+            </AdminLayout>
+          }
+        />
+      </Routes>
+    </Router>
   )
 }
 
