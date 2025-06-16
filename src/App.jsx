@@ -12,20 +12,12 @@ import Navbar from './components/layouts/user/Navbar';
 import Subnav from './components/layouts/user/Subnav';
 import Cart from './components/user/CheckoutCart/Cart';
 import PlaceOrder from './components/user/CheckoutCart/PlaceOrder';
+import Home from './components/user/Home/Home';
 
 const App = () => {
   return (
     <div>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <h1>Đây là trang chủ</h1>
-            </>
-          }
-        />
-
         <Route
           path="/admin/don-hang"
           element={
@@ -72,6 +64,7 @@ const App = () => {
       <Routes>
         <Route path="/cart" element={<Cart />} />
         <Route path="/place-order" element={<PlaceOrder />} />
+        <Route path="/" element={<Home />} />
       </Routes>
       
     </div>
