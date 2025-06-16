@@ -173,7 +173,7 @@ const PlaceOrder = () => {
   const handlePaymentGatewaySubmit = () => {
     // Simulate redirection to payment gateway
     toast.info(`Đang chuyển hướng đến cổng thanh toán ${getPaymentGatewayName(selectedPaymentGateway)}...`, {
-      autoClose: 2000,
+      autoClose: 3000,
     });
     
     // Close the payment modal
@@ -201,7 +201,7 @@ const PlaceOrder = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6 bg-white relative mb-32">
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
       
       <div className="border border-[#cccccc]/80 rounded-lg p-4 bg-white shadow-md">
         <SectionTitle title="Địa chỉ giao hàng" />
@@ -346,7 +346,7 @@ const PlaceOrder = () => {
             )}
           </div>
           <button 
-            className="px-4 py-2 bg-[#192F59] text-white rounded text-sm cursor-pointer"
+            className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm cursor-pointer"
             onClick={applyCoupon}
           >
             Áp dụng
@@ -394,7 +394,7 @@ const PlaceOrder = () => {
             </div>
           </div>
           <button 
-            className="px-6 py-2 bg-[#192F59] text-white rounded text-sm"
+            className="px-6 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm"
             onClick={handlePlaceOrder}
           >
             Xác nhận
@@ -517,17 +517,17 @@ const PlaceOrder = () => {
                 </div>
               </div>
               
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex justify-center gap-3 pt-4">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-300 rounded"
+                  className="px-4 py-2 bg-white hover:text-[#C92127] border rounded"
                   onClick={closeModal}
                 >
                   Huỷ
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#192F59] text-white rounded"
+                  className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded"
                 >
                   Lưu
                 </button>
@@ -593,22 +593,23 @@ const PlaceOrder = () => {
               )}
             </div>
             
-            <div className="flex justify-end gap-3 mt-6">
-              <button
-                type="button"
-                className="px-4 py-2 bg-gray-300 rounded"
-                onClick={closePaymentModal}
-              >
-                Huỷ
-              </button>
-              <button
-                type="button"
-                className="px-4 py-2 bg-[#192F59] text-white rounded"
-                onClick={handlePaymentGatewaySubmit}
-              >
-                Thanh toán
-              </button>
-            </div>
+          <div className="flex justify-center gap-3 mt-6">
+            <button
+              type="button"
+              className="min-w-[120px] px-4 py-2 bg-white border hover:text-[#C92127] rounded text-center"
+              onClick={closePaymentModal}
+            >
+              Huỷ
+            </button>
+            <button
+              type="button"
+              className="min-w-[120px] px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-center"
+              onClick={handlePaymentGatewaySubmit}
+            >
+              Thanh toán
+            </button>
+          </div>
+
           </div>
         </div>
       )}

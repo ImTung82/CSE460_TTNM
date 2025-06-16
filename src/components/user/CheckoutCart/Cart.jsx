@@ -114,7 +114,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60">
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
       <h1 className="text-2xl font-bold mb-6">Giỏ hàng</h1>
 
       {cartItems.length > 0 ? (
@@ -220,7 +220,7 @@ const Cart = () => {
           Tổng tiền: <span className="text-red-600 font-bold">{totalAmount.toLocaleString()} đ</span>
         </p>
         <button 
-          className={`px-6 py-2 rounded ${totalAmount > 0 ? 'bg-[#192F59] text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+          className={`px-6 py-2 rounded ${totalAmount > 0 ? 'bg-[#192F59] hover:bg-[#114388] text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
           onClick={handleCheckout}
           disabled={totalAmount === 0}
         >
