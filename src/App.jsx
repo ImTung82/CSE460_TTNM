@@ -1,15 +1,31 @@
 import { useState } from 'react'
 //import './App.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AdminLayout  from './components/layouts/admin/AdminLayout';
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminLayout from './components/layouts/admin/AdminLayout';
 import OrderTable from './components/admin/orders/OrderTable';
 import AddOrder from './components/admin/orders/AddOrder';
 import EditOrder from './components/admin/orders/EditOrder';
 import DeleteOrderModal from './components/admin/orders/DeleteOrderModal';
+
+import {BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './components/layouts/user/Navbar';
+import Subnav from './components/layouts/user/Subnav';
+import Cart from './components/user/CheckoutCart/Cart';
+import PlaceOrder from './components/user/CheckoutCart/PlaceOrder';
+
 const App = () => {
   return (
-    <Router>
+    <div>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <h1>Đây là trang chủ</h1>
+            </>
+          }
+        />
+
         <Route
           path="/admin/don-hang"
           element={
@@ -51,8 +67,15 @@ const App = () => {
           }
         />
       </Routes>
-    </Router>
+      
+      
+      <Routes>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/place-order" element={<PlaceOrder />} />
+      </Routes>
+      
+    </div>
   )
 }
 
-export default App
+export default App;

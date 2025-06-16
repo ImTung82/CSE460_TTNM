@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <aside className="w-[300px] h-[800px] bg-black text-white p-5">
+    <aside className="w-[300px] h-[950px] bg-black text-white p-5">
       <div className="text-2xl text-center font-bold mb-8"><Link
           to="/admin"
           

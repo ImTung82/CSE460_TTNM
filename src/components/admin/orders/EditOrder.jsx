@@ -8,11 +8,6 @@ function EditOrder() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Thực hiện cập nhật đơn hàng tại đây
-
-        toast.success("Sửa đơn hàng thành công!");
-
         // Chờ toast hiển thị rồi chuyển trang
         setTimeout(() => {
             navigate("/admin/don-hang", { state: { message: "Sửa đơn hàng thành công!" } });

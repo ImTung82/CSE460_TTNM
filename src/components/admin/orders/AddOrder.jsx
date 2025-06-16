@@ -1,56 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 function AddOrder() {
-    const navigate = useNavigate(); // <-- Dùng để chuyển trang
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        tenKhachHang: '',
+        diaChi: '',
+        soDienThoai: '',
+        tongTien: '',
+        ngayDat: '',
+        phuongThucThanhToan: ''
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (!formData.tenKhachHang.trim()) newErrors.tenKhachHang = 'Tên khách hàng không được bỏ trống';
+        if (!formData.diaChi.trim()) newErrors.diaChi = 'Địa chỉ không được bỏ trống';
+        if (!formData.soDienThoai.trim()) {
+            newErrors.soDienThoai = 'Số điện thoại không được bỏ trống';
+        } else if (!/^\d{9,11}$/.test(formData.soDienThoai)) {
+            newErrors.soDienThoai = 'Số điện thoại không hợp lệ';
+        }
+        if (!formData.tongTien.trim()) newErrors.tongTien = 'Tổng tiền không được bỏ trống';
+        if (!formData.ngayDat.trim()) newErrors.ngayDat = 'Ngày đặt hàng không được bỏ trống';
+        if (!formData.phuongThucThanhToan || formData.phuongThucThanhToan === '-- Chọn phương thức --') {
+            newErrors.phuongThucThanhToan = 'Vui lòng chọn phương thức thanh toán';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!validate()) return;
 
         toast.success("Thêm đơn hàng thành công!");
-
-        // Chờ 1 chút để toast hiển thị rồi mới navigate (1-2 giây)
         setTimeout(() => {
             navigate("/admin/don-hang", { state: { message: "Thêm đơn hàng thành công!" } });
         }, 1000);
     };
+
     return (
         <div className="bg-white h-screen">
             <h2 className="text-2xl font-bold mb-6 text-black">Thêm đơn hàng mới</h2>
 
             <form className="mx-20 space-y-4" onSubmit={handleSubmit}>
                 {/* Tên khách hàng */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Tên khách hàng:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="Nhập tên khách hàng"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Tên khách hàng:</label>
+                        <input
+                            name="tenKhachHang"
+                            value={formData.tenKhachHang}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="Nhập tên khách hàng"
+                        />
+                    </div>
+                    {errors.tenKhachHang && <p className="text-red-500 ml-[25%]">{errors.tenKhachHang}</p>}
                 </div>
 
                 {/* Địa chỉ */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Địa chỉ:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="Nhập địa chỉ"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Địa chỉ:</label>
+                        <input
+                            name="diaChi"
+                            value={formData.diaChi}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="Nhập địa chỉ"
+                        />
+                    </div>
+                    {errors.diaChi && <p className="text-red-500 ml-[25%]">{errors.diaChi}</p>}
                 </div>
 
                 {/* Số điện thoại */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Số điện thoại:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="0123456789"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Số điện thoại:</label>
+                        <input
+                            name="soDienThoai"
+                            value={formData.soDienThoai}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="0123456789"
+                        />
+                    </div>
+                    {errors.soDienThoai && <p className="text-red-500 ml-[25%]">{errors.soDienThoai}</p>}
                 </div>
 
                 {/* Danh sách sản phẩm */}
+                {/* Không validate sản phẩm ở đây */}
                 <div className="flex items-start">
                     <label className="w-1/4 font-semibold mt-2">Danh sách sản phẩm:</label>
                     <div className="w-3/4">
@@ -107,31 +163,52 @@ function AddOrder() {
                 </div>
 
                 {/* Phương thức thanh toán */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Phương thức thanh toán:</label>
-                    <select className="w-3/4 border border-gray-300 p-2 rounded">
-                        <option>-- Chọn phương thức --</option>
-                        <option>Thanh toán khi nhận hàng</option>
-                        <option>Chuyển khoản ngân hàng</option>
-                        <option>Ví điện tử</option>
-                    </select>
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Phương thức thanh toán:</label>
+                        <select
+                            name="phuongThucThanhToan"
+                            value={formData.phuongThucThanhToan}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        >
+                            <option>-- Chọn phương thức --</option>
+                            <option>Thanh toán khi nhận hàng</option>
+                            <option>Chuyển khoản ngân hàng</option>
+                            <option>Ví điện tử</option>
+                        </select>
+                    </div>
+                    {errors.phuongThucThanhToan && <p className="text-red-500 ml-[25%]">{errors.phuongThucThanhToan}</p>}
                 </div>
+
                 {/* Tổng tiền */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Tổng tiền:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Tổng tiền:</label>
+                        <input
+                            name="tongTien"
+                            value={formData.tongTien}
+                            onChange={handleChange}
+                            type="text"
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        />
+                    </div>
+                    {errors.tongTien && <p className="text-red-500 ml-[25%]">{errors.tongTien}</p>}
                 </div>
 
                 {/* Ngày đặt hàng */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Ngày đặt hàng:</label>
-                    <input
-                        type="date"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Ngày đặt hàng:</label>
+                        <input
+                            name="ngayDat"
+                            value={formData.ngayDat}
+                            onChange={handleChange}
+                            type="date"
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        />
+                    </div>
+                    {errors.ngayDat && <p className="text-red-500 ml-[25%]">{errors.ngayDat}</p>}
                 </div>
 
                 {/* Trạng thái */}
@@ -146,21 +223,21 @@ function AddOrder() {
                     </select>
                 </div>
 
-            {/* Nút thao tác */}
-            <div className="flex space-x-2 pt-10">
-                <button
-                    type="submit"
-                    className="w-22 h-10 font-bold bg-blue-500 hover:opacity-70 text-white rounded transition-all ease-out duration-150"
-                >
-                    Thêm
-                </button>
-                <button
-                    type="reset"
-                    className="w-22 h-10 font-bold border hover:border-red-500 hover:text-red-500 text-black rounded transition-all ease-out duration-150"
-                >
-                    Hủy
-                </button>
-            </div>
+                {/* Nút thao tác */}
+                <div className="flex space-x-2 pt-10">
+                    <button
+                        type="submit"
+                        className="w-22 h-10 font-bold bg-blue-500 hover:opacity-70 text-white rounded transition-all ease-out duration-150"
+                    >
+                        Thêm
+                    </button>
+                    <button
+                        type="reset"
+                        className="w-22 h-10 font-bold border hover:border-red-500 hover:text-red-500 text-black rounded transition-all ease-out duration-150"
+                    >
+                        Hủy
+                    </button>
+                </div>
             </form>
         </div>
     );
