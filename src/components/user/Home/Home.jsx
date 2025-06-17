@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "../../layouts/user/Navbar";
 import Subnav from "../../layouts/user/Subnav";
+import Footer from "../../layouts/user/Footer";
 
 const Home = () => {
   const sampleBook = {
@@ -150,6 +151,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
