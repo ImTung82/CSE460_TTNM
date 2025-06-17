@@ -7,21 +7,22 @@ import Subnav from "../../layouts/user/Subnav";
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState(
-    Array(5).fill({
-      id: 0,
-      name: "Thám Tử Lừng Danh Conan - Tập 43 (Tái Bản 2023)",
-      price: 24000,
-      oldPrice: 30000,
-      quantity: 1,
-      image: "/assets/user/book.png",
-      selected: false,
-    }).map((item, index) => ({ ...item, id: index }))
+    Array(5)
+      .fill({
+        id: 0,
+        name: "Thám Tử Lừng Danh Conan - Tập 43 (Tái Bản 2023)",
+        price: 24000,
+        oldPrice: 30000,
+        quantity: 1,
+        image: "/assets/user/book.png",
+        selected: false,
+      })
+      .map((item, index) => ({ ...item, id: index }))
   );
 
   const [selectAll, setSelectAll] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  // Check for order success message when component mounts
   useEffect(() => {
     const orderSuccess = sessionStorage.getItem("orderSuccess");
     if (orderSuccess) {
@@ -36,26 +37,32 @@ const Cart = () => {
     setSelectAll(newSelectAll);
 
     // Update all items selection status
-    setCartItems(cartItems.map(item => ({
-      ...item,
-      selected: newSelectAll
-    })));
+    setCartItems(
+      cartItems.map((item) => ({
+        ...item,
+        selected: newSelectAll,
+      }))
+    );
   };
 
   // Handle individual item selection
   const handleSelectItem = (id) => {
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, selected: !item.selected } : item
-    ));
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === id ? { ...item, selected: !item.selected } : item
+      )
+    );
   };
 
   // Update quantity with buttons
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
 
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
   };
 
   // Handle direct quantity input
@@ -64,14 +71,18 @@ const Cart = () => {
 
     // Ensure the input is a positive number
     if (!isNaN(value) && value > 0) {
-      setCartItems(cartItems.map(item =>
-        item.id === id ? { ...item, quantity: value } : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: value } : item
+        )
+      );
     } else if (e.target.value === "") {
       // Allow empty input while typing
-      setCartItems(cartItems.map(item =>
-        item.id === id ? { ...item, quantity: e.target.value } : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: e.target.value } : item
+        )
+      );
     }
   };
 
@@ -81,9 +92,11 @@ const Cart = () => {
 
     if (isNaN(value) || value < 1 || e.target.value === "") {
       // Reset to 1 if invalid
-      setCartItems(cartItems.map(item =>
-        item.id === id ? { ...item, quantity: 1 } : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: 1 } : item
+        )
+      );
     }
   };
 
@@ -91,19 +104,21 @@ const Cart = () => {
   useEffect(() => {
     const total = cartItems.reduce((sum, item) => {
       if (!item.selected) return sum;
-      const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
-      return sum + (item.price * quantity);
+      const quantity = typeof item.quantity === "number" ? item.quantity : 1;
+      return sum + item.price * quantity;
     }, 0);
 
     setTotalAmount(total);
 
     // Update selectAll state based on items
-    setSelectAll(cartItems.length > 0 && cartItems.every(item => item.selected));
+    setSelectAll(
+      cartItems.length > 0 && cartItems.every((item) => item.selected)
+    );
   }, [cartItems]);
 
   // Remove item from cart
   const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
   // Handle checkout
@@ -118,7 +133,18 @@ const Cart = () => {
       <Navbar />
       <Subnav />
       <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60">
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <h1 className="text-2xl font-bold mb-6">Giỏ hàng</h1>
 
         {cartItems.length > 0 ? (
@@ -142,7 +168,10 @@ const Cart = () => {
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.id} className="border-t border-gray-200 text-sm">
+                  <tr
+                    key={item.id}
+                    className="border-t border-gray-200 text-sm"
+                  >
                     <td className="p-4 align-middle">
                       <input
                         type="checkbox"
@@ -176,7 +205,9 @@ const Cart = () => {
                         <div className="flex border border-gray-300 rounded">
                           <button
                             className="px-3 py-1 border-r border-gray-300"
-                            onClick={() => updateQuantity(item.id, Number(item.quantity) - 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, Number(item.quantity) - 1)
+                            }
                           >
                             -
                           </button>
@@ -189,7 +220,9 @@ const Cart = () => {
                           />
                           <button
                             className="px-3 py-1 border-l border-gray-300"
-                            onClick={() => updateQuantity(item.id, Number(item.quantity) + 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, Number(item.quantity) + 1)
+                            }
                           >
                             +
                           </button>
@@ -199,13 +232,23 @@ const Cart = () => {
 
                     <td className="p-4 text-right align-middle">
                       <p className="text-red-600 font-bold">
-                        {(item.price * (typeof item.quantity === 'number' ? item.quantity : 1)).toLocaleString()} đ
+                        {(
+                          item.price *
+                          (typeof item.quantity === "number"
+                            ? item.quantity
+                            : 1)
+                        ).toLocaleString()}{" "}
+                        đ
                       </p>
                     </td>
 
                     <td className="p-4 text-center align-middle">
                       <button onClick={() => removeItem(item.id)}>
-                        <img src="/assets/user/delete.png" alt="delete" className="w-5 h-5" />
+                        <img
+                          src="/assets/user/delete.png"
+                          alt="delete"
+                          className="w-5 h-5"
+                        />
                       </button>
                     </td>
                   </tr>
@@ -221,10 +264,17 @@ const Cart = () => {
 
         <div className="flex flex-col items-end mt-6 gap-2 text-sm">
           <p className="font-medium">
-            Tổng tiền: <span className="text-red-600 font-bold">{totalAmount.toLocaleString()} đ</span>
+            Tổng tiền:{" "}
+            <span className="text-red-600 font-bold">
+              {totalAmount.toLocaleString()} đ
+            </span>
           </p>
           <button
-            className={`px-6 py-2 rounded ${totalAmount > 0 ? 'bg-[#192F59] hover:bg-[#114388] text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+            className={`px-6 py-2 rounded ${
+              totalAmount > 0
+                ? "bg-[#192F59] hover:bg-[#114388] text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
             onClick={handleCheckout}
             disabled={totalAmount === 0}
           >
