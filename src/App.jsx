@@ -5,7 +5,6 @@ import AdminLayout from './components/layouts/admin/AdminLayout';
 import OrderTable from './components/admin/orders/OrderTable';
 import AddOrder from './components/admin/orders/AddOrder';
 import EditOrder from './components/admin/orders/EditOrder';
-import DeleteOrderModal from './components/admin/orders/DeleteOrderModal';
 
 import {BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/layouts/user/Navbar';
@@ -47,14 +46,6 @@ const App = () => {
           element={
             <AdminLayout>
               <EditOrder />
-            </AdminLayout>
-          }
-        />
-        <Route
-          path="/admin/don-hang/xoa-don-hang"
-          element={
-            <AdminLayout>
-              <DeleteOrderModal />
             </AdminLayout>
           }
         />

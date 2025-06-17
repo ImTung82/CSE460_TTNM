@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+
+
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import DeleteOrderModal from './DeleteOrderModal';
+import OrderDetailModal from './OrderDetailModal';
 import { toast, ToastContainer } from 'react-toastify';
+
 const OrderTable = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const orders = [
     {
@@ -36,29 +40,81 @@ const OrderTable = () => {
       status: "Đang xử lý đơn hàng",
       statusStyle: "bg-yellow-100 text-yellow-600",
     },
+    {
+      id: "4TQ00004",
+      name: "Lê Hoàng Long",
+      phone: "0987654245",
+      address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
+      total: "89.000₫",
+      status: "Đang xử lý đơn hàng",
+      statusStyle: "bg-yellow-100 text-yellow-600",
+    },
+    {
+      id: "4TQ00005",
+      name: "Lê Hoàng Long",
+      phone: "0987654245",
+      address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
+      total: "89.000₫",
+      status: "Đang xử lý đơn hàng",
+      statusStyle: "bg-yellow-100 text-yellow-600",
+    },{
+      id: "4TQ00006",
+      name: "Lê Hoàng Long",
+      phone: "0987654245",
+      address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
+      total: "89.000₫",
+      status: "Đang xử lý đơn hàng",
+      statusStyle: "bg-yellow-100 text-yellow-600",
+    },
+    {
+      id: "4TQ00007",
+      name: "Lê Hoàng Long",
+      phone: "0987654245",
+      address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
+      total: "89.000₫",
+      status: "Đang xử lý đơn hàng",
+      statusStyle: "bg-yellow-100 text-yellow-600",
+    },
+    {
+      id: "4TQ00008",
+      name: "Lê Hoàng Long",
+      phone: "0987654245",
+      address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
+      total: "89.000₫",
+      status: "Đang xử lý đơn hàng",
+      statusStyle: "bg-yellow-100 text-yellow-600",
+    },
   ];
+
   const location = useLocation();
 
-    useEffect(() => {
-        if (location.state?.message) {
-            toast.success(location.state.message);
-        }
-    }, [location]);
+  useEffect(() => {
+    if (location.state?.message) {
+      toast.success(location.state.message);
+    }
+  }, [location]);
+
   const handleClickOrder = (order) => {
     setSelectedOrder(order);
+    setIsDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => {
+    setSelectedOrder(null);
+    setIsDetailModalOpen(false);
   };
 
   const openDeleteModal = (order) => {
     setOrderToDelete(order);
-    setIsModalOpen(true);
+    setIsDeleteModalOpen(true);
   };
 
   const closeDeleteModal = () => {
-    setIsModalOpen(false);
     setOrderToDelete(null);
+    setIsDeleteModalOpen(false);
   };
 
-   const confirmDelete = () => {
+  const confirmDelete = () => {
     closeDeleteModal();
     toast.success(`Xóa đơn hàng thành công!`);
   };
@@ -67,10 +123,10 @@ const OrderTable = () => {
     <div className="p-6 relative">
       <h2 className="text-3xl font-bold">Quản lý đơn hàng</h2>
       <div className="flex justify-between items-center mb-4">
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"/>
+        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
         <Link
           to="/admin/don-hang/them-moi"
-          className="flex items-center bg-[#28A745] hover:bg-[#7fca8d] text-white font-bold px-4 py-3 rounded-md transition duration-200 cursor-pointer"
+          className="flex items-center bg-[#28A745] hover:bg-[#7fca8d] text-white font-bold px-4 py-3 rounded-md transition duration-200"
         >
           <img src="/assets/admin/icon_them.png" alt="" className="w-5 h-5" />
           <span className="ml-2">Thêm mới</span>
@@ -111,12 +167,7 @@ const OrderTable = () => {
                 <div className="flex justify-center items-center gap-2">
                   <Link to="/admin/don-hang/sua-don-hang" className="text-yellow-500 hover:text-yellow-600">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M.5 15.5V13L12.6.9c.2-.2.5-.2.7 0l1.8 1.8c.2.2.2.5 0 .7L3 15.5zM11 3l2 2"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinejoin="round"
-                      />
+                      <path d="M.5 15.5V13L12.6.9c.2-.2.5-.2.7 0l1.8 1.8c.2.2.2.5 0 .7L3 15.5zM11 3l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                     </svg>
                   </Link>
                   <button
@@ -135,6 +186,7 @@ const OrderTable = () => {
           ))}
         </tbody>
       </table>
+
       <div className="mt-5 flex justify-end items-center gap-2">
         <button className="w-9 h-9 font-bold rounded-lg border border-gray-300 hover:bg-blue-400 hover:text-white text-sm text-gray-700 transition-all ease-out duration-150">
           &lt;&lt;
@@ -164,10 +216,17 @@ const OrderTable = () => {
           &gt;&gt;
         </button>
       </div>
+
+      {/* Modals */}
       <DeleteOrderModal
-        isOpen={isModalOpen}
+        isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={confirmDelete}
+      />
+      <OrderDetailModal
+        isOpen={isDetailModalOpen}
+        onClose={closeDetailModal}
+        order={selectedOrder}
       />
     </div>
   );
