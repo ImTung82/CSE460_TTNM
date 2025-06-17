@@ -64,42 +64,42 @@ const Home = () => {
 
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#192F59] hover:bg-white/80 p-2 rounded-full"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#192F59] hover:opacity-70 p-2 rounded-full transition-all ease-out duration-300"
           >
             <img
               src="/assets/user/icon_lui.png"
               alt="Previous"
-              className="h-6 w-6"
+              className="h-8 w-8"
             />
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#192F59] hover:bg-white/80 p-2 rounded-full"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#192F59] hover:opacity-70 p-2 rounded-full transition-all ease-out duration-300"
           >
             <img
               src="/assets/user/icon_tien.png"
               alt="Next"
-              className="h-6 w-6"
+              className="h-8 w-8"
             />
           </button>
         </div>
 
-        <div className="max-w-screen-lg mx-auto px-4 py-8">
+        <div className="max-w-screen-lg mx-auto py-8">
           <div className="py-10 bg-white text-center">
-            <h2 className="text-2xl font-bold mb-8 uppercase">Sách mới</h2>
+            <h2 className="text-4xl font-bold mb-8 uppercase">Sách mới</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-4">
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
                   <div
                     key={index}
-                    className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition duration-200 rounded"
+                    className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition-all ease-out duration-200 rounded"
                   >
                     <img
                       src={book.img}
                       alt={book.title}
-                      className="w-full h-auto object-cover mb-2"
+                      className="w-full h-auto object-cover mb-2 hover:scale-95 hover:opacity-70 transition-transform duration-300 ease-in-out"
                     />
                     <p className="text-sm text-gray-800">{book.title}</p>
                     <div className="flex items-center gap-2 mt-1">
@@ -119,19 +119,19 @@ const Home = () => {
           </div>
 
           <div className="py-10 bg-white text-center">
-            <h2 className="text-2xl font-bold mb-8 uppercase">Sách mới</h2>
+            <h2 className="text-4xl font-bold mb-8 uppercase">Sách bán chạy</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-4">
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
                   <div
                     key={index}
-                    className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition duration-200 rounded"
+                    className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition-all ease-out duration-200 rounded"
                   >
                     <img
                       src={book.img}
                       alt={book.title}
-                      className="w-full h-auto object-cover mb-2"
+                      className="w-full h-auto object-cover mb-2 hover:scale-95 hover:opacity-70 transition-transform duration-300 ease-in-out"
                     />
                     <p className="text-sm text-gray-800">{book.title}</p>
                     <div className="flex items-center gap-2 mt-1">

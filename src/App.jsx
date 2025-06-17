@@ -6,12 +6,13 @@ import OrderTable from './components/admin/orders/OrderTable';
 import AddOrder from './components/admin/orders/AddOrder';
 import EditOrder from './components/admin/orders/EditOrder';
 
-import {BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/layouts/user/Navbar';
 import Subnav from './components/layouts/user/Subnav';
 import Cart from './components/user/CheckoutCart/Cart';
 import PlaceOrder from './components/user/CheckoutCart/PlaceOrder';
 import Home from './components/user/Home/Home';
+import Login from './components/user/Login/Login';
 
 const App = () => {
   return (
@@ -50,14 +51,15 @@ const App = () => {
           }
         />
       </Routes>
-      
-      
+
+
       <Routes>
         <Route path="/cart" element={<Cart />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/" element={<Home />} />
+        <Route path="/dang-nhap" element={<Login />} />
       </Routes>
-      
+
     </div>
   )
 }

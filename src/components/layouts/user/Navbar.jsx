@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between px-10 py-2 font-medium h-[80px]">
-      <div className="w-[500px]">
+    <div className="flex items-center justify-between px-10 py-2 font-medium h-[80px] mx-55">
+      <div className="w-[400px]">
         <Link to="/">
-          <img src="/assets/user/logo.png" className="w-32" alt="Logo" />
+          <img src="/assets/user/logo_2.png" className="w-32" alt="Logo" />
         </Link>
       </div>
 
-      <div className="flex items-center border border-[#192F59] rounded-full w-[500px] overflow-hidden h-10">
+      <div className="flex items-center border border-[#192F59] rounded-full w-[700px] overflow-hidden h-10">
         <input
           type="text"
           placeholder="Tìm kiếm..."
@@ -21,10 +21,10 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="flex items-center gap-6 text-center text-sm text-[#192F59] w-[500px] justify-end">
+      <div className="flex items-center gap-10 text-center text-sm text-[#192F59] w-[500px] justify-end">
         <div className="flex flex-col items-center">
           <img src="/assets/user/notify.png" className="w-8 cursor-pointer" alt="Notifications" />
-          <span>Thông báo</span>
+          <span className="text-[12px]">Thông báo</span>
         </div>
 
         <Link to="/cart" className="flex flex-col items-center">
@@ -34,12 +34,17 @@ const Navbar = () => {
               5
             </span>
           </div>
-          <span>Giỏ hàng</span>
+          <span className="text-[12px]">Giỏ hàng</span>
         </Link>
 
-        <div className="flex flex-col items-center">
+        <div className="group relative flex flex-col items-center transition-all ease-out duration-300">
           <img src="/assets/user/account.png" className="w-8 cursor-pointer" alt="Account" />
-          <span>Tài khoản</span>
+          <span className="text-[12px]">Tài khoản</span>
+          <div className="absolute top-full right-0 w-40 bg-white rounded shadow-lg flex-col hidden group-hover:flex z-20 transition-all ease-out duration-300">
+            <Link to="/dang-nhap" className="px-4 py-3 text-left hover:bg-gray-100 text-sm">Đăng nhập</Link>
+            <div className="border"></div>
+            <button className="px-4 py-3 text-left hover:bg-gray-100 text-sm">Đăng ký</button>
+          </div>
         </div>
       </div>
     </div>
