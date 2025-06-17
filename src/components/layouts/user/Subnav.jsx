@@ -1,12 +1,12 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Subnav = () => {
   return (
     <div className="bg-[#192F59] text-white text-sm font-medium">
       <div className="flex items-center justify-between max-w-screen-lg mx-auto">
-        <div className="px-8 py-3 hover:bg-[#114388] transition cursor-pointer">
+        <Link to="/" className="px-8 py-3 hover:bg-[#114388] transition cursor-pointer">
           Trang chủ
-        </div>
+        </Link>
 
         <div className="group relative px-8 py-3 hover:bg-[#114388] transition cursor-pointer">
           <p className="text-left">Danh mục</p>
