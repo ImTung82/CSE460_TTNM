@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Navbar from "../../layouts/user/Navbar";
-import Subnav from "../../layouts/user/Subnav";
+import Header from "../../layouts/user/Header";
 import Footer from "../../layouts/user/Footer";
 
 const Home = () => {
@@ -44,8 +43,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
-      <Subnav />
+      <Header />
       <div className="bg-white text-black">
         <div className="w-full relative overflow-hidden">
           <div
