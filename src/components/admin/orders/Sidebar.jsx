@@ -12,55 +12,55 @@ const Sidebar = () => {
       <nav className="space-y-3">
         <Link
           to="/admin/san-pham"
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý đầu sách
         </Link>
         <Link
           to="/admin/don-hang"
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý đơn hàng
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý mã giảm giá
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý thông báo người dùng
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý PT thanh toán
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý PT vận chuyển
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Quản lý danh mục
         </Link>
         <Link
           to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           Thống kê doanh thu
         </Link>
         <Link
-          to=""
-          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-red-600 hover:bg-white hover:ml-4 font-normal hover:font-bold"
+          to="/"
+          className="block px-4 py-2 rounded-3xl text-white transition-all hover:text-[#E65F2B] hover:bg-white hover:ml-4 font-normal hover:font-bold"
         >
           → Trở về trang chủ
         </Link>
