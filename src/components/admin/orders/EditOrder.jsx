@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,9 +6,84 @@ import 'react-toastify/dist/ReactToastify.css';
 function EditOrder() {
     const navigate = useNavigate();
 
+    const [formData, setFormData] = useState({
+        tenKhachHang: 'Nguyễn Văn A',
+        diaChi: '123 Trần Duy Hưng',
+        soDienThoai: '0912345678',
+        tongTien: '500000',
+        ngayDat: '2024-06-10',
+        phuongThucThanhToan: 'Thanh toán khi nhận hàng'
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const validateField = (name, value) => {
+        let error = "";
+
+        switch (name) {
+            case "tenKhachHang":
+                if (!value.trim()) error = "Tên khách hàng không được bỏ trống";
+                break;
+            case "diaChi":
+                if (!value.trim()) error = "Địa chỉ không được bỏ trống";
+                break;
+            case "soDienThoai":
+                if (!value.trim()) {
+                    error = "Số điện thoại không được bỏ trống";
+                } else if (!/^\d{9,11}$/.test(value)) {
+                    error = "Số điện thoại không hợp lệ";
+                }
+                break;
+            case "tongTien":
+                if (!value.trim()) error = "Tổng tiền không được bỏ trống";
+                break;
+            case "ngayDat":
+                if (!value.trim()) error = "Ngày đặt hàng không được bỏ trống";
+                break;
+            case "phuongThucThanhToan":
+                if (!value || value === "-- Chọn phương thức --") {
+                    error = "Vui lòng chọn phương thức thanh toán";
+                }
+                break;
+            default:
+                break;
+        }
+
+        setErrors(prev => ({ ...prev, [name]: error }));
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        
+        setFormData(prev => ({ ...prev, [name]: value }));
+
+        
+        validateField(name, value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Chờ toast hiển thị rồi chuyển trang
+
+        // Kiểm tra từng trường
+        const newErrors = {};
+        Object.keys(formData).forEach((key) => {
+            validateField(key, formData[key]); // gọi lại hàm validate
+            if (
+                !formData[key] ||
+                (key === "phuongThucThanhToan" && formData[key] === "-- Chọn phương thức --")
+            ) {
+                newErrors[key] = "Vui lòng điền đầy đủ thông tin";
+            }
+        });
+
+        // Nếu có lỗi thì hiển thị toast và không submit
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        // Nếu không có lỗi, thực hiện submit
         setTimeout(() => {
             navigate("/admin/don-hang", { state: { message: "Sửa đơn hàng thành công!" } });
         }, 1000);
@@ -16,43 +91,60 @@ function EditOrder() {
 
     return (
         <div className="bg-white h-screen">
+            <ToastContainer />
             <h2 className="text-2xl font-bold mb-6 text-black">Chỉnh sửa đơn hàng</h2>
 
             <form className="mx-20 space-y-4" onSubmit={handleSubmit}>
                 {/* Tên khách hàng */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Tên khách hàng:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="Nhập tên khách hàng"
-                        defaultValue="Nguyễn Văn A"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Tên khách hàng:<span className="text-red-500 ml-1">*</span></label>
+                        <input
+                            name="tenKhachHang"
+                            type="text"
+                            value={formData.tenKhachHang}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="Nhập tên khách hàng"
+                        />
+                    </div>
+                    {errors.tenKhachHang && <p className="text-red-500 ml-[25%]">{errors.tenKhachHang}</p>}
                 </div>
 
                 {/* Địa chỉ */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Địa chỉ:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="Nhập địa chỉ"
-                        defaultValue="123 Trần Duy Hưng"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Địa chỉ:<span className="text-red-500 ml-1">*</span></label>
+                        <input
+                            name="diaChi"
+                            type="text"
+                            value={formData.diaChi}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="Nhập địa chỉ"
+                        />
+                    </div>
+                    {errors.diaChi && <p className="text-red-500 ml-[25%]">{errors.diaChi}</p>}
                 </div>
 
                 {/* Số điện thoại */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Số điện thoại:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        placeholder="0123456789"
-                        defaultValue="0912345678"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Số điện thoại:<span className="text-red-500 ml-1">*</span></label>
+                        <input
+                            name="soDienThoai"
+                            type="text"
+                            value={formData.soDienThoai}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                            placeholder="0123456789"
+                        />
+                    </div>
+                    {errors.soDienThoai && <p className="text-red-500 ml-[25%]">{errors.soDienThoai}</p>}
                 </div>
 
                 {/* Danh sách sản phẩm */}
+                {/* Không validate sản phẩm ở đây */}
                 <div className="flex items-start">
                     <label className="w-1/4 font-semibold mt-2">Danh sách sản phẩm:</label>
                     <div className="w-3/4">
@@ -67,7 +159,7 @@ function EditOrder() {
                             <tbody>
                                 <tr>
                                     <td className="border border-gray-300 p-2">
-                                        <select className="w-full border border-gray-300 p-1 rounded" defaultValue="Lập trình Java cơ bản">
+                                        <select className="w-full border border-gray-300 p-1 rounded">
                                             <option>Lập trình Java cơ bản</option>
                                             <option>Học React nhanh</option>
                                             <option>Python cho người mới</option>
@@ -79,7 +171,7 @@ function EditOrder() {
                                             type="number"
                                             min="1"
                                             className="w-full border border-gray-300 p-1 rounded"
-                                            defaultValue="2"
+                                            defaultValue="1"
                                         />
                                     </td>
                                     <td className="border border-gray-300 p-2 text-center">
@@ -109,34 +201,52 @@ function EditOrder() {
                 </div>
 
                 {/* Phương thức thanh toán */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Phương thức thanh toán:</label>
-                    <select className="w-3/4 border border-gray-300 p-2 rounded" defaultValue="Thanh toán khi nhận hàng">
-                        <option>-- Chọn phương thức --</option>
-                        <option>Thanh toán khi nhận hàng</option>
-                        <option>Chuyển khoản ngân hàng</option>
-                        <option>Ví điện tử</option>
-                    </select>
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Phương thức thanh toán:<span className="text-red-500 ml-1">*</span></label>
+                        <select
+                            name="phuongThucThanhToan"
+                            value={formData.phuongThucThanhToan}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        >
+                            <option>-- Chọn phương thức --</option>
+                            <option>Thanh toán khi nhận hàng</option>
+                            <option>Chuyển khoản ngân hàng</option>
+                            <option>Ví điện tử</option>
+                        </select>
+                    </div>
+                    {errors.phuongThucThanhToan && <p className="text-red-500 ml-[25%]">{errors.phuongThucThanhToan}</p>}
                 </div>
 
                 {/* Tổng tiền */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Tổng tiền:</label>
-                    <input
-                        type="text"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        defaultValue="500000"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Tổng tiền:<span className="text-red-500 ml-1">*</span></label>
+                        <input
+                            name="tongTien"
+                            type="text"
+                            value={formData.tongTien}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        />
+                    </div>
+                    {errors.tongTien && <p className="text-red-500 ml-[25%]">{errors.tongTien}</p>}
                 </div>
 
                 {/* Ngày đặt hàng */}
-                <div className="flex items-center">
-                    <label className="w-1/4 font-semibold">Ngày đặt hàng:</label>
-                    <input
-                        type="date"
-                        className="w-3/4 border border-gray-300 p-2 rounded"
-                        defaultValue="2024-06-10"
-                    />
+                <div className="flex flex-col">
+                    <div className="flex items-center">
+                        <label className="w-1/4 font-semibold">Ngày đặt hàng:<span className="text-red-500 ml-1">*</span></label>
+                        <input
+                            name="ngayDat"
+                            type="date"
+                            value={formData.ngayDat}
+                            onChange={handleChange}
+                            className="w-3/4 border border-gray-300 p-2 rounded"
+                        />
+                    </div>
+                    {errors.ngayDat && <p className="text-red-500 ml-[25%]">{errors.ngayDat}</p>}
                 </div>
 
                 {/* Trạng thái */}
@@ -161,7 +271,8 @@ function EditOrder() {
                     </button>
                     <button
                         type="reset"
-                        className="w-22 h-10 font-bold border hover:border-gray-500 hover:text-gray-500 text-black rounded transition-all ease-out duration-150"
+                        onClick={() => navigate("/admin/don-hang")}
+                        className="w-22 h-10 font-bold border hover:border-red-500 hover:text-red-500 text-black rounded transition-all ease-out duration-150"
                     >
                         Hủy
                     </button>

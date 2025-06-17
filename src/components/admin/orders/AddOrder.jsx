@@ -17,40 +17,78 @@ function AddOrder() {
 
     const [errors, setErrors] = useState({});
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+    const validateField = (name, value) => {
+        let error = "";
+
+        switch (name) {
+            case "tenKhachHang":
+                if (!value.trim()) error = "Tên khách hàng không được bỏ trống";
+                break;
+            case "diaChi":
+                if (!value.trim()) error = "Địa chỉ không được bỏ trống";
+                break;
+            case "soDienThoai":
+                if (!value.trim()) {
+                    error = "Số điện thoại không được bỏ trống";
+                } else if (!/^\d{9,11}$/.test(value)) {
+                    error = "Số điện thoại không hợp lệ";
+                }
+                break;
+            case "tongTien":
+                if (!value.trim()) error = "Tổng tiền không được bỏ trống";
+                break;
+            case "ngayDat":
+                if (!value.trim()) error = "Ngày đặt hàng không được bỏ trống";
+                break;
+            case "phuongThucThanhToan":
+                if (!value || value === "-- Chọn phương thức --") {
+                    error = "Vui lòng chọn phương thức thanh toán";
+                }
+                break;
+            default:
+                break;
+        }
+
+        setErrors(prev => ({ ...prev, [name]: error }));
     };
 
-    const validate = () => {
-        const newErrors = {};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-        if (!formData.tenKhachHang.trim()) newErrors.tenKhachHang = 'Tên khách hàng không được bỏ trống';
-        if (!formData.diaChi.trim()) newErrors.diaChi = 'Địa chỉ không được bỏ trống';
-        if (!formData.soDienThoai.trim()) {
-            newErrors.soDienThoai = 'Số điện thoại không được bỏ trống';
-        } else if (!/^\d{9,11}$/.test(formData.soDienThoai)) {
-            newErrors.soDienThoai = 'Số điện thoại không hợp lệ';
-        }
-        if (!formData.tongTien.trim()) newErrors.tongTien = 'Tổng tiền không được bỏ trống';
-        if (!formData.ngayDat.trim()) newErrors.ngayDat = 'Ngày đặt hàng không được bỏ trống';
-        if (!formData.phuongThucThanhToan || formData.phuongThucThanhToan === '-- Chọn phương thức --') {
-            newErrors.phuongThucThanhToan = 'Vui lòng chọn phương thức thanh toán';
-        }
+        // Cập nhật form data
+        setFormData(prev => ({ ...prev, [name]: value }));
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        // Gọi validate riêng cho từng trường
+        validateField(name, value);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!validate()) return;
 
-        toast.success("Thêm đơn hàng thành công!");
+        // Kiểm tra từng trường
+        const newErrors = {};
+        Object.keys(formData).forEach((key) => {
+            validateField(key, formData[key]); // gọi lại hàm validate
+            if (
+                !formData[key] ||
+                (key === "phuongThucThanhToan" && formData[key] === "-- Chọn phương thức --")
+            ) {
+                newErrors[key] = "Vui lòng điền đầy đủ thông tin";
+            }
+        });
+
+        // Nếu có lỗi thì hiển thị toast và không submit
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        // Nếu không có lỗi, thực hiện submit
         setTimeout(() => {
             navigate("/admin/don-hang", { state: { message: "Thêm đơn hàng thành công!" } });
         }, 1000);
     };
+
 
     return (
         <div className="bg-white h-screen">
@@ -60,7 +98,7 @@ function AddOrder() {
                 {/* Tên khách hàng */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Tên khách hàng:</label>
+                        <label className="w-1/4 font-semibold">Tên khách hàng:<span className="text-red-500 ml-1">*</span></label>
                         <input
                             name="tenKhachHang"
                             value={formData.tenKhachHang}
@@ -76,7 +114,7 @@ function AddOrder() {
                 {/* Địa chỉ */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Địa chỉ:</label>
+                        <label className="w-1/4 font-semibold">Địa chỉ:<span className="text-red-500 ml-1">*</span></label>
                         <input
                             name="diaChi"
                             value={formData.diaChi}
@@ -92,7 +130,7 @@ function AddOrder() {
                 {/* Số điện thoại */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Số điện thoại:</label>
+                        <label className="w-1/4 font-semibold">Số điện thoại:<span className="text-red-500 ml-1">*</span></label>
                         <input
                             name="soDienThoai"
                             value={formData.soDienThoai}
@@ -165,7 +203,7 @@ function AddOrder() {
                 {/* Phương thức thanh toán */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Phương thức thanh toán:</label>
+                        <label className="w-1/4 font-semibold">Phương thức thanh toán:<span className="text-red-500 ml-1">*</span></label>
                         <select
                             name="phuongThucThanhToan"
                             value={formData.phuongThucThanhToan}
@@ -184,7 +222,7 @@ function AddOrder() {
                 {/* Tổng tiền */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Tổng tiền:</label>
+                        <label className="w-1/4 font-semibold">Tổng tiền:<span className="text-red-500 ml-1">*</span></label>
                         <input
                             name="tongTien"
                             value={formData.tongTien}
@@ -199,7 +237,7 @@ function AddOrder() {
                 {/* Ngày đặt hàng */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Ngày đặt hàng:</label>
+                        <label className="w-1/4 font-semibold">Ngày đặt hàng:<span className="text-red-500 ml-1">*</span></label>
                         <input
                             name="ngayDat"
                             value={formData.ngayDat}
@@ -233,6 +271,7 @@ function AddOrder() {
                     </button>
                     <button
                         type="reset"
+                        onClick={() => navigate("/admin/don-hang")}
                         className="w-22 h-10 font-bold border hover:border-red-500 hover:text-red-500 text-black rounded transition-all ease-out duration-150"
                     >
                         Hủy

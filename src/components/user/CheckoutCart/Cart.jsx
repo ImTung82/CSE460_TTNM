@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../../layouts/user/Navbar";
 import Subnav from "../../layouts/user/Subnav";
+import Footer from "../../layouts/user/Footer";
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState(
@@ -132,7 +133,7 @@ const Cart = () => {
     <>
       <Navbar />
       <Subnav />
-      <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60">
+      <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60 mb-36">
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -282,6 +283,7 @@ const Cart = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
