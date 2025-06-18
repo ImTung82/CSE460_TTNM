@@ -13,6 +13,8 @@ import Cart from "./components/user/CheckoutCart/Cart";
 import PlaceOrder from "./components/user/CheckoutCart/PlaceOrder";
 import Home from "./components/user/Home/Home";
 import Login from "./components/user/Login/Login";
+import BookList from "./components/admin/books/BookList";
+import AddBook from "./components/admin/books/AddBook";
 
 const App = () => (
   <Routes>
@@ -21,6 +23,8 @@ const App = () => (
     <Route path="/admin/don-hang" element={<AdminLayout><OrderTable /></AdminLayout>} />
     <Route path="/admin/don-hang/them-moi" element={<AdminLayout><AddOrder /></AdminLayout>} />
     <Route path="/admin/don-hang/sua-don-hang" element={<AdminLayout><EditOrder /></AdminLayout>} />
+    <Route path="/admin/san-pham" element={<AdminLayout><BookList /></AdminLayout>} />
+    <Route path="/admin/san-pham/them-moi" element={<AdminLayout><AddBook /></AdminLayout>} />
 
     {/* User routes */}
     <Route path="/" element={<Home />} />
