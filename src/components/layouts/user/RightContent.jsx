@@ -9,7 +9,7 @@ const RightContent = () => {
             Thám Tử Lừng Danh Tizen - 69
           </h1>
 
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-6 mb-6">
             <div className="space-y-2">
               <p className="text-gray-700">Tác giả: Gosho Aoyama</p>
               <p className="text-gray-700">Hình thức bìa: Bìa Mềm</p>
@@ -31,29 +31,31 @@ const RightContent = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mb-4">Thông tin chi tiết</h2>
-          <div className="">
-            <div className="grid grid-cols-1 gap-2">
+          <h2 className="text-lg font-semibold mb-2 mb-4">
+            Thông tin chi tiết
+          </h2>
+          <div className="bg-gray-50 rounded-lg p-2 text-700 max-w-[850px]">
+            <div className="grid grid-cols-1 gap-5">
               {[
-                ["Tác giả", "Gosho Aoyama"],
-                ["Người Dịch", "Hoàng Giang"],
-                ["Tên nhà sản xuất", "Kim Đồng"],
-                ["Năm xuất bản", "2025"],
-                ["Hình thức", "Bìa Mềm"],
-                ["Ngôn Ngữ", "Tiếng Việt"],
-                ["Trọng lượng (gr)", "145"],
-                ["Kích Thước, Cao Rộng", "17.5 x 11.3 x 0.9 cm"],
-                ["Số trang", "165"],
-                ["Thể loại", "Trinh thám"],
-              ].map(([label, value], index) => (
+                ["Tác giả :", "Gosho Aoyama"],
+                ["Người Dịch :", "Hoàng Giang"],
+                ["Tên nhà sản xuất :", "Kim Đồng"],
+                ["Năm xuất bản :", "2025"],
+                ["Hình thức :", "Bìa Mềm"],
+                ["Ngôn Ngữ :", "Tiếng Việt"],
+                ["Trọng lượng (gr) :", "145"],
+                ["Kích Thước, Cao Rộng :", "17.5 x 11.3 x 0.9 cm"],
+                ["Số trang :", "165"],
+                ["Thể loại :", "Trinh thám"],
+              ].map(([label, value], index, arr) => (
                 <div
                   key={index}
-                  className={`grid grid-cols-[180px_1fr] py-1 px-4 ${
-                    index < 9 ? "border-b border-gray-200" : ""
+                  className={`flex items-start py-1 ${
+                    index < arr.length - 1 ? "border-b border-gray-200" : ""
                   }`}
                 >
-                  <span className="text-gray-600">{label}</span>
-                  <span className="font-medium text-center">{value}</span>
+                  <span className="text-gray-600 min-w-[460px]">{label}</span>
+                  <span className="font-medium">{value}</span>
                 </div>
               ))}
             </div>
@@ -62,8 +64,8 @@ const RightContent = () => {
 
         <div>
           <h2 className="text-lg font-semibold mb-4">Mô tả sách</h2>
-          <div className="prose prose-sm text-gray-700">
-            <p>
+          <div className="prose prose-sm text-gray-700 gap-4">
+            <p className="max-w-[850px]">
               Kudo Shinichi là một thám tử trẻ nổi tiếng với tài năng suy luận
               xuất sắc. Trong một lần theo dõi các thành viên của tổ chức áo đen
               bí ẩn, cậu bị phát hiện và bị ép uống một loại thuốc độc lạ. Tuy

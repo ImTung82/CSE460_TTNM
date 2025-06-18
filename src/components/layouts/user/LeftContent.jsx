@@ -16,12 +16,11 @@ export default function LeftContent() {
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <button
             type="button"
             className="flex-1 border border-red-500 text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center"
           >
-            {/* Shopping Cart SVG thay thế */}
             <img
               src="/assets/user/cart_icon.png"
               alt="Cart Icon"
