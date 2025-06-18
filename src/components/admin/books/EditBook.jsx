@@ -4,25 +4,25 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AddBook() {
+function EditBook() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        tenSach: '',
-        hinhAnh: null,
-        tacGia: '',
-        nguoiDich: '',
-        moTa: '',
-        tenNhaXuatBan: '',
-        namXuatBan: '',
-        hinhThuc: '',
-        ngonNgu: '',
-        trongLuong: '',
-        kichThuocBaoBi: '',
-        soTrang: '',
-        theLoai: [],
-        giaGoc: '',
-        khuyenMai: '',
+        tenSach: 'Thám tử Lừng danh Tizen - Tập 69',
+        hinhAnh: "tham_tu_lung_danh_tizen_tap_69.jpg",
+        tacGia: 'Gosho Aoyama',
+        nguoiDich: 'Hương Giang',
+        moTa: 'Kudo Tizen là một cậu thám tử học sinh năng nổ với biệt tài suy luận có thể sánh ngang với Sherlock Holmes! Một ngày nọ, khi mải đuổi theo những kẻ khả nghi, cậu đã bị chúng cho uống một loại thuốc kì lạ khiến cho cơ thể bị teo nhỏ. Vậy là một thám tử tí hon xuất hiện với cái tên giả: Edogawa Tizen!!',
+        tenNhaXuatBan: 'Kim Đồng',
+        namXuatBan: '2025',
+        hinhThuc: 'Bìa mềm',
+        ngonNgu: 'Tiếng Việt',
+        trongLuong: '145',
+        kichThuocBaoBi: '17.6 x 11.3 x 0.9',
+        soTrang: '180',
+        theLoai: ["Tiểu thuyết", "Trinh thám"],
+        giaGoc: '30000',
+        khuyenMai: '20',
     });
 
     const giaGocNumber = parseFloat(formData.giaGoc) || 0;
@@ -54,7 +54,7 @@ function AddBook() {
     };
 
     const [errors, setErrors] = useState({});
-    const [fileName, setFileName] = useState("Chưa có ảnh nào được chọn");
+    const [fileName, setFileName] = useState("tham_tu_lung_danh_tizen_tap_69.jpg");
 
     const validateField = (name, value) => {
         let error = "";
@@ -162,14 +162,14 @@ function AddBook() {
 
         setTimeout(() => {
             navigate("/admin/san-pham", {
-                state: { message: "Thêm đầu sách thành công!" }
+                state: { message: "Sửa thông tin đầu sách thành công!" }
             });
         }, 1000);
     };
 
     return (
         <div className="bg-white">
-            <h2 className="text-2xl font-bold mb-6 text-black">Thêm đầu sách mới</h2>
+            <h2 className="text-2xl font-bold mb-6 text-black">Sửa thông tin đầu sách</h2>
 
             <form className="mx-20 space-y-4" onSubmit={handleSubmit}>
                 {/* Tên đầu sách */}
@@ -388,6 +388,7 @@ function AddBook() {
                         <label className="w-1/4 font-semibold">Thể loại:<span className="text-red-500 ml-1">*</span></label>
                         <select
                             name="theLoai"
+                            value={formData.theLoai}
                             onChange={handleChange}
                             className="w-3/4 border border-gray-300 p-2 rounded"
                             id="theLoai"
@@ -461,9 +462,9 @@ function AddBook() {
                 <div className="flex space-x-2 pt-10">
                     <button
                         type="submit"
-                        className="w-22 h-10 font-bold bg-blue-500 hover:opacity-70 text-white rounded transition-all ease-out duration-150"
+                        className="w-22 h-10 font-bold bg-yellow-500 hover:opacity-70 text-white rounded transition-all ease-out duration-150"
                     >
-                        Thêm
+                        Sửa
                     </button>
                     <button
                         type="reset"
@@ -480,4 +481,4 @@ function AddBook() {
     );
 }
 
-export default AddBook;
+export default EditBook;
