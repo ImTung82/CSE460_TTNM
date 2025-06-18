@@ -90,7 +90,7 @@ function EditOrder() {
     };
 
     return (
-        <div className="bg-white h-screen">
+        <div className="bg-white">
             <ToastContainer />
             <h2 className="text-2xl font-bold mb-6 text-black">Chỉnh sửa đơn hàng</h2>
 
