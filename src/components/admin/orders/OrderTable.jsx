@@ -142,7 +142,7 @@ const OrderTable = () => {
             <th className="px-4 py-2 ">Địa chỉ</th>
             <th className="px-4 py-2 ">Tổng tiền</th>
             <th className="px-4 py-2 ">Trạng thái</th>
-            <th className="px-4 py-2 ">Hành động</th>
+            <th className="px-4 py-2 text-center">Hành động</th>
           </tr>
         </thead>
         <tbody className="bg-white">
