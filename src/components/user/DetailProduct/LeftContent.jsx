@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 export default function LeftContent() {
   return (
     <div>
@@ -29,12 +29,11 @@ export default function LeftContent() {
             Thêm vào giỏ hàng
           </button>
 
-          <button
-            type="button"
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          <Link to="/place-order"
+            className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
           >
             Mua ngay
-          </button>
+          </Link>
         </div>
       </div>
     </div>
