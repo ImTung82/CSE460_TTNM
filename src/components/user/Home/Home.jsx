@@ -84,10 +84,10 @@ const Home = () => {
           </button>
         </div>
 
-        <div className="max-w-screen-lg mx-auto py-8">
+        <div className="max-w-screen-xl mx-auto py-8">
           <div className="py-10 bg-white text-center">
             <h2 className="text-4xl font-bold mb-8 uppercase">Sách mới</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
@@ -120,11 +120,12 @@ const Home = () => {
 
           <div className="py-10 bg-white text-center">
             <h2 className="text-4xl font-bold mb-8 uppercase">Sách bán chạy</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
-                  <Link to="/chi-tiet-dau-sach"
+                  <Link
+                    to="/chi-tiet-dau-sach"
                     key={index}
                     className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition-all ease-out duration-200 rounded"
                   >
@@ -133,7 +134,7 @@ const Home = () => {
                       alt={book.title}
                       className="w-full h-auto object-cover mb-2 hover:scale-95 hover:opacity-70 transition-transform duration-300 ease-in-out"
                     />
-                    <p className="text-sm text-gray-800">{book.title}</p>
+                    <p className="text-xl text-gray-800">{book.title}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-red-600 font-semibold">
                         {book.price}

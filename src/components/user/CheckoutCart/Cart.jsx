@@ -125,15 +125,15 @@ const Cart = () => {
   // Handle checkout
   const handleCheckout = () => {
     if (totalAmount > 0) {
-      navigate("/place-order");
+      navigate("/dat-hang");
     }
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
       <Subnav />
-      <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60 mb-36">
+      <div className=" pt-10 px-4 md:px-16 lg:px-60 mb-36">
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -189,12 +189,12 @@ const Cart = () => {
                         className="w-20 h-28 object-cover rounded border"
                       />
                       <div className="flex flex-col justify-between">
-                        <p className="font-semibold">{item.name}</p>
+                        <p className="font-medium">{item.name}</p>
                         <div className="flex items-center gap-2 mt-auto">
-                          <p className="text-red-600 font-bold">
+                          <p className="text-red-600 font-semibold">
                             {item.price.toLocaleString()} đ
                           </p>
-                          <p className="line-through text-gray-400 text-xs">
+                          <p className="line-through text-gray-400 text-xs font-normal">
                             {item.oldPrice.toLocaleString()} đ
                           </p>
                         </div>
@@ -217,7 +217,7 @@ const Cart = () => {
                             value={item.quantity}
                             onChange={(e) => handleQuantityChange(item.id, e)}
                             onBlur={(e) => handleQuantityBlur(item.id, e)}
-                            className="px-3 py-1 w-12 text-center outline-none"
+                            className="px-3 py-1 w-12 text-center outline-none font-normal"
                           />
                           <button
                             className="px-3 py-1 border-l border-gray-300"
@@ -232,7 +232,7 @@ const Cart = () => {
                     </td>
 
                     <td className="p-4 text-right align-middle">
-                      <p className="text-red-600 font-bold">
+                      <p className="text-[#E82323] font-medium">
                         {(
                           item.price *
                           (typeof item.quantity === "number"
@@ -264,9 +264,9 @@ const Cart = () => {
         )}
 
         <div className="flex flex-col items-end mt-6 gap-2 text-sm">
-          <p className="font-medium">
+          <p className="font-semibold">
             Tổng tiền:{" "}
-            <span className="text-red-600 font-bold">
+            <span className="text-[#E82323] font-semibold">
               {totalAmount.toLocaleString()} đ
             </span>
           </p>
@@ -284,7 +284,7 @@ const Cart = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
