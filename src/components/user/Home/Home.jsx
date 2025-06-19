@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 import Header from "../../layouts/user/Header";
 import Footer from "../../layouts/user/Footer";
@@ -90,7 +91,8 @@ const Home = () => {
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
-                  <div
+                  <Link
+                    to="/chi-tiet-dau-sach"
                     key={index}
                     className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition-all ease-out duration-200 rounded"
                   >
@@ -111,7 +113,7 @@ const Home = () => {
                     <span className="line-through text-sm text-gray-400">
                       {book.oldPrice}
                     </span>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>
@@ -122,7 +124,7 @@ const Home = () => {
               {Array(5)
                 .fill(sampleBook)
                 .map((book, index) => (
-                  <div
+                  <Link to="/chi-tiet-dau-sach"
                     key={index}
                     className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition-all ease-out duration-200 rounded"
                   >
@@ -143,7 +145,7 @@ const Home = () => {
                     <span className="line-through text-sm text-gray-400">
                       {book.oldPrice}
                     </span>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>
