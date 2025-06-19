@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Header from "../../layouts/user/Header";
 import Footer from "../../layouts/user/Footer";
 import booksData from "../../../data/booksData";
@@ -50,21 +50,23 @@ export default function SearchTitle() {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="max-w-335.5 w-full h-34.25 mx-auto flex justify-between">
+      <div className="max-w-325 w-full h-34.25 mx-auto flex justify-between items-center">
         <div className="max-w-136.5 w-full h-full flex flex-col justify-center gap-2.5">
           <h1 className="text-[40px] ">Tìm kiếm</h1>
           <p className="text-xl ">
             Kết quả tìm kiếm cho <span className="font-bold">"{keyword}"</span>
           </p>
         </div>
-        <SortDropdown
-          selected={selected}
-          isOpen={isOpen}
-          onToggle={() => setIsOpen((prev) => !prev)}
-          onSelect={handleSelect}
-        />
+        <div className="">
+          <SortDropdown
+            selected={selected}
+            isOpen={isOpen}
+            onToggle={() => setIsOpen((prev) => !prev)}
+            onSelect={handleSelect}
+          />
+        </div>
       </div>
       <div className="max-w-336.25 w-full max-h-385.5 h-full mx-auto mb-8 p-3.75">
         {paginatedBooks.length === 0 ? (
@@ -74,14 +76,15 @@ export default function SearchTitle() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {paginatedBooks.map((book, idx) => (
-              <div
+              <Link
+                to="/chi-tiet-dau-sach"
                 key={idx}
                 className="text-left p-2 border border-transparent hover:border-[#cccccc] hover:bg-gray-50 transition duration-200 rounded"
               >
                 <img
                   src={book.img}
                   alt={book.title}
-                  className="w-full h-auto object-cover mb-2"
+                  className="w-full h-auto object-cover mb-2 hover:scale-95 hover:opacity-70 transition-transform duration-300 ease-in-out"
                 />
                 <p className="text-sm text-gray-800">{book.title}</p>
                 <div className="flex items-center gap-2 mt-1">
@@ -95,7 +98,7 @@ export default function SearchTitle() {
                 <span className="line-through text-sm text-gray-400">
                   {book.oldPrice}
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
         )}
@@ -106,6 +109,6 @@ export default function SearchTitle() {
         onPageChange={handlePageChange}
       />
       <Footer />
-    </>
+    </div>
   );
 }

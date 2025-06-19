@@ -29,7 +29,8 @@ export default function LeftContent() {
             Thêm vào giỏ hàng
           </button>
 
-          <Link to="/place-order"
+          <Link
+            to="/dat-hang"
             className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
           >
             Mua ngay

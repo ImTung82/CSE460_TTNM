@@ -132,7 +132,7 @@ const booksData = [
     price: "50.000đ",
     oldPrice: "60.000đ",
     discount: "-17%",
-    img: "/assets/user/sherlock.webp",
+    img: "/assets/user/book2.png",
     category: "trinh-tham",
   },
   {
@@ -140,7 +140,7 @@ const booksData = [
     price: "40.000đ",
     oldPrice: "50.000đ",
     discount: "-20%",
-    img: "/assets/user/Your-name.jpg",
+    img: "/assets/user/book2.png",
     category: "light-novel",
   },
 ];

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SortDropdown({ selected, isOpen, onToggle, onSelect }) {
   return (
-    <div className="relative inline-block text-left py-8">
+    <div className="relative inline-block text-left">
       <div className="flex items-center gap-4 h-[44px]">
         <label className="text-xl whitespace-nowrap">Sắp xếp theo</label>
         <button

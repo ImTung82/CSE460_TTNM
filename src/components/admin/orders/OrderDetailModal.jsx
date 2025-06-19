@@ -23,7 +23,9 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="bg-white rounded-xl shadow-lg max-w-5xl w-full p-6 relative border border-gray-300">
-        <h2 className="text-2xl font-bold text-center mb-6">Chi tiết đơn hàng</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Chi tiết đơn hàng
+        </h2>
 
         <div className="grid grid-cols-2 gap-6">
           {/* Cột trái */}
@@ -34,9 +36,11 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
                   <strong>Đơn hàng:</strong>{" "}
                   <span className="text-blue-600">{order.id}</span>
                 </p>
-                <p className="text-gray-400 text-sm">Ngày đặt hàng: 01/06/2025</p>
+                <p className="text-gray-400 text-sm">
+                  Ngày đặt hàng: 01/06/2025
+                </p>
               </div>
-              <span className="text-white bg-green-500 text-sm px-3 py-1 rounded">
+              <span className="text-white bg-[#01FF16] text-sm px-3 py-1 rounded">
                 Thành công
               </span>
             </div>
@@ -56,8 +60,6 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-
-
 
             {/* Danh sách sản phẩm */}
             <div className="border border-gray-200 rounded h-[240px] p-4">
@@ -103,7 +105,6 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-
               <div className="border border-gray-200 rounded">
                 <div className="p-4 space-y-2">
                   <p className="flex justify-between">
@@ -120,24 +121,21 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
                   </p>
                 </div>
 
-
                 {/* Nét kẻ full chiều ngang chia cách */}
                 <div className="border-t border-gray-300 my-2" />
 
                 <div className="p-3">
-                  <p className="flex justify-between font-bold text-red-600 text-lg">
+                  <p className="flex justify-between font-bold text-[#FF0000] text-lg">
                     <span>Tổng tiền:</span>
                     <span>{order.total}</span>
                   </p>
                 </div>
-
               </div>
-
             </div>
 
             <button
               onClick={onClose}
-              className="mt-3 bg-[#1D3557] text-white text-lg font-bold py-2 rounded hover:bg-[#16324f]"
+              className="mt-3 bg-[#192F59] text-white text-lg font-bold py-2 rounded hover:bg-[#16324f]"
             >
               TRỞ LẠI
             </button>

@@ -8,7 +8,7 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim()) {
-      navigate(`/title?keyword=${encodeURIComponent(search.trim())}`);
+      navigate(`/ten-sach?keyword=${encodeURIComponent(search.trim())}`);
     }
   };
 
@@ -49,7 +49,7 @@ const Navbar = () => {
           <span className="text-[12px]">Thông báo</span>
         </div>
 
-        <Link to="/cart" className="flex flex-col items-center">
+        <Link to="/gio-hang" className="flex flex-col items-center">
           <div className="relative">
             <img
               src="/assets/user/cart.png"
