@@ -31,9 +31,7 @@ const RightContent = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mb-2 mb-4">
-            Thông tin chi tiết
-          </h2>
+          <h2 className="text-2xl mb-2 mb-4 font-bold">Thông tin chi tiết</h2>
           <div className="bg-gray-50 rounded-lg p-2 text-700 max-w-[850px]">
             <div className="grid grid-cols-1 gap-5">
               {[
@@ -63,7 +61,7 @@ const RightContent = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mb-4">Mô tả sách</h2>
+          <h2 className="text-2xl font-bold mb-4">Mô tả sách</h2>
           <div className="prose prose-sm text-gray-700 gap-4">
             <p className="max-w-[850px]">
               Kudo Shinichi là một thám tử trẻ nổi tiếng với tài năng suy luận

@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../../layouts/user/Navbar";
 import Subnav from "../../layouts/user/Subnav";
-import Breadcrumb from "../../layouts/user/Breadcrumb";
-import LeftContent from "../../layouts/user/LeftContent";
-import RightContent from "../../layouts/user/RightContent";
+import Breadcrumb from "./Breadcrumb";
+import LeftContent from "./LeftContent";
+import RightContent from "./RightContent";
 import Footer from "../../layouts/user/Footer";
 
 const Detail = () => {

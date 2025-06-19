@@ -14,8 +14,23 @@ import BookList from "./components/admin/books/BookList";
 import AddBook from "./components/admin/books/AddBook";
 import EditBook from "./components/admin/books/EditBook";
 import Detail from "./components/user/DetailProduct/Detail";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+
+// ✅ ScrollToTop: cuộn lên đầu mỗi khi đổi route
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 const App = () => (
+  <>
+  <ScrollToTop />
   <Routes>
     {/* Admin routes */}
     <Route
@@ -82,8 +97,8 @@ const App = () => (
     <Route path="/place-order" element={<PlaceOrder />} />
     <Route path="/collections" element={<Collection />} />
     <Route path="/title" element={<SearchTitle />} />
-    <Route path="/detail" element={<Detail />} />
-  </Routes>
+    <Route path="/chi-tiet-dau-sach" element={<Detail />} />
+  </Routes></>
 );
 
 export default App;
