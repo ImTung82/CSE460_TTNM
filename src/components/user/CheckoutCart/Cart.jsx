@@ -125,15 +125,15 @@ const Cart = () => {
   // Handle checkout
   const handleCheckout = () => {
     if (totalAmount > 0) {
-      navigate("/place-order");
+      navigate("/dat-hang");
     }
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
       <Subnav />
-      <div className="min-h-screen pt-10 px-4 md:px-16 lg:px-60 mb-36">
+      <div className=" pt-10 px-4 md:px-16 lg:px-60 mb-36">
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -284,7 +284,7 @@ const Cart = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
