@@ -6,12 +6,12 @@ const Subnav = () => {
       <div className="flex items-center justify-between max-w-screen-lg mx-auto">
         <Link
           to="/"
-          className="px-8 py-3 hover:bg-[#114388] transition cursor-pointer uppercase"
+          className="px-8 py-3 hover:bg-[#114388] font-semibold transition cursor-pointer uppercase"
         >
           Trang chủ
         </Link>
 
-        <div className="group relative px-8 py-3 hover:bg-[#114388] transition cursor-pointer">
+        <div className="group relative px-8 py-3 hover:bg-[#114388] font-semibold transition cursor-pointer">
           <Link to="/collections" className="text-left uppercase">
             Danh mục
           </Link>
@@ -39,11 +39,11 @@ const Subnav = () => {
           </div>
         </div>
 
-        <div className="px-8 py-3 hover:bg-[#114388] transition cursor-pointer uppercase">
+        <div className="px-8 py-3 hover:bg-[#114388] font-semibold transition cursor-pointer uppercase">
           Về 4TQ
         </div>
 
-        <div className="px-8 py-3 hover:bg-[#114388] transition cursor-pointer uppercase">
+        <div className="px-8 py-3 hover:bg-[#114388] font-semibold transition cursor-pointer uppercase">
           Liên hệ
         </div>
       </div>

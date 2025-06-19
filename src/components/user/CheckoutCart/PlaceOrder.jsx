@@ -211,7 +211,7 @@ const PlaceOrder = () => {
       <div className="border border-[#cccccc]/80 rounded-lg p-4 bg-white shadow-md">
         <SectionTitle title="Địa chỉ giao hàng" />
         <div className="space-y-2 text-sm text-gray-700">
-          <label className="block">
+          <label className="block font-medium">
             <input
               type="radio"
               name="address"
@@ -224,7 +224,7 @@ const PlaceOrder = () => {
           </label>
           
           {newAddress && (
-            <label className="block">
+            <label className="block font-medium">
               <input
                 type="radio"
                 name="address"
@@ -237,7 +237,7 @@ const PlaceOrder = () => {
             </label>
           )}
           
-          <label className="block">
+          <label className="block font-medium">
             <input
               type="radio"
               name="address"
@@ -254,7 +254,7 @@ const PlaceOrder = () => {
       <div className="border border-[#cccccc]/80 rounded-lg p-4 bg-white shadow-md">
         <SectionTitle title="Phương thức vận chuyển" />
         <div className="space-y-2 text-sm text-gray-700">
-          <label className="block">
+          <label className="block font-medium">
             <input
               type="radio"
               name="shipping"
@@ -263,11 +263,11 @@ const PlaceOrder = () => {
             />
             Giao hàng tiêu chuẩn
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input type="radio" name="shipping" className="mr-2" />
             Giao nhanh
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input type="radio" name="shipping" className="mr-2" />
             Nhận tại cửa hàng: 108 Giảng Võ, Ba Đình, Hà Nội
           </label>
@@ -277,7 +277,7 @@ const PlaceOrder = () => {
       <div className="border border-[#cccccc]/80 rounded-lg p-4 bg-white shadow-md">
         <SectionTitle title="Phương thức thanh toán" />
         <div className="space-y-2 text-sm text-gray-700">
-          <label className="block">
+          <label className="block font-medium">
             <input
               type="radio"
               name="payment"
@@ -288,7 +288,7 @@ const PlaceOrder = () => {
             />
             Thanh toán khi nhận hàng
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input 
               type="radio" 
               name="payment" 
@@ -299,7 +299,7 @@ const PlaceOrder = () => {
             /> 
             VNPay
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input 
               type="radio" 
               name="payment" 
@@ -310,7 +310,7 @@ const PlaceOrder = () => {
             /> 
             ZaloPay
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input 
               type="radio" 
               name="payment" 
@@ -321,7 +321,7 @@ const PlaceOrder = () => {
             /> 
             Momo
           </label>
-          <label className="block">
+          <label className="block font-medium">
             <input 
               type="radio" 
               name="payment" 
@@ -342,7 +342,7 @@ const PlaceOrder = () => {
             <input
               type="text"
               placeholder="Nhập mã khuyến mãi"
-              className="w-full border border-[#cccccc] px-4 py-2 rounded text-sm"
+              className="w-full border border-[#cccccc] px-4 py-2 rounded text-sm font-medium"
               value={couponCode}
               onChange={handleCouponChange}
             />
@@ -351,13 +351,13 @@ const PlaceOrder = () => {
             )}
           </div>
           <button 
-            className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm cursor-pointer"
+            className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm cursor-pointer font-bold"
             onClick={applyCoupon}
           >
             Áp dụng
           </button>
         </div>
-        <a href="#" className="text-sm text-blue-500 mt-2 inline-block">
+        <a href="#" className="text-sm text-blue-500 mt-2 inline-block font-medium">
           Chọn mã khuyến mãi
         </a>
       </div>
@@ -372,10 +372,10 @@ const PlaceOrder = () => {
             </p>
             <div className="flex flex-col justify-center">
               <p className="font-semibold text-black text-sm">24.000đ</p>
-              <p className="text-gray-500 line-through text-xs">30.000đ</p>
+              <p className="font-normal text-gray-500 line-through text-xs">30.000đ</p>
             </div>
-            <p className="text-center text-sm text-black font-medium">2</p>
-            <div className="flex items-center justify-end text-sm font-medium text-red-600">
+            <p className="text-center text-sm text-black font-normal">2</p>
+            <div className="flex items-center justify-end text-sm font-medium text-[#E82323]">
               48.000 đ
             </div>
           </div>
@@ -386,20 +386,20 @@ const PlaceOrder = () => {
         <div className="max-w-4xl mx-auto flex flex-col items-end space-y-3">
           <div className="space-y-1 text-sm w-[250px]">
             <div className="flex justify-between">
-              <p className="text-gray-700">Thành tiền:</p>
-              <p className="font-medium text-black">48.000 đ</p>
+              <p className="text-black font-semibold">Thành tiền:</p>
+              <p className="text-black font-semibold">48.000 đ</p>
             </div>
             <div className="flex justify-between">
-              <p className="text-gray-700">Phí vận chuyển:</p>
-              <p className="font-medium text-black">20.000 đ</p>
+              <p className="text-black font-semibold">Phí vận chuyển:</p>
+              <p className="text-black font-semibold">20.000 đ</p>
             </div>
             <div className="flex justify-between">
-              <p className="font-semibold">Tổng tiền:</p>
-              <p className="font-semibold text-red-600">68.000 đ</p>
+              <p className="text-black font-semibold">Tổng tiền:</p>
+              <p className="font-semibold text-[#E82323]">68.000 đ</p>
             </div>
           </div>
           <button 
-            className="px-6 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm"
+            className="px-6 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-sm font-bold"
             onClick={handlePlaceOrder}
           >
             Xác nhận
@@ -416,7 +416,7 @@ const PlaceOrder = () => {
             </h2>
             <form className="space-y-4 text-sm" onSubmit={handleFormSubmit}>
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Họ và tên người nhận:</label>
+                <label className="col-span-1 font-medium">Họ và tên người nhận:</label>
                 <div className="col-span-2">
                   <input
                     type="text"
@@ -432,7 +432,7 @@ const PlaceOrder = () => {
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Số điện thoại:</label>
+                <label className="col-span-1 font-medium">Số điện thoại:</label>
                 <div className="col-span-2">
                   <input
                     type="text"
@@ -448,66 +448,66 @@ const PlaceOrder = () => {
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Quốc gia:</label>
+                <label className="col-span-1 font-medium">Quốc gia:</label>
                 <select 
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
                   className="col-span-2 border border-gray-300 rounded px-3 py-2 w-full"
                 >
-                  <option>Việt Nam</option>
-                  <option>Hoa Kỳ</option>
-                  <option>Nhật Bản</option>
-                  <option>Hàn Quốc</option>
+                  <option className="font-normal">Việt Nam</option>
+                  <option className="font-normal">Hoa Kỳ</option>
+                  <option className="font-normal">Nhật Bản</option>
+                  <option className="font-normal">Hàn Quốc</option>
                 </select>
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Tỉnh/Thành phố:</label>
+                <label className="col-span-1 font-medium">Tỉnh/Thành phố:</label>
                 <select 
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
                   className="col-span-2 border border-gray-300 rounded px-3 py-2 w-full"
                 >
-                  <option>Hà Nội</option>
-                  <option>TP. Hồ Chí Minh</option>
-                  <option>Đà Nẵng</option>
-                  <option>Hải Phòng</option>
+                  <option className="font-normal">Hà Nội</option>
+                  <option className="font-normal">TP. Hồ Chí Minh</option>
+                  <option className="font-normal">Đà Nẵng</option>
+                  <option className="font-normal">Hải Phòng</option>
                 </select>
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Quận/Huyện:</label>
+                <label className="col-span-1 font-medium">Quận/Huyện:</label>
                 <select 
                   name="district"
                   value={formData.district}
                   onChange={handleInputChange}
                   className="col-span-2 border border-gray-300 rounded px-3 py-2 w-full"
                 >
-                  <option>Ba Đình</option>
-                  <option>Cầu Giấy</option>
-                  <option>Thanh Xuân</option>
-                  <option>Hoàng Mai</option>
+                  <option className="font-normal">Ba Đình</option>
+                  <option className="font-normal">Cầu Giấy</option>
+                  <option className="font-normal">Thanh Xuân</option>
+                  <option className="font-normal">Hoàng Mai</option>
                 </select>
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Phường/Xã:</label>
+                <label className="col-span-1 font-medium">Phường/Xã:</label>
                 <select 
                   name="ward"
                   value={formData.ward}
                   onChange={handleInputChange}
                   className="col-span-2 border border-gray-300 rounded px-3 py-2 w-full"
                 >
-                  <option>Kim Mã</option>
-                  <option>Dịch Vọng</option>
-                  <option>Nguyễn Trãi</option>
+                  <option className="font-normal">Kim Mã</option>
+                  <option className="font-normal">Dịch Vọng</option>
+                  <option className="font-normal">Nguyễn Trãi</option>
                 </select>
               </div>
               
               <div className="grid grid-cols-3 gap-4 items-center">
-                <label className="col-span-1">Địa chỉ nhận hàng:</label>
+                <label className="col-span-1 font-medium">Địa chỉ nhận hàng:</label>
                 <div className="col-span-2">
                   <input
                     type="text"
@@ -525,14 +525,14 @@ const PlaceOrder = () => {
               <div className="flex justify-center gap-3 pt-4">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-white hover:text-[#C92127] border rounded"
+                  className="px-4 py-2 bg-white hover:text-[#C92127] border rounded font-semibold"
                   onClick={closeModal}
                 >
                   Huỷ
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded"
+                  className="px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded font-bold"
                 >
                   Lưu
                 </button>
@@ -549,35 +549,35 @@ const PlaceOrder = () => {
             <h2 className="text-lg font-bold mb-2 text-center">
               Thanh toán qua {getPaymentGatewayName(selectedPaymentGateway)}
             </h2>
-            <p className="text-center text-gray-600 text-sm mb-6">
+            <p className="text-center text-gray-600 text-sm mb-6 font-normal">
               Vui lòng hoàn tất thanh toán để tiếp tục
             </p>
 
             {/* Mock payment gateway UI - this would be the actual payment gateway in a real app */}
             <div className="space-y-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
               <div className="flex justify-between items-center border-b pb-2">
-                <span className="text-sm text-gray-600">Tổng thanh toán:</span>
-                <span className="font-bold text-red-600">68.000 đ</span>
+                <span className="text-sm text-gray-600 font-medium">Tổng thanh toán:</span>
+                <span className="font-semibold text-[#E82323]">68.000 đ</span>
               </div>
               
               {selectedPaymentGateway === "creditcard" && (
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs text-gray-700 mb-1">Số thẻ</label>
+                    <label className="block text-xs text-gray-700 mb-1 font-medium">Số thẻ</label>
                     <input type="text" placeholder="XXXX XXXX XXXX XXXX" className="w-full p-2 border rounded" />
                   </div>
                   <div className="flex gap-2">
                     <div className="flex-1">
-                      <label className="block text-xs text-gray-700 mb-1">Ngày hết hạn</label>
+                      <label className="block text-xs text-gray-700 mb-1 font-medium">Ngày hết hạn</label>
                       <input type="text" placeholder="MM/YY" className="w-full p-2 border rounded" />
                     </div>
                     <div className="w-24">
-                      <label className="block text-xs text-gray-700 mb-1">CVV</label>
+                      <label className="block text-xs text-gray-700 mb-1 font-medium">CVV</label>
                       <input type="text" placeholder="123" className="w-full p-2 border rounded" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs text-gray-700 mb-1">Tên chủ thẻ</label>
+                    <label className="block text-xs text-gray-700 mb-1 font-medium">Tên chủ thẻ</label>
                     <input type="text" placeholder="NGUYEN VAN A" className="w-full p-2 border rounded" />
                   </div>
                 </div>
@@ -591,7 +591,7 @@ const PlaceOrder = () => {
                     className="w-16 h-16 mx-auto mb-4"
                     onError={(e) => { e.target.src = "/assets/user/qr.jpg"; }}
                   />
-                  <p className="text-sm">
+                  <p className="text-sm font-medium">
                     Quét mã QR hoặc nhấn "Thanh toán" để tiếp tục
                   </p>
                 </div>
@@ -601,14 +601,14 @@ const PlaceOrder = () => {
           <div className="flex justify-center gap-3 mt-6">
             <button
               type="button"
-              className="min-w-[120px] px-4 py-2 bg-white border hover:text-[#C92127] rounded text-center"
+              className="min-w-[120px] px-4 py-2 bg-white border hover:text-[#C92127] rounded text-center font-semibold"
               onClick={closePaymentModal}
             >
               Huỷ
             </button>
             <button
               type="button"
-              className="min-w-[120px] px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-center"
+              className="min-w-[120px] px-4 py-2 bg-[#192F59] hover:bg-[#114388] text-white rounded text-center font-bold"
               onClick={handlePaymentGatewaySubmit}
             >
               Thanh toán
