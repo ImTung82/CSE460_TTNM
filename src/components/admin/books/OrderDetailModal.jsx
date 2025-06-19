@@ -25,6 +25,7 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
       <div className="bg-white rounded-xl shadow-lg max-w-5xl w-full p-6 relative border border-gray-300">
         <h2 className="text-2xl font-bold text-center mb-6">Chi tiết đơn hàng</h2>
 
+
         <div className="grid grid-cols-2 gap-6">
           {/* Cột trái */}
           <div className="space-y-4">

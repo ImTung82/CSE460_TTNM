@@ -57,10 +57,10 @@ function Login() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-[#192F59]">
             <div className="bg-white rounded-md border border-blue-300 p-8 w-full max-w-md shadow">
-                <h1 className="text-2xl font-bold text-black mb-2">Đăng nhập</h1>
+                <h1 className="text-3xl font-bold text-black mb-2">Đăng nhập</h1>
                 <p className="text-gray-600 text-sm mb-6">
                     Bạn chưa có tài khoản?{" "}
-                    <a href="" className="text-blue-800 font-medium hover:underline">
+                    <a href="" className="text-[#192F59] font-medium hover:underline">
                         Đăng ký tại đây
                     </a>
                 </p>

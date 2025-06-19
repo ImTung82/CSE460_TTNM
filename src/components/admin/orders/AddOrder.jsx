@@ -91,7 +91,7 @@ function AddOrder() {
 
 
     return (
-        <div className="bg-white h-screen">
+        <div className="bg-white">
             <h2 className="text-2xl font-bold mb-6 text-black">Thêm đơn hàng mới</h2>
 
             <form className="mx-20 space-y-4" onSubmit={handleSubmit}>
