@@ -5,6 +5,7 @@ const booksData = [
     oldPrice: "30.000đ",
     discount: "-20%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 70",
@@ -12,6 +13,7 @@ const booksData = [
     oldPrice: "32.000đ",
     discount: "-22%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 71",
@@ -19,6 +21,7 @@ const booksData = [
     oldPrice: "33.000đ",
     discount: "-21%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 72",
@@ -26,6 +29,7 @@ const booksData = [
     oldPrice: "34.000đ",
     discount: "-21%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 73",
@@ -33,6 +37,7 @@ const booksData = [
     oldPrice: "35.000đ",
     discount: "-20%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 74",
@@ -40,6 +45,7 @@ const booksData = [
     oldPrice: "36.000đ",
     discount: "-19%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 75",
@@ -47,6 +53,7 @@ const booksData = [
     oldPrice: "38.000đ",
     discount: "-21%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 76",
@@ -54,6 +61,7 @@ const booksData = [
     oldPrice: "39.000đ",
     discount: "-21%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 77",
@@ -61,6 +69,7 @@ const booksData = [
     oldPrice: "40.000đ",
     discount: "-20%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 78",
@@ -68,6 +77,7 @@ const booksData = [
     oldPrice: "41.000đ",
     discount: "-20%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 79",
@@ -75,6 +85,7 @@ const booksData = [
     oldPrice: "42.000đ",
     discount: "-19%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 80",
@@ -82,6 +93,7 @@ const booksData = [
     oldPrice: "43.000đ",
     discount: "-19%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 81",
@@ -89,6 +101,7 @@ const booksData = [
     oldPrice: "44.000đ",
     discount: "-18%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 82",
@@ -96,6 +109,7 @@ const booksData = [
     oldPrice: "45.000đ",
     discount: "-18%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 82",
@@ -103,6 +117,7 @@ const booksData = [
     oldPrice: "45.000đ",
     discount: "-18%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Thám tử lừng danh Tizen - 82",
@@ -110,20 +125,23 @@ const booksData = [
     oldPrice: "45.000đ",
     discount: "-18%",
     img: "/assets/user/book2.png",
+    category: "trinh-tham",
   },
   {
     title: "Sherlock Holmes",
     price: "50.000đ",
     oldPrice: "60.000đ",
     discount: "-17%",
-    img: "/assets/user/book1.png",
+    img: "/assets/user/sherlock.webp",
+    category: "trinh-tham",
   },
   {
     title: "Your Name",
     price: "40.000đ",
     oldPrice: "50.000đ",
     discount: "-20%",
-    img: "/assets/user/book3.png",
+    img: "/assets/user/Your-name.jpg",
+    category: "light-novel",
   },
 ];
 
