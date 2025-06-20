@@ -20,7 +20,7 @@ const OrderTable = () => {
       address: "Số 12 Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh",
       total: "120.000₫",
       status: "Giao hàng thành công",
-      statusStyle: "bg-emerald-100 text-emerald-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00002",
@@ -29,7 +29,7 @@ const OrderTable = () => {
       address: "Tòa nhà FPT, Duy Tân, Cầu Giấy, Hà Nội",
       total: "235.000₫",
       status: "Đang vận chuyển",
-      statusStyle: "bg-blue-100 text-blue-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00003",
@@ -38,7 +38,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00004",
@@ -47,7 +47,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00005",
@@ -56,7 +56,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },{
       id: "4TQ00006",
       name: "Lê Hoàng Long",
@@ -64,7 +64,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00007",
@@ -73,7 +73,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },
     {
       id: "4TQ00008",
@@ -82,7 +82,7 @@ const OrderTable = () => {
       address: "80 Trần Hưng Đạo, Quận Hải Châu, Đà Nẵng",
       total: "89.000₫",
       status: "Đang xử lý đơn hàng",
-      statusStyle: "bg-yellow-100 text-yellow-600",
+      statusStyle: "text-black",
     },
   ];
 
@@ -126,7 +126,7 @@ const OrderTable = () => {
         <ToastContainer position="top-right" autoClose={3000} theme="colored" />
         <Link
           to="/admin/don-hang/them-moi"
-          className="flex items-center bg-[#28A745] hover:bg-[#7fca8d] text-white font-bold px-4 py-3 rounded-md transition duration-200"
+          className="flex items-center bg-[#28A745] hover:opacity-70 text-white font-bold px-4 py-3 rounded-md transition duration-200"
         >
           <img src="/assets/admin/icon_them.png" alt="" className="w-5 h-5" />
           <span className="ml-2">Thêm mới</span>
@@ -159,7 +159,7 @@ const OrderTable = () => {
               <td className="border-t border-gray-300 px-4 py-4">{order.address}</td>
               <td className="border-t border-gray-300 px-4 py-4">{order.total}</td>
               <td className="border-t border-gray-300 px-4 py-4">
-                <span className={`text-sm font-medium px-2 py-1 rounded ${order.statusStyle}`}>
+                <span className={`text-sm font-medium py-1 rounded ${order.statusStyle}`}>
                   {order.status}
                 </span>
               </td>

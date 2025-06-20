@@ -149,7 +149,7 @@ const BookList = () => {
                 <ToastContainer position="top-right" autoClose={3000} theme="colored" />
                 <Link
                     to="/admin/san-pham/them-moi"
-                    className="flex items-center bg-[#28A745] hover:bg-[#7fca8d] text-white font-bold px-4 py-3 rounded-md transition duration-200"
+                    className="flex items-center bg-[#28A745] hover:opacity-70 text-white font-bold px-4 py-3 rounded-md transition duration-200"
                 >
                     <img src="/assets/admin/icon_them.png" alt="" className="w-5 h-5" />
                     <span className="ml-2">Thêm mới</span>

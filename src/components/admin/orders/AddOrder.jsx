@@ -169,7 +169,7 @@ function AddOrder() {
                 <tr>
                   <th className="border border-gray-300 p-2">Tên sách</th>
                   <th className="border border-gray-300 p-2">Số lượng</th>
-                  <th className="border border-gray-300 p-2">Xóa</th>
+                  <th className="border border-gray-300 p-2"></th>
                 </tr>
               </thead>
               <tbody>

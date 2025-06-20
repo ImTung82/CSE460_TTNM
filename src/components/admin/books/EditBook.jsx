@@ -123,6 +123,8 @@ function EditBook() {
                     error = "Khuyến mãi không được bỏ trống";
                 } else if (isNaN(value)) {
                     error = "Khuyến mãi chỉ được nhập số";
+                } else if (parseFloat(value) < 0 || parseFloat(value) > 100) {
+                    error = "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
                 }
                 break;
             default:

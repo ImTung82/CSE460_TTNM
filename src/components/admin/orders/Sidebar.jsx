@@ -31,22 +31,22 @@ const Sidebar = () => {
             <Link to="/admin/don-hang" className={getLinkClass("/admin/don-hang")}>
               Quản lý đơn hàng
             </Link>
-            <Link to="/admin/ma-giam-gia" className={getLinkClass("/admin/ma-giam-gia")}>
+            <Link to="" className={getLinkClass("/admin/ma-giam-gia")}>
               Quản lý mã giảm giá
             </Link>
-            <Link to="/admin/thong-bao" className={getLinkClass("/admin/thong-bao")}>
+            <Link to="" className={getLinkClass("/admin/thong-bao")}>
               Quản lý thông báo người dùng
             </Link>
-            <Link to="/admin/pt-thanh-toan" className={getLinkClass("/admin/pt-thanh-toan")}>
+            <Link to="" className={getLinkClass("/admin/pt-thanh-toan")}>
               Quản lý PT thanh toán
             </Link>
-            <Link to="/admin/pt-van-chuyen" className={getLinkClass("/admin/pt-van-chuyen")}>
+            <Link to="" className={getLinkClass("/admin/pt-van-chuyen")}>
               Quản lý PT vận chuyển
             </Link>
-            <Link to="/admin/danh-muc" className={getLinkClass("/admin/danh-muc")}>
+            <Link to="" className={getLinkClass("/admin/danh-muc")}>
               Quản lý danh mục
             </Link>
-            <Link to="/admin/thong-ke" className={getLinkClass("/admin/thong-ke")}>
+            <Link to="" className={getLinkClass("/admin/thong-ke")}>
               Thống kê doanh thu
             </Link>
           </div>
