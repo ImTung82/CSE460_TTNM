@@ -48,7 +48,7 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
             <div className="border border-gray-200 rounded p-4 h-[85px] flex items-center">
               <div className="flex gap-6">
                 {/* Cột trái: Nhãn */}
-                <div className="space-y-2 w-[170px] text-gray-600">
+                <div className="space-y-2 w-[170px] text-black">
                   <p className="font-bold mb-2">Thông tin khách hàng:</p>
                 </div>
 
@@ -62,8 +62,8 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
             </div>
 
             {/* Danh sách sản phẩm */}
-            <div className="border border-gray-200 rounded h-[240px] p-4">
-              <p className="font-bold mb-2">Danh sách sản phẩm</p>
+            <div className="border border-gray-200 rounded h-[240px]">
+              <p className="font-bold p-4">Danh sách sản phẩm</p>
               <table className="w-full text-left border-t border-gray-200">
                 <thead>
                   <tr className="bg-gray-200">
@@ -125,7 +125,7 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
                 <div className="border-t border-gray-300 my-2" />
 
                 <div className="p-3">
-                  <p className="flex justify-between font-bold text-[#FF0000] text-lg">
+                  <p className="flex justify-between text-[#FF0000] text-lg">
                     <span>Tổng tiền:</span>
                     <span>{order.total}</span>
                   </p>
