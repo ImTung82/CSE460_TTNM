@@ -134,7 +134,7 @@ const Home = () => {
                       alt={book.title}
                       className="w-full h-auto object-cover mb-2 hover:scale-95 hover:opacity-70 transition-transform duration-300 ease-in-out"
                     />
-                    <p className="text-xl text-gray-800">{book.title}</p>
+                    <p className="text-sm text-gray-800">{book.title}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-red-600 font-semibold">
                         {book.price}
