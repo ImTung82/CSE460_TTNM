@@ -104,7 +104,7 @@ const BookList = () => {
             trongLuong: "145",
             kichThuocBaoBi: "17.6 x 11.3 x 0.9",
             soTrang: "180",
-            theLoai: ["Trinh thám"]
+            theLoai: ["Trinh thám", "Manga"]
         },
     ];
 
