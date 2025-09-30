@@ -10,6 +10,7 @@ import Cart from "./components/user/CheckoutCart/Cart";
 import PlaceOrder from "./components/user/CheckoutCart/PlaceOrder";
 import Home from "./components/user/Home/Home";
 import Login from "./components/user/Login/Login";
+import Register from "./components/user/Register/Register";
 import BookList from "./components/admin/books/BookList";
 import AddBook from "./components/admin/books/AddBook";
 import EditBook from "./components/admin/books/EditBook";
@@ -95,6 +96,7 @@ const App = () => (
       {/* User routes */}
       <Route path="/" element={<Home />} />
       <Route path="/dang-nhap" element={<Login />} />
+      <Route path="/dang-ky" element={<Register />} />
       <Route path="/gio-hang" element={<Cart />} />
       <Route path="/dat-hang" element={<PlaceOrder />} />
       <Route path="/danh-muc" element={<Collection />} />

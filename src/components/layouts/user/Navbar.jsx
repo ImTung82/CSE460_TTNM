@@ -78,9 +78,12 @@ const Navbar = () => {
               Đăng nhập
             </Link>
             <div className="border"></div>
-            <button className="px-4 py-3 text-left hover:bg-gray-100 text-sm">
+            <Link
+              to="/dang-ky"
+              className="px-4 py-3 text-left hover:bg-gray-100 text-sm"
+            >
               Đăng ký
-            </button>
+            </Link>
           </div>
         </div>
       </div>
