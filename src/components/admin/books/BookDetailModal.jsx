@@ -20,7 +20,7 @@ const BookDetailModal = ({ book, onClose }) => {
             <img
               src="/assets/admin/sach.webp"
               alt={book.tenSach}
-              className="w-64 h-auto shadow-md rounded"
+              className="w-64 h-80 shadow-md rounded"
             />
           </div>
 
@@ -64,7 +64,7 @@ const BookDetailModal = ({ book, onClose }) => {
           <div className="mt-6 text-right">
             <button
               onClick={onClose}
-              className="bg-[#0d1f4a] hover:opacity-80 text-white font-bold py-2 px-35 rounded"
+              className="bg-[#0d1f4a] hover:opacity-80 text-white font-bold py-2 px-35 rounded cursor-pointer transition-all ease-out duration-150"
             >
               TRỞ LẠI
             </button>

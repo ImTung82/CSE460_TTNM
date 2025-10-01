@@ -135,7 +135,7 @@ const OrderDetailModal = ({ isOpen, onClose }) => {
 
             <button
               onClick={onClose}
-              className="mt-3 bg-[#192F59] text-white text-lg font-bold py-2 rounded hover:bg-[#16324f]"
+              className="mt-3 bg-[#192F59] text-white text-lg font-bold py-2 rounded hover:opacity-70 cursor-pointer transition-all ease-out duration-150"
             >
               TRỞ LẠI
             </button>

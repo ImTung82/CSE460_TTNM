@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const [passwordShowed, setPasswordShowed] = useState('false')
@@ -54,13 +56,30 @@ function Login() {
         }
     }
 
+    const location = useLocation();
+
+    useEffect(() => {
+        let shown = false
+        if (location.state?.message) {
+            toast.success(location.state.message, { theme: "colored" })
+            shown = true
+        }
+        if (!shown) {
+            const msg = sessionStorage.getItem('registerSuccess')
+            if (msg) {
+                toast.success(msg, { theme: "colored" })
+                sessionStorage.removeItem('registerSuccess')
+            }
+        }
+    }, [location])
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-[#192F59]">
             <div className="bg-white rounded-md border border-blue-300 p-8 w-full max-w-md shadow">
                 <h1 className="text-3xl font-bold text-black mb-2">Đăng nhập</h1>
                 <p className="text-gray-600 text-sm mb-6">
                     Bạn chưa có tài khoản?{" "}
-                    <a href="" className="text-[#192F59] font-medium hover:underline">
+                    <a href="/dang-ky" className="text-[#192F59] font-medium hover:underline">
                         Đăng ký tại đây
                     </a>
                 </p>
@@ -136,6 +155,7 @@ function Login() {
                     Bạn quên mật khẩu?
                 </p>
             </div>
+            <ToastContainer position="top-right" autoClose={2500} newestOnTop />
         </div>
     )
 }
