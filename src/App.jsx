@@ -15,6 +15,9 @@ import BookList from "./components/admin/books/BookList";
 import AddBook from "./components/admin/books/AddBook";
 import EditBook from "./components/admin/books/EditBook";
 import Detail from "./components/user/DetailProduct/Detail";
+import UserTable from "./components/admin/users/UserTable";
+import AddUser from "./components/admin/users/AddUser";
+import EditUser from "./components/admin/users/EditUser";
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 
@@ -65,6 +68,30 @@ const App = () => (
         element={
           <AdminLayout>
             <EditOrder />
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/nguoi-dung"
+        element={
+          <AdminLayout>
+            <UserTable />
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/nguoi-dung/them-moi"
+        element={
+          <AdminLayout>
+            <AddUser />
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/nguoi-dung/sua-nguoi-dung"
+        element={
+          <AdminLayout>
+            <EditUser />
           </AdminLayout>
         }
       />

@@ -6,6 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 function AddOrder() {
   const navigate = useNavigate();
 
+  // Local stock map (title -> available quantity). Adjust values to match your inventory or replace with real data source.
+  const stockMap = {
+    'Lập trình Java cơ bản': 5,
+    'Học React nhanh': 3,
+    'Python cho người mới': 2,
+    'Cấu trúc dữ liệu': 4
+  };
+
   const [formData, setFormData] = useState({
     tenKhachHang: "",
     diaChi: "",
@@ -22,27 +30,46 @@ function AddOrder() {
 
     switch (name) {
       case "tenKhachHang":
+        // 2-50 chars, letters, spaces and hyphen only (Unicode letters)
         if (!value.trim()) error = "Tên khách hàng không được bỏ trống";
+        else if (!/^[\p{L}\s-]{2,50}$/u.test(value.trim())) error = "Tên hợp lệ 2-50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
         break;
       case "diaChi":
+        // 5-100 chars, allow letters, numbers, spaces and common punctuation (no special symbols)
         if (!value.trim()) error = "Địa chỉ không được bỏ trống";
+        else if (!/^[\p{L}0-9\s,\.\-\/]{5,100}$/u.test(value.trim())) error = "Địa chỉ 5-100 ký tự, không chứa ký tự đặc biệt";
         break;
       case "soDienThoai":
         if (!value.trim()) {
           error = "Số điện thoại không được bỏ trống";
         } else if (!/^\d{9,11}$/.test(value)) {
+          // accept 9-11 digits here but later we require VN 10 digits starting with 0
           error = "Số điện thoại không hợp lệ";
         }
         break;
       case "tongTien":
         if (!value.trim()) error = "Tổng tiền không được bỏ trống";
+        else if (!/^\d+$/.test(value.trim())) error = "Tổng tiền chỉ được chứa chữ số";
         break;
       case "ngayDat":
         if (!value.trim()) error = "Ngày đặt hàng không được bỏ trống";
-        break;
-      case "phuongThucThanhToan":
-        if (!value || value === "-- Chọn phương thức --") {
-          error = "Vui lòng chọn phương thức thanh toán";
+        else {
+          // Accept either YYYY-MM-DD (from input type=date) or DD/MM/YYYY
+          let d = null;
+          if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+            d = new Date(value);
+          } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+            const [dd, mm, yyyy] = value.split('/');
+            d = new Date(`${yyyy}-${mm}-${dd}`);
+          }
+          if (!d || isNaN(d.getTime())) {
+            error = 'Ngày đặt hàng không hợp lệ';
+          } else {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            d.setHours(0,0,0,0);
+            if (d > today) error = 'Ngày đặt không được lớn hơn ngày hiện tại';
+          }
         }
         break;
       default:
@@ -85,6 +112,33 @@ function AddOrder() {
     }
 
     // Nếu không có lỗi, thực hiện submit
+    // Validate product list: extract rows from form DOM
+    const table = e.target.querySelector('table');
+    const rows = table ? Array.from(table.querySelectorAll('tbody tr')) : [];
+    if (rows.length === 0) {
+      toast.error('Danh sách sản phẩm không được để trống');
+      return;
+    }
+    for (const r of rows) {
+      const select = r.querySelector('select');
+      const qtyInput = r.querySelector('input[type="number"]');
+      const title = select ? select.value.trim() : '';
+      const qty = qtyInput ? parseInt(qtyInput.value, 10) : 0;
+      if (!title) {
+        toast.error('Tên sách không được để trống');
+        return;
+      }
+      if (!qty || qty < 1) {
+        toast.error('Số lượng phải lớn hơn 0');
+        return;
+      }
+      const available = stockMap[title] ?? 0;
+      if (qty > available) {
+        toast.error(`Số lượng cho "${title}" vượt quá tồn kho (${available})`);
+        return;
+      }
+    }
+
     setTimeout(() => {
       navigate("/admin/don-hang", {
         state: { message: "Thêm đơn hàng thành công!" },

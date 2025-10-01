@@ -31,6 +31,9 @@ const Sidebar = () => {
             <Link to="/admin/don-hang" className={getLinkClass("/admin/don-hang")}>
               Quản lý đơn hàng
             </Link>
+            <Link to="/admin/nguoi-dung" className={getLinkClass("/admin/nguoi-dung")}>
+              Quản lý người dùng
+            </Link>
             <Link to="" className={getLinkClass("/admin/ma-giam-gia")}>
               Quản lý mã giảm giá
             </Link>
