@@ -60,22 +60,28 @@ function EditBook() {
         let error = "";
         switch (name) {
             case "tenSach":
-                if (!value.trim()) error = "Tên đầu sách không được bỏ trống";
+                if (!value.trim()) 
+                    error = "Tên đầu sách không được bỏ trống";
                 break;
             case "hinhAnh":
-                if (!value) error = "Vui lòng tải lên hình ảnh cho đầu sách";
+                if (!value) 
+                    error = "Vui lòng tải lên hình ảnh cho đầu sách";
                 break;
             case "tacGia":
-                if (!value.trim()) error = "Tác giả không được bỏ trống";
+                if (!value.trim()) 
+                    error = "Tác giả không được bỏ trống";
                 break;
             case "nguoiDich":
-                if (!value.trim()) error = "Người dịch không được bỏ trống";
+                if (!value.trim()) 
+                    error = "Người dịch không được bỏ trống";
                 break;
             case "moTa":
-                if (!value.trim()) error = "Mô tả không được bỏ trống";
+                if (!value.trim()) 
+                    error = "Mô tả không được bỏ trống";
                 break;
             case "tenNhaXuatBan":
-                if (!value.trim()) error = "Tên nhà xuất bản không được bỏ trống";
+                if (!value.trim()) 
+                    error = "Tên nhà xuất bản không được bỏ trống";
                 break;
             case "namXuatBan":
                 if (!value.trim()) {

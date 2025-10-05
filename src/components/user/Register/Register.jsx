@@ -15,63 +15,99 @@ function Register() {
     const [addressError, setAddressError] = useState('')
     const navigate = useNavigate()
 
+    const validateField = (name, value) => {
+        let error = "";
+        switch (name) {
+            case "username":
+                if (!value.trim()) 
+                    error = "Tên người dùng không được để trống.";
+                break;
+            case "password":
+                if (!value.trim()) {
+                    error = "Mật khẩu không được để trống.";
+                } else if (value.length < 8) {
+                    error = "Mật khẩu phải có ít nhất 8 ký tự.";
+                }
+                break;
+            case "email":
+                if (!value.trim()) 
+                    error = "Email không được để trống.";
+                break;
+            case "phone":
+                if (!value.trim()) {
+                    error = "Số điện thoại không được để trống.";
+                } else if (!/^0\d{9}$/.test(value)) {
+                    error = "Số điện thoại phải đủ 10 số và bắt đầu bằng số 0.";
+                }
+                break;
+            case "address":
+                if (!value.trim()) 
+                    error = "Địa chỉ không được để trống.";
+                break;
+            default:
+                break;
+        }
+        return error;
+    };
+
     const handleUsernameChange = (e) => {
         const value = e.target.value
         setUsername(value)
-        setUsernameError(value ? '' : 'Tên người dùng không được để trống.')
+        const error = validateField("username", value);
+        setUsernameError(error);
     }
 
     const handlePasswordChange = (e) => {
         const value = e.target.value
         setPassword(value)
-        if (!value) setPasswordError('Mật khẩu không được để trống.')
-        else if (value.length < 8) setPasswordError('Mật khẩu phải có ít nhất 8 ký tự.')
-        else setPasswordError('')
+        const error = validateField("password", value);
+        setPasswordError(error);
     }
 
     const handleEmailChange = (e) => {
         const value = e.target.value
         setEmail(value)
-        setEmailError(value ? '' : 'Email không được để trống.')
+        const error = validateField("email", value);
+        setEmailError(error);
     }
 
     const handlePhoneChange = (e) => {
         const value = e.target.value
         setPhone(value)
-        if (!value) setPhoneError('Số điện thoại không được để trống.')
-        else if (!/^0\d{9}$/.test(value)) setPhoneError('Số điện thoại phải đủ 10 số và bắt đầu bằng số 0.')
-        else setPhoneError('')
+        const error = validateField("phone", value);
+        setPhoneError(error);
     }
 
     const handleAddressChange = (e) => {
         const value = e.target.value
         setAddress(value)
-        setAddressError(value ? '' : 'Địa chỉ không được để trống.')
+        const error = validateField("address", value);
+        setAddressError(error);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        let valid = true
+        
+        const newErrors = {};
+        const formFields = { username, password, email, phone, address };
+        
+        Object.entries(formFields).forEach(([key, value]) => {
+            const error = validateField(key, value);
+            if (error) newErrors[key] = error;
+        });
 
-        if (!username) { setUsernameError('Tên người dùng không được để trống.'); valid = false }
-
-        if (!password) { setPasswordError('Mật khẩu không được để trống.'); valid = false }
-        else if (password.length < 8) { setPasswordError('Mật khẩu phải có ít nhất 8 ký tự.'); valid = false }
-
-        if (!email) { setEmailError('Email không được để trống.'); valid = false }
-
-        if (!phone) { setPhoneError('Số điện thoại không được để trống.'); valid = false }
-        else if (!/^0\d{9}$/.test(phone)) { setPhoneError('Số điện thoại phải đủ 10 số và bắt đầu bằng số 0.'); valid = false }
-
-        if (!address) { setAddressError('Địa chỉ không được để trống.'); valid = false }
-
-        if (valid) {
-            // Lưu fallback để Login lấy nếu location.state bị mất
-            sessionStorage.setItem('registerSuccess', 'Đăng ký thành công!')
-            navigate("/dang-nhap", {
-                state: { message: "Đăng ký thành công!" }
-            });
+        if (Object.keys(newErrors).length > 0) {
+            setUsernameError(newErrors.username || '');
+            setPasswordError(newErrors.password || '');
+            setEmailError(newErrors.email || '');
+            setPhoneError(newErrors.phone || '');
+            setAddressError(newErrors.address || '');
+            return;
         }
+
+        navigate("/dang-nhap", {
+            state: { message: "Đăng ký thành công!" }
+        });
     }
 
     return (
