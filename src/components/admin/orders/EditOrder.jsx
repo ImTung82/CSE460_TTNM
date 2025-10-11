@@ -24,57 +24,78 @@ function EditOrder() {
 
     const [errors, setErrors] = useState({});
 
-    const validateField = (name, value) => {
-        let error = "";
+    const validateCustomerName = (value) => {
+        if (!value.trim())
+            return "Tên khách hàng không được bỏ trống";
+        if (!/^[\p{L}\s-]{2,50}$/u.test(value.trim()))
+            return "Tên hợp lệ 2-50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
+        return "";
+    };
 
-        switch (name) {
-            case "tenKhachHang":
-                    if (!value.trim()) error = "Tên khách hàng không được bỏ trống";
-                    else if (!/^[\p{L}\s-]{2,50}$/u.test(value.trim())) error = "Tên hợp lệ 2-50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
-                break;
-            case "diaChi":
-                    if (!value.trim()) error = "Địa chỉ không được bỏ trống";
-                    else if (!/^[\p{L}0-9\s,\.\-\/]{5,100}$/u.test(value.trim())) error = "Địa chỉ 5-100 ký tự, không chứa ký tự đặc biệt";
-                break;
-            case "soDienThoai":
-                if (!value.trim()) {
-                    error = "Số điện thoại không được bỏ trống";
-                } else if (!/^\d{9,11}$/.test(value)) {
-                    error = "Số điện thoại không hợp lệ";
-                }
-                break;
-            case "tongTien":
-                    if (!value.trim()) error = "Tổng tiền không được bỏ trống";
-                    else if (!/^\d+$/.test(value.trim())) error = "Tổng tiền chỉ được chứa chữ số";
-                break;
-            case "ngayDat":
-                    if (!value.trim()) error = "Ngày đặt hàng không được bỏ trống";
-                    else {
-                        let d = null;
-                        if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-                            d = new Date(value);
-                        } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
-                            const [dd, mm, yyyy] = value.split('/');
-                            d = new Date(`${yyyy}-${mm}-${dd}`);
-                        }
-                        if (!d || isNaN(d.getTime())) {
-                            error = 'Ngày đặt hàng không hợp lệ';
-                        } else {
-                            const today = new Date();
-                            today.setHours(0,0,0,0);
-                            d.setHours(0,0,0,0);
-                            if (d > today) error = 'Ngày đặt không được lớn hơn ngày hiện tại';
-                        }
-                    }
-                break;
-            case "phuongThucThanhToan":
-                    // payment method no longer required
-                    break;
-            default:
-                break;
+    const validateAddress = (value) => {
+        if (!value.trim())
+            return "Địa chỉ không được bỏ trống";
+        if (!/^[\p{L}0-9\s,\.\-\/]{5,100}$/u.test(value.trim()))
+            return "Địa chỉ 5-100 ký tự, không chứa ký tự đặc biệt";
+        return "";
+    };
+
+    const validatePhone = (value) => {
+        if (!value.trim())
+            return "Số điện thoại không được bỏ trống";
+        if (!/^\d{9,11}$/.test(value))
+            return "Số điện thoại không hợp lệ";
+        return "";
+    };
+
+    const validateTotal = (value) => {
+        if (!value.trim())
+            return "Tổng tiền không được bỏ trống";
+        if (!/^\d+$/.test(value.trim()))
+            return "Tổng tiền chỉ được chứa chữ số";
+        return "";
+    };
+
+    const validateOrderDate = (value) => {
+        if (!value.trim())
+            return "Ngày đặt hàng không được bỏ trống";
+
+        let d = null;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(value))
+            d = new Date(value);
+        else if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+            const [dd, mm, yyyy] = value.split('/');
+            d = new Date(`${yyyy}-${mm}-${dd}`);
         }
 
-        setErrors(prev => ({ ...prev, [name]: error }));
+        if (!d || isNaN(d.getTime()))
+            return 'Ngày đặt hàng không hợp lệ';
+
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        d.setHours(0,0,0,0);
+
+        if (d > today)
+            return 'Ngày đặt không được lớn hơn ngày hiện tại';
+
+        return "";
+    };
+
+    const validateField = (name, value) => {
+        switch (name) {
+            case "tenKhachHang":
+                return validateCustomerName(value);
+            case "diaChi":
+                return validateAddress(value);
+            case "soDienThoai":
+                return validatePhone(value);
+            case "tongTien":
+                return validateTotal(value);
+            case "ngayDat":
+                return validateOrderDate(value);
+            default:
+                return "";
+        }
     };
 
     const handleChange = (e) => {
