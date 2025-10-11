@@ -56,87 +56,141 @@ function EditBook() {
     const [errors, setErrors] = useState({});
     const [fileName, setFileName] = useState("tham_tu_lung_danh_tizen_tap_69.jpg");
 
+    const validateTenSach = (value) => {
+        if (!value.trim())
+            return "Tên đầu sách không được bỏ trống";
+        else if (value.length > 250)
+            return "Tên đầu sách không được vượt quá 250 ký tự";
+        return "";
+    };
+
+    const validateHinhAnh = (value) => {
+        if (!value)
+            return "Vui lòng tải lên hình ảnh cho đầu sách";
+        else if (value.type !== "image/jpeg" && value.type !== "image/jpg" && value.type !== "image/png" && value.type !== "image/svg+xml")
+            return "Định dạng ảnh không hợp lệ.";
+        else if (value.size > 25 * 1024 * 1024)
+            return "Kích thước ảnh không được vượt quá 25MB";
+        return "";
+    };
+
+    const validateTacGia = (value) => {
+        if (!value.trim())
+            return "Tác giả không được bỏ trống";
+        return "";
+    };
+
+    const validateNguoiDich = (value) => {
+        if (!value.trim())
+            return "Người dịch không được bỏ trống";
+        return "";
+    };
+
+    const validateMoTa = (value) => {
+        if (!value.trim())
+            return "Mô tả không được bỏ trống";
+        else if (value.length > 2000)
+            return "Mô tả tổng quan không được vượt quá 2000 ký tự";
+        return "";
+    };
+
+    const validateTenNhaXuatBan = (value) => {
+        if (!value.trim())
+            return "Tên nhà xuất bản không được bỏ trống";
+        return "";
+    };
+
+    const validateNamXuatBan = (value) => {
+        if (!value.trim())
+            return "Năm xuất bản không được bỏ trống";
+        else if (isNaN(value))
+            return "Năm xuất bản chỉ được nhập số";
+        return "";
+    };
+
+    const validateHinhThuc = (value) => {
+        if (!value || value === "-- Chọn hình thức --")
+            return "Vui lòng chọn hình thức của sách";
+        return "";
+    };
+
+    const validateNgonNgu = (value) => {
+        if (!value || value === "-- Chọn ngôn ngữ --")
+            return "Vui lòng chọn ngôn ngữ của sách";
+        return "";
+    };
+
+    const validateTrongLuong = (value) => {
+        if (isNaN(value))
+            return "Trọng lượng chỉ được nhập số";
+        return "";
+    };
+
+    const validateSoTrang = (value) => {
+        if (!value.trim())
+            return "Số trang không được bỏ trống";
+        else if (isNaN(value))
+            return "Số trang chỉ được nhập số";
+        return "";
+    };
+
+    const validateTheLoai = (value) => {
+        if (!value || value.length === 0)
+            return "Vui lòng chọn thể loại cho sách";
+        return "";
+    };
+
+    const validateGiaGoc = (value) => {
+        if (!value.trim())
+            return "Giá gốc không được bỏ trống";
+        else if (isNaN(value))
+            return "Giá gốc chỉ được nhập số";
+        return "";
+    };
+
+    const validateKhuyenMai = (value) => {
+        if (!value.trim())
+            return "Khuyến mãi không được bỏ trống";
+        else if (isNaN(value))
+            return "Khuyến mãi chỉ được nhập số";
+        else if (parseFloat(value) < 0 || parseFloat(value) > 100)
+            return "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
+        return "";
+    };
+
     const validateField = (name, value) => {
-        let error = "";
         switch (name) {
             case "tenSach":
-                if (!value.trim()) 
-                    error = "Tên đầu sách không được bỏ trống";
-                break;
+                return validateTenSach(value);
             case "hinhAnh":
-                if (!value) 
-                    error = "Vui lòng tải lên hình ảnh cho đầu sách";
-                break;
+                return validateHinhAnh(value);
             case "tacGia":
-                if (!value.trim()) 
-                    error = "Tác giả không được bỏ trống";
-                break;
+                return validateTacGia(value);
             case "nguoiDich":
-                if (!value.trim()) 
-                    error = "Người dịch không được bỏ trống";
-                break;
+                return validateNguoiDich(value);
             case "moTa":
-                if (!value.trim()) 
-                    error = "Mô tả không được bỏ trống";
-                break;
+                return validateMoTa(value);
             case "tenNhaXuatBan":
-                if (!value.trim()) 
-                    error = "Tên nhà xuất bản không được bỏ trống";
-                break;
+                return validateTenNhaXuatBan(value);
             case "namXuatBan":
-                if (!value.trim()) {
-                    error = "Năm xuất bản không được bỏ trống";
-                } else if (isNaN(value)) {
-                    error = "Năm xuất bản chỉ được nhập số";
-                }
-                break;
+                return validateNamXuatBan(value);
             case "hinhThuc":
-                if (!value || value === "-- Chọn hình thức --") {
-                    error = "Vui lòng chọn hình thức của sách";
-                }
-                break;
+                return validateHinhThuc(value);
             case "ngonNgu":
-                if (!value || value === "-- Chọn ngôn ngữ --") {
-                    error = "Vui lòng chọn ngôn ngữ của sách";
-                }
-                break;
+                return validateNgonNgu(value);
             case "trongLuong":
-                if (isNaN(value)) {
-                    error = "Trọng lượng chỉ được nhập số";
-                }
-                break;
+                return validateTrongLuong(value);
             case "soTrang":
-                if (!value.trim()) {
-                    error = "Số trang không được bỏ trống";
-                } else if (isNaN(value)) {
-                    error = "Số trang chỉ được nhập số";
-                }
-                break;
+                return validateSoTrang(value);
             case "theLoai":
-                if (!value || value.length === 0) {
-                    error = "Vui lòng chọn thể loại cho sách";
-                }
-                break;
+                return validateTheLoai(value);
             case "giaGoc":
-                if (!value.trim()) {
-                    error = "Giá gốc không được bỏ trống";
-                } else if (isNaN(value)) {
-                    error = "Giá gốc chỉ được nhập số";
-                }
-                break;
+                return validateGiaGoc(value);
             case "khuyenMai":
-                if (!value.trim()) {
-                    error = "Khuyến mãi không được bỏ trống";
-                } else if (isNaN(value)) {
-                    error = "Khuyến mãi chỉ được nhập số";
-                } else if (parseFloat(value) < 0 || parseFloat(value) > 100) {
-                    error = "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
-                }
-                break;
+                return validateKhuyenMai(value);
             default:
-                break;
+                return "";
         }
-        return error;
     };
 
     const handleChange = (e) => {
@@ -467,7 +521,7 @@ function EditBook() {
                 </div>
 
                 {/* Nút thao tác */}
-                <div className="flex space-x-2 pt-10">
+                <div className="flex space-x-2 pt-10 justify-end">
                     <button
                         type="submit"
                         className="w-22 h-10 font-bold bg-yellow-500 hover:opacity-70 text-white rounded transition-all ease-out duration-150"
