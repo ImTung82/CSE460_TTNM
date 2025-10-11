@@ -7,28 +7,62 @@ const EditUser = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const validate = (name, value) => {
+  const validateName = (value) => {
+    if (!value.trim())
+      return 'Tên người dùng không được bỏ trống';
+    else if (!/^.{2,50}$/.test(value.trim()))
+      return 'Tên phải có 2-50 ký tự';
+    return '';
+  };
+
+  const validateEmail = (value) => {
+    if (!value.trim())
+      return 'Email không được bỏ trống';
+    else if (value.length > 150)
+      return 'Email không được vượt quá 150 ký tự';
+    else if (!/^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(value))
+      return 'Email không hợp lệ';
+    return '';
+  };
+
+  const validatePassword = (value) => {
+    // optional on edit
+    return '';
+  };
+
+  const validatePhone = (value) => {
+    if (!value.trim())
+      return 'Số điện thoại không được bỏ trống';
+    else if (!/^0\d{1,9}$/.test(value))
+      return 'Số điện thoại phải bắt đầu bằng 0 và tối đa 10 chữ số';
+    return '';
+  };
+
+  const validateAddress = (value) => {
+    if (!value.trim())
+      return 'Địa chỉ không được bỏ trống';
+    else if (!/^.{15,150}$/.test(value.trim()))
+      return 'Địa chỉ phải có 15-150 ký tự';
+    return '';
+  };
+
+  const validateField = (name, value) => {
     let err = '';
     switch (name) {
       case 'name':
-        if (!value.trim()) err = 'Tên người dùng không được bỏ trống';
-        else if (!/^.{2,50}$/.test(value.trim())) err = 'Tên phải có 2-50 ký tự';
+        err = validateName(value);
         break;
       case 'email':
-        if (!value.trim()) err = 'Email không được bỏ trống';
-        else if (value.length > 150) err = 'Email không được vượt quá 150 ký tự';
-        else if (!/^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(value)) err = 'Email không hợp lệ';
+        err = validateEmail(value);
         break;
       case 'password':
-        // optional on edit
+        err = validatePassword(value);
         break;
       case 'phone':
-        if (!value.trim()) err = 'Số điện thoại không được bỏ trống';
-        else if (!/^0\d{1,9}$/.test(value)) err = 'Số điện thoại phải bắt đầu bằng 0 và tối đa 10 chữ số';
+        err = validatePhone(value);
         break;
       case 'address':
-        if (!value.trim()) err = 'Địa chỉ không được bỏ trống';
-        else if (!/^.{15,150}$/.test(value.trim())) err = 'Địa chỉ phải có 15-150 ký tự';
+        err = validateAddress(value);
         break;
       default:
         break;
@@ -40,14 +74,14 @@ const EditUser = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
-    validate(name, value);
+    validateField(name, value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const fields = ['name','email','phone','address'];
     let ok = true;
-    fields.forEach(f => { if(!validate(f, form[f])) ok = false; });
+    fields.forEach(f => { if(!validateField(f, form[f])) ok = false; });
     if (!ok) return;
 
     setTimeout(() => {
