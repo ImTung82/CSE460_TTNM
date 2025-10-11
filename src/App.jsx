@@ -20,6 +20,9 @@ import AddUser from "./components/admin/users/AddUser";
 import EditUser from "./components/admin/users/EditUser";
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import DiscountList from "./components/admin/discount/DiscountList";
+import AddDiscount from "./components/admin/discount/AddDiscount";
+import EditDiscount from "./components/admin/discount/EditDiscount";
 
 // ✅ ScrollToTop: cuộn lên đầu mỗi khi đổi route
 const ScrollToTop = () => {
@@ -117,6 +120,30 @@ const App = () => (
           <AdminLayout>
             <EditBook />
           </AdminLayout>
+        }
+      />
+      < Route
+        path="/admin/giam-gia"
+        element={
+          < AdminLayout >
+            <DiscountList />
+          </AdminLayout >
+        }
+      />
+      < Route
+        path="/admin/giam-gia/them-moi"
+        element={
+          < AdminLayout >
+            <AddDiscount />
+          </AdminLayout >
+        }
+      />
+      < Route
+        path="/admin/giam-gia/sua-giam-gia"
+        element={
+          < AdminLayout >
+            <EditDiscount />
+          </AdminLayout >
         }
       />
 
