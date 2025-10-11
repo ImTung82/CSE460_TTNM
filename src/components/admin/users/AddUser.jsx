@@ -53,25 +53,18 @@ const AddUser = () => {
     let err = '';
     switch (name) {
       case 'name':
-        err = validateName(value);
-        break;
+        return validateName(value);
       case 'email':
-        err = validateEmail(value);
-        break;
+        return validateEmail(value);
       case 'password':
-        err = validatePassword(value);
-        break;
+        return validatePassword(value);
       case 'phone':
-        err = validatePhone(value);
-        break;
+        return validatePhone(value);
       case 'address':
-        err = validateAddress(value);
-        break;
+        return validateAddress(value);
       default:
-        break;
+        return '';
     }
-    setErrors(prev => ({ ...prev, [name]: err }));
-    return err === '';
   };
 
   const handleChange = (e) => {
