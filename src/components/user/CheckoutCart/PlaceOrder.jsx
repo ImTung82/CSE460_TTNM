@@ -33,7 +33,8 @@ const PlaceOrder = () => {
   });
 
   const validateFullName = (value) => {
-    if (!value || !value.trim()) return "Họ tên người nhận không được để trống";
+    if (!value || !value.trim()) 
+      return "Họ tên người nhận không được để trống";
     const trimmedValue = value.trim();
     if (!/^[\p{L}\s]+$/u.test(trimmedValue))
       return "Họ tên người nhận không được chứa kí tự đặc biệt";
@@ -43,7 +44,8 @@ const PlaceOrder = () => {
   };
 
   const validatePhone = (value) => {
-    if (!value || !value.trim()) return "Số điện thoại không được để trống";
+    if (!value || !value.trim()) 
+      return "Số điện thoại không được để trống";
     const trimmedValue = value.trim();
     if (!/^\d+$/.test(trimmedValue))
       return "Số điện thoại chỉ được chứa ký tự số (0–9)";
@@ -53,7 +55,8 @@ const PlaceOrder = () => {
   };
 
   const validateAddress = (value) => {
-    if (!value || !value.trim()) return "Địa chỉ không được để trống";
+    if (!value || !value.trim()) 
+      return "Địa chỉ không được để trống";
     const trimmedValue = value.trim();
     if (!/^[\p{L}0-9\s,.\-\/]+$/u.test(trimmedValue))
       return "Địa chỉ không hợp lệ, không được chứa ký tự đặc biệt";

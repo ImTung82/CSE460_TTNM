@@ -30,7 +30,7 @@ const Cart = () => {
     { id: 15, name: "Sách giá ký tự đặc biệt", price: "24000@", oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Ký tự đặc biệt
     { id: 16, name: "Sách giá chữ", price: "abc", oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Chứa chữ
     { id: 17, name: "Sách giá âm", price: -24000, oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Giá âm
-    { id: 18, name: "Sách giá = 0", price: 0, oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Giá bằng 0
+    { id: 18, name: "Sách giá bằng 0", price: 0, oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Giá bằng 0
     { id: 19, name: "Sách giá thực dương", price: 24000.5, oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Số thực dương
     { id: 20, name: "Sách giá hợp lệ", price: 24000, oldPrice: 30000, quantity: 1, image: "/assets/user/book.png", selected: false }, // Hợp lệ
   ]);
@@ -43,7 +43,7 @@ const Cart = () => {
     return "Tên sách không được để trống";
   if (name.length > 250)
     return "Tên sách vượt quá 250 ký tự";
-  const invalidSpecialChars = /[^a-zA-ZÀ-ỹ0-9\s\-\(\)]/;
+    const invalidSpecialChars = /[^a-zA-ZÀ-ỹ0-9\s\.\,\-\/]/;
   if (invalidSpecialChars.test(name))
     return "Tên sách không hợp lệ";
   return "";
@@ -212,7 +212,7 @@ const handleCheckout = () => {
     return;
   }
   
-  if (totalAmount > 0) {
+  if (totalAmount >= 0) {
     navigate("/dat-hang");
   }
 };
