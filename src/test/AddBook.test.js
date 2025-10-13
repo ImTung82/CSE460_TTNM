@@ -129,30 +129,33 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            expect(validateTenSach('Tên sách hợp lệ')).toBe('');
+            expect(validateTenSach('Conan')).toBe('');
             expect(validateTenSach('a'.repeat(250))).toBe('');
         });
     });
 
     describe('validateHinhAnh', () => {
-        it('nên trả về lỗi khi giá trị null/undefined', () => {
+        it('Thất bại do hình ảnh null/undefined', () => {
             expect(validateHinhAnh(null)).toBe('Vui lòng tải lên hình ảnh cho đầu sách');
             expect(validateHinhAnh(undefined)).toBe('Vui lòng tải lên hình ảnh cho đầu sách');
         });
 
-        it('nên trả về lỗi cho định dạng file không hợp lệ', () => {
+        it('Thất bại do định dạng file không hợp lệ', () => {
             const invalidFile = { type: 'application/pdf', size: 1024 };
             expect(validateHinhAnh(invalidFile)).toBe('Định dạng ảnh không hợp lệ.');
         });
 
-        it('nên trả về lỗi khi kích thước file vượt quá 25MB', () => {
+        it('Thất bại do kích thước file vượt quá 25MB', () => {
             const largeFile = { type: 'image/jpeg', size: 26 * 1024 * 1024 };
             expect(validateHinhAnh(largeFile)).toBe('Kích thước ảnh không được vượt quá 25MB');
         });
 
-        it('nên trả về chuỗi rỗng cho file ảnh hợp lệ', () => {
-            const validFile = { type: 'image/jpeg', size: 1024 * 1024 };
-            expect(validateHinhAnh(validFile)).toBe('');
+        it('Thành công', () => {
+            const jpgFile = { type: 'image/jpg', size: 1024 * 1024 };
+            expect(validateHinhAnh(jpgFile)).toBe('');
+
+            const jpegFile = { type: 'image/jpeg', size: 1024 * 1024 };
+            expect(validateHinhAnh(jpegFile)).toBe('');
             
             const pngFile = { type: 'image/png', size: 2 * 1024 * 1024 };
             expect(validateHinhAnh(pngFile)).toBe('');
@@ -163,97 +166,97 @@ describe('AddBook Validation Functions', () => {
     });
 
     describe('validateMoTa', () => {
-        it('nên trả về lỗi khi chuỗi rỗng', () => {
+        it('Thất bại do mô tả bỏ trống', () => {
             expect(validateMoTa('')).toBe('Mô tả không được bỏ trống');
             expect(validateMoTa('   ')).toBe('Mô tả không được bỏ trống');
         });
 
-        it('nên trả về lỗi khi chuỗi dài hơn 2000 ký tự', () => {
+        it('Thất bại do mô tả dài hơn 2000 ký tự', () => {
             const longString = 'a'.repeat(2001);
             expect(validateMoTa(longString)).toBe('Mô tả tổng quan không được vượt quá 2000 ký tự');
         });
 
-        it('nên trả về chuỗi rỗng cho đầu vào hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateMoTa('Mô tả hợp lệ')).toBe('');
             expect(validateMoTa('a'.repeat(2000))).toBe('');
         });
     });
 
     describe('validateTenNhaXuatBan', () => {
-        it('nên trả về lỗi khi chuỗi rỗng', () => {
+        it('Thất bại do tên nhà xuất bản bỏ trống', () => {
             expect(validateTenNhaXuatBan('')).toBe('Tên nhà xuất bản không được bỏ trống');
             expect(validateTenNhaXuatBan('   ')).toBe('Tên nhà xuất bản không được bỏ trống');
         });
 
-        it('nên trả về lỗi khi chuỗi dài hơn 250 ký tự', () => {
+        it('Thất bại do tên nhà xuất bản dài hơn 250 ký tự', () => {
             const longString = 'a'.repeat(251);
             expect(validateTenNhaXuatBan(longString)).toBe('Tên nhà xuất bản không được vượt quá 250 ký tự');
         });
 
-        it('nên trả về chuỗi rỗng cho đầu vào hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateTenNhaXuatBan('NXB Kim Đồng')).toBe('');
         });
     });
 
     describe('validateNamXuatBan', () => {
-        it('nên trả về lỗi cho đầu vào không phải số', () => {
+        it('Thất bại do năm xuất bản không phải số', () => {
             expect(validateNamXuatBan('abc')).toBe('Năm xuất bản chỉ được nhập số');
             expect(validateNamXuatBan('2023abc')).toBe('Năm xuất bản chỉ được nhập số');
         });
 
-        it('nên trả về lỗi cho đầu vào không phải số nguyên', () => {
+        it('Thất bại do năm xuất bản không phải số nguyên', () => {
             expect(validateNamXuatBan('2023.5')).toBe('Năm xuất bản phải là số nguyên');
         });
 
-        it('nên trả về lỗi cho số 0 hoặc số âm', () => {
+        it('Thất bại do năm xuất bản bằng 0 hoặc âm', () => {
             expect(validateNamXuatBan('0')).toBe('Năm xuất bản phải lớn hơn 0');
             expect(validateNamXuatBan('-2023')).toBe('Năm xuất bản phải lớn hơn 0');
         });
 
-        it('nên trả về chuỗi rỗng cho năm hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateNamXuatBan('2023')).toBe('');
             expect(validateNamXuatBan('1999')).toBe('');
         });
     });
 
     describe('validateTacGia', () => {
-        it('nên trả về lỗi khi chuỗi rỗng', () => {
+        it('Thất bại do tác giả bỏ trống', () => {
             expect(validateTacGia('')).toBe('Tác giả không được bỏ trống');
             expect(validateTacGia('   ')).toBe('Tác giả không được bỏ trống');
         });
 
-        it('nên trả về lỗi khi chuỗi dài hơn 250 ký tự', () => {
+        it('Thất bại do tác giả dài hơn 250 ký tự', () => {
             const longString = 'a'.repeat(251);
             expect(validateTacGia(longString)).toBe('Tác giả không được vượt quá 250 ký tự');
         });
 
-        it('nên trả về chuỗi rỗng cho đầu vào hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateTacGia('Nguyễn Nhật Ánh')).toBe('');
         });
     });
 
     describe('validateNguoiDich', () => {
-        it('nên trả về lỗi khi chuỗi rỗng', () => {
+        it('Thất bại do người dịch bỏ trống', () => {
             expect(validateNguoiDich('')).toBe('Người dịch không được bỏ trống');
             expect(validateNguoiDich('   ')).toBe('Người dịch không được bỏ trống');
         });
 
-        it('nên trả về lỗi khi chuỗi dài hơn 250 ký tự', () => {
+        it('Thất bại do người dịch dài hơn 250 ký tự', () => {
             const longString = 'a'.repeat(251);
             expect(validateNguoiDich(longString)).toBe('Người dịch không được vượt quá 250 ký tự');
         });
 
-        it('nên trả về chuỗi rỗng cho đầu vào hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateNguoiDich('Trần Văn A')).toBe('');
         });
     });
 
     describe('validateNgonNgu', () => {
-        it('nên trả về lỗi cho lựa chọn mặc định', () => {
+        it('Thất bại do chưa chọn ngôn ngữ', () => {
             expect(validateNgonNgu('-- Chọn ngôn ngữ --')).toBe('Vui lòng chọn ngôn ngữ của sách');
         });
 
-        it('nên trả về chuỗi rỗng cho lựa chọn hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateNgonNgu('Tiếng Việt')).toBe('');
             expect(validateNgonNgu('Tiếng Anh')).toBe('');
             expect(validateNgonNgu('Tiếng Nhật')).toBe('');
@@ -261,98 +264,98 @@ describe('AddBook Validation Functions', () => {
     });
 
     describe('validateTrongLuong', () => {
-        it('nên trả về lỗi cho đầu vào không phải số', () => {
+        it('Thất bại do trọng lượng không phải số', () => {
             expect(validateTrongLuong('abc')).toBe('Trọng lượng chỉ được nhập số');
         });
 
-        it('nên trả về lỗi cho đầu vào không phải số nguyên', () => {
+        it('Thất bại do trọng lượng không phải số nguyên', () => {
             expect(validateTrongLuong('100.5')).toBe('Trọng lượng phải là số nguyên');
         });
 
-        it('nên trả về lỗi cho số 0 hoặc số âm', () => {
+        it('Thất bại do trọng lượng bằng 0 hoặc âm', () => {
             expect(validateTrongLuong('0')).toBe('Trọng lượng phải lớn hơn 0');
             expect(validateTrongLuong('-100')).toBe('Trọng lượng phải lớn hơn 0');
         });
 
-        it('nên trả về chuỗi rỗng cho trọng lượng hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateTrongLuong('500')).toBe('');
             expect(validateTrongLuong('1000')).toBe('');
         });
     });
 
     describe('validateSoTrang', () => {
-        it('nên trả về lỗi cho đầu vào không phải số', () => {
+        it('Thất bại do số trang không phải số', () => {
             expect(validateSoTrang('abc')).toBe('Số trang chỉ được nhập số');
         });
 
-        it('nên trả về lỗi cho đầu vào không phải số nguyên', () => {
+        it('Thất bại do số trang không phải số nguyên', () => {
             expect(validateSoTrang('100.5')).toBe('Số trang phải là số nguyên');
         });
 
-        it('nên trả về lỗi cho số 0 hoặc số âm', () => {
+        it('Thất bại do số trang bằng 0 hoặc âm', () => {
             expect(validateSoTrang('0')).toBe('Số trang phải lớn hơn 0');
             expect(validateSoTrang('-100')).toBe('Số trang phải lớn hơn 0');
         });
 
-        it('nên trả về chuỗi rỗng cho số trang hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateSoTrang('200')).toBe('');
             expect(validateSoTrang('500')).toBe('');
         });
     });
 
     describe('validateHinhThuc', () => {
-        it('nên trả về lỗi cho lựa chọn mặc định', () => {
+        it('Thất bại do chưa chọn hình thức', () => {
             expect(validateHinhThuc('-- Chọn hình thức --')).toBe('Vui lòng chọn hình thức của sách');
         });
 
-        it('nên trả về chuỗi rỗng cho lựa chọn hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateHinhThuc('Bìa cứng')).toBe('');
             expect(validateHinhThuc('Bìa mềm')).toBe('');
         });
     });
 
     describe('validateTheLoai', () => {
-        it('nên trả về lỗi cho mảng rỗng', () => {
+        it('Thất bại do chưa chọn thể loại', () => {
             expect(validateTheLoai([])).toBe('Vui lòng chọn thể loại cho sách');
         });
 
-        it('nên trả về chuỗi rỗng cho mảng không rỗng', () => {
+        it('Thành công', () => {
             expect(validateTheLoai(['Tiểu thuyết'])).toBe('');
             expect(validateTheLoai(['Tiểu thuyết', 'Khoa học'])).toBe('');
         });
     });
 
     describe('validateGiaGoc', () => {
-        it('nên trả về lỗi cho đầu vào không phải số', () => {
+        it('Thất bại do giá gốc không phải số', () => {
             expect(validateGiaGoc('abc')).toBe('Giá gốc chỉ được nhập số');
         });
 
-        it('nên trả về lỗi cho đầu vào không phải số nguyên', () => {
+        it('Thất bại do giá gốc không phải số nguyên', () => {
             expect(validateGiaGoc('100.5')).toBe('Giá gốc phải là số nguyên');
         });
 
-        it('nên trả về lỗi cho số 0 hoặc số âm', () => {
+        it('Thất bại do giá gốc bằng 0 hoặc âm', () => {
             expect(validateGiaGoc('0')).toBe('Giá gốc phải lớn hơn 0');
             expect(validateGiaGoc('-100')).toBe('Giá gốc phải lớn hơn 0');
         });
 
-        it('nên trả về chuỗi rỗng cho giá hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateGiaGoc('100000')).toBe('');
             expect(validateGiaGoc('50000')).toBe('');
         });
     });
 
     describe('validateKhuyenMai', () => {
-        it('nên trả về lỗi cho đầu vào không phải số', () => {
+        it('Thất bại do khuyến mãi không phải số', () => {
             expect(validateKhuyenMai('abc')).toBe('Khuyến mãi chỉ được nhập số');
         });
 
-        it('nên trả về lỗi cho giá trị ngoài khoảng 0-100', () => {
+        it('Thất bại do khuyến mãi ngoài khoảng 0-100', () => {
             expect(validateKhuyenMai('-5')).toBe('Khuyến mãi phải nằm trong khoảng từ 0 đến 100');
             expect(validateKhuyenMai('105')).toBe('Khuyến mãi phải nằm trong khoảng từ 0 đến 100');
         });
 
-        it('nên trả về chuỗi rỗng cho phần trăm khuyến mãi hợp lệ', () => {
+        it('Thành công', () => {
             expect(validateKhuyenMai('0')).toBe('');
             expect(validateKhuyenMai('50')).toBe('');
             expect(validateKhuyenMai('100')).toBe('');
