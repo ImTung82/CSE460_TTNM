@@ -165,9 +165,7 @@ function EditBook() {
     };
 
     const validateKhuyenMai = (value) => {
-        if (!value.trim())
-            return "Khuyến mãi không được bỏ trống";
-        else if (isNaN(value))
+        if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
             return "Khuyến mãi chỉ được nhập số";
         else if (parseFloat(value) < 0 || parseFloat(value) > 100)
             return "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
