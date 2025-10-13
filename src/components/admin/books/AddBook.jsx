@@ -74,18 +74,6 @@ function AddBook() {
         return "";
     };
 
-    const validateTacGia = (value) => {
-        if (!value.trim())
-            return "Tác giả không được bỏ trống";
-        return "";
-    };
-
-    const validateNguoiDich = (value) => {
-        if (!value.trim())
-            return "Người dịch không được bỏ trống";
-        return "";
-    };
-
     const validateMoTa = (value) => {
         if (!value.trim())
             return "Mô tả không được bỏ trống";
@@ -95,55 +83,84 @@ function AddBook() {
     };
 
     const validateTenNhaXuatBan = (value) => {
-        if (!value.trim()) return "Tên nhà xuất bản không được bỏ trống";
+        if (!value.trim()) 
+            return "Tên nhà xuất bản không được bỏ trống";
+        else if (value.length > 250)
+            return "Tên nhà xuất bản không được vượt quá 250 ký tự";
         return "";
     };
 
     const validateNamXuatBan = (value) => {
-        if (!value.trim())
-            return "Năm xuất bản không được bỏ trống";
-        else if (isNaN(value))
+        if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
             return "Năm xuất bản chỉ được nhập số";
+        else if (!Number.isInteger(Number(value)))
+            return "Năm xuất bản phải là số nguyên";
+        else if (Number(value) <= 0)
+            return "Năm xuất bản phải lớn hơn 0";
         return "";
     };
 
-    const validateHinhThuc = (value) => {
-        if (!value || value === "-- Chọn hình thức --")
-            return "Vui lòng chọn hình thức của sách";
+    const validateTacGia = (value) => {
+        if (!value.trim())
+            return "Tác giả không được bỏ trống";
+        else if (value.length > 250)
+            return "Tác giả không được vượt quá 250 ký tự";
+        return "";
+    };
+
+    const validateNguoiDich = (value) => {
+        if (!value.trim())
+            return "Người dịch không được bỏ trống";
+        else if (value.length > 250)
+            return "Người dịch không được vượt quá 250 ký tự";
         return "";
     };
 
     const validateNgonNgu = (value) => {
-        if (!value || value === "-- Chọn ngôn ngữ --")
+        if (value === "-- Chọn ngôn ngữ --")
             return "Vui lòng chọn ngôn ngữ của sách";
         return "";
     };
 
     const validateTrongLuong = (value) => {
-        if (isNaN(value))
+        if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
             return "Trọng lượng chỉ được nhập số";
+        else if (!Number.isInteger(Number(value)))
+            return "Trọng lượng phải là số nguyên";
+        else if (Number(value) <= 0)
+            return "Trọng lượng phải lớn hơn 0";
         return "";
     };
 
     const validateSoTrang = (value) => {
-        if (!value.trim())
-            return "Số trang không được bỏ trống";
-        else if (isNaN(value))
+        if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
             return "Số trang chỉ được nhập số";
+        else if (!Number.isInteger(Number(value)))
+            return "Số trang phải là số nguyên";
+        else if (Number(value) <= 0)
+            return "Số trang phải lớn hơn 0";
+        return "";
+    };
+
+    const validateHinhThuc = (value) => {
+        if (value === "-- Chọn hình thức --")
+            return "Vui lòng chọn hình thức của sách";
         return "";
     };
 
     const validateTheLoai = (value) => {
-        if (!value || value.length === 0)
+        if (value.length === 0)
             return "Vui lòng chọn thể loại cho sách";
         return "";
     };
 
     const validateGiaGoc = (value) => {
-        if (!value.trim())
-            return "Giá gốc không được bỏ trống";
-        else if (isNaN(value))
+        if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
             return "Giá gốc chỉ được nhập số";
+        else if (!Number.isInteger(Number(value)))
+            return "Giá gốc phải là số nguyên";
+        else if (Number(value) <= 0)
+            return "Giá gốc phải lớn hơn 0";
         return "";
     };
 
