@@ -32,6 +32,68 @@ const PlaceOrder = () => {
     address: "",
   });
 
+  const validateFullName = (value) => {
+    if (!value || !value.trim()) 
+      return "Họ tên người nhận không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^[\p{L}\s]+$/u.test(trimmedValue))
+      return "Họ tên người nhận không được chứa kí tự đặc biệt";
+    if (trimmedValue.length < 2 || trimmedValue.length > 50)
+      return "Họ tên người nhận phải có độ dài từ 2 đến 50 ký tự";
+    return "";
+  };
+
+  const validatePhone = (value) => {
+    if (!value || !value.trim()) 
+      return "Số điện thoại không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^\d+$/.test(trimmedValue))
+      return "Số điện thoại chỉ được chứa ký tự số (0–9)";
+    if (!/^0\d{9}$/.test(trimmedValue))
+      return "Số điện thoại phải gồm đúng 10 chữ số và bắt đầu bằng số 0";
+    return "";
+  };
+
+  const validateAddress = (value) => {
+    if (!value || !value.trim()) 
+      return "Địa chỉ không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^[\p{L}0-9\s,.\-\/]+$/u.test(trimmedValue))
+      return "Địa chỉ không hợp lệ, không được chứa ký tự đặc biệt";
+    if (trimmedValue.length < 5 || trimmedValue.length > 255)
+      return "Địa chỉ phải có độ dài từ 5 đến 255 ký tự";
+    return "";
+  };
+
+  const validateCouponCode = (value) => {
+    if (!value || !value.trim())
+      return "";
+    const trimmedValue = value.trim();
+    if (!/^[a-zA-Z0-9]+$/.test(trimmedValue))
+      return "Mã khuyến mãi không hợp lệ, chỉ được chứa chữ và số";
+    if (trimmedValue.length < 3 || trimmedValue.length > 20)
+      return "Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự";
+    const validCoupons = ["SALE2025", "DISCOUNT20", "NEWUSER"];
+    if (!validCoupons.includes(trimmedValue.toUpperCase()))
+      return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
+    return "";
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "fullName":
+        return validateFullName(value);
+      case "phone":
+        return validatePhone(value);
+      case "address":
+        return validateAddress(value);
+      case "couponCode":
+        return validateCouponCode(value);
+      default:
+        return "";
+    }
+  };
+
   // Check if returning from a payment gateway
   useEffect(() => {
     const paymentStatus = sessionStorage.getItem("paymentStatus");
@@ -92,41 +154,31 @@ const PlaceOrder = () => {
       [name]: value,
     });
 
-    // Clear error when user types
-    if (formErrors[name]) {
-      setFormErrors({
-        ...formErrors,
-        [name]: "",
-      });
-    }
+    const error = validateField(name, value);
+    setFormErrors({
+      ...formErrors,
+      [name]: error,
+    });
   };
 
   const validateForm = () => {
     let isValid = true;
-    const newErrors = { ...formErrors };
+    const newErrors = {};
 
-    // Validate fullName
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = "Trường này không được để trống";
-      isValid = false;
-    }
+    Object.keys(formData).forEach((key) => {
+      if (key === "fullName" || key === "phone" || key === "address") {
+        const error = validateField(key, formData[key]);
+        if (error) {
+          newErrors[key] = error;
+          isValid = false;
+        }
+      }
+    });
 
-    // Validate phone
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Trường này không được để trống";
-      isValid = false;
-    } else if (!/^0\d{9}$/.test(formData.phone)) {
-      newErrors.phone = "Số điện thoại gồm 10 chữ số và bắt đầu bằng số 0";
-      isValid = false;
-    }
-
-    // Validate address
-    if (!formData.address.trim()) {
-      newErrors.address = "Trường này không được để trống";
-      isValid = false;
-    }
-
-    setFormErrors(newErrors);
+    setFormErrors({
+      ...formErrors,
+      ...newErrors,
+    });
     return isValid;
   };
 
@@ -147,15 +199,16 @@ const PlaceOrder = () => {
 
   const handleCouponChange = (e) => {
     setCouponCode(e.target.value);
-    // Clear error when user types
-    if (couponError) {
-      setCouponError("");
-    }
+    const error = validateField("couponCode", e.target.value);
+    setCouponError(error);
   };
 
   const applyCoupon = () => {
-    if (couponCode.trim()) {
-      setCouponError("Mã giảm giá không hợp lệ");
+    const error = validateField("couponCode", couponCode);
+    setCouponError(error);
+
+    if (!error && couponCode.trim()) {
+      toast.success("Áp dụng mã khuyến mãi thành công!");
     }
   };
 
