@@ -37,7 +37,7 @@ function EditUser() {
   const validatePhone = (value) => {
     if (!value.trim())
       return 'Số điện thoại không được bỏ trống';
-    else if (!/^0\d{1,9}$/.test(value))
+    else if (!/^0\d{9}$/.test(value))
       return 'Số điện thoại phải bắt đầu bằng 0 và tối đa 10 chữ số';
     return '';
   };

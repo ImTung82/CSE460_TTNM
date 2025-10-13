@@ -44,7 +44,7 @@ function AddOrder() {
   const validatePhone = (value) => {
     if (!value.trim()) 
       return "Số điện thoại không được bỏ trống";
-    if (!/^\d{9,11}$/.test(value)) 
+    if (!/^\d{10}$/.test(value)) 
       return "Số điện thoại không hợp lệ";
     return "";
   };
