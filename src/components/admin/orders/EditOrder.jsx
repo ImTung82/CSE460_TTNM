@@ -27,16 +27,16 @@ function EditOrder() {
     const validateCustomerName = (value) => {
         if (!value.trim())
             return "Tên khách hàng không được bỏ trống";
-        if (!/^[\p{L}\s-]{2,50}$/u.test(value.trim()))
-            return "Tên hợp lệ 2-50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
+        if (!/^[\p{L}\s-]{1,50}$/u.test(value.trim()))
+            return "Tên khách hàng không vượt quá 50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
         return "";
     };
 
     const validateAddress = (value) => {
         if (!value.trim())
             return "Địa chỉ không được bỏ trống";
-        if (!/^[\p{L}0-9\s,\.\-\/]{5,100}$/u.test(value.trim()))
-            return "Địa chỉ 5-100 ký tự, không chứa ký tự đặc biệt";
+        if (!/^[\p{L}0-9\s,\.\-\/]{1,100}$/u.test(value.trim()))
+            return "Địa chỉ không vượt quá 100 ký tự, không chứa ký tự đặc biệt";
         return "";
     };
 
