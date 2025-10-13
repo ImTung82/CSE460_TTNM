@@ -28,23 +28,23 @@ function AddOrder() {
   const validateCustomerName = (value) => {
     if (!value.trim()) 
       return "Tên khách hàng không được bỏ trống";
-    if (!/^[\p{L}\s-]{2,50}$/u.test(value.trim())) 
-      return "Tên hợp lệ 2-50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
+    if (!/^[\p{L}\s-]{1,50}$/u.test(value.trim())) 
+      return "Tên khách không vượt quá 50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
     return "";
   };
 
   const validateAddress = (value) => {
     if (!value.trim()) 
       return "Địa chỉ không được bỏ trống";
-    if (!/^[\p{L}0-9\s,\.\-\/]{5,100}$/u.test(value.trim())) 
-      return "Địa chỉ 5-100 ký tự, không chứa ký tự đặc biệt";
+    if (!/^[\p{L}0-9\s,\.\-\/]{1,100}$/u.test(value.trim())) 
+      return "Địa chỉ không vượt quá 100 ký tự, không chứa ký tự đặc biệt";
     return "";
   };
 
   const validatePhone = (value) => {
     if (!value.trim()) 
       return "Số điện thoại không được bỏ trống";
-    if (!/^\d{9,11}$/.test(value)) 
+    if (!/^\d{10}$/.test(value)) 
       return "Số điện thoại không hợp lệ";
     return "";
   };
@@ -114,9 +114,7 @@ function AddOrder() {
     Object.keys(formData).forEach((key) => {
       validateField(key, formData[key]); // gọi lại hàm validate
       if (
-        !formData[key] ||
-        (key === "phuongThucThanhToan" &&
-          formData[key] === "-- Chọn phương thức --")
+        !formData[key]
       ) {
         newErrors[key] = "Vui lòng điền đầy đủ thông tin";
       }
@@ -303,17 +301,11 @@ function AddOrder() {
               onChange={handleChange}
               className="w-3/4 border border-gray-300 p-2 rounded"
             >
-              <option>-- Chọn phương thức --</option>
               <option>Thanh toán khi nhận hàng</option>
               <option>Chuyển khoản ngân hàng</option>
               <option>Ví điện tử</option>
             </select>
           </div>
-          {errors.phuongThucThanhToan && (
-            <p className="text-red-500 ml-[25%]">
-              {errors.phuongThucThanhToan}
-            </p>
-          )}
         </div>
 
         {/* Tổng tiền */}
