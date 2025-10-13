@@ -25,10 +25,10 @@ function EditOrder() {
     const [errors, setErrors] = useState({});
 
     const validateCustomerName = (value) => {
-        if (!value.trim())
+        if (!value.trim()) 
             return "Tên khách hàng không được bỏ trống";
-        if (!/^[\p{L}\s-]{1,50}$/u.test(value.trim()))
-            return "Tên khách hàng không vượt quá 50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
+        if (!/^[\p{L}\s-]{1,50}$/u.test(value.trim())) 
+            return "Tên khách không vượt quá 50 ký tự, chỉ chứa chữ cái, khoảng trắng và dấu gạch ngang";
         return "";
     };
 
@@ -41,9 +41,9 @@ function EditOrder() {
     };
 
     const validatePhone = (value) => {
-        if (!value.trim())
+        if (!value.trim()) 
             return "Số điện thoại không được bỏ trống";
-        if (!/^\d{9,11}$/.test(value))
+        if (!/^\d{10}$/.test(value)) 
             return "Số điện thoại không hợp lệ";
         return "";
     };
@@ -100,12 +100,9 @@ function EditOrder() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        
         setFormData(prev => ({ ...prev, [name]: value }));
-
-        
-        validateField(name, value);
+        const error = validateField(name, value);
+        setErrors(prev => ({ ...prev, [name]: error }));
     };
 
     const handleSubmit = (e) => {
@@ -114,22 +111,17 @@ function EditOrder() {
         // Kiểm tra từng trường
         const newErrors = {};
         Object.keys(formData).forEach((key) => {
-            validateField(key, formData[key]); // gọi lại hàm validate
-            if (
-                !formData[key] ||
-                (key === "phuongThucThanhToan" && formData[key] === "-- Chọn phương thức --")
-            ) {
-                newErrors[key] = "Vui lòng điền đầy đủ thông tin";
+            const error = validateField(key, formData[key]);
+            if (error || !formData[key]) {
+                newErrors[key] = error || "Vui lòng điền đầy đủ thông tin";
             }
         });
 
-        // Nếu có lỗi thì hiển thị toast và không submit
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
 
-        // Nếu không có lỗi, thực hiện submit
         // Validate product list
         const table = e.target.querySelector('table');
         const rows = table ? Array.from(table.querySelectorAll('tbody tr')) : [];
@@ -158,7 +150,9 @@ function EditOrder() {
         }
 
         setTimeout(() => {
-            navigate("/admin/don-hang", { state: { message: "Sửa đơn hàng thành công!" } });
+            navigate("/admin/don-hang", {
+                state: { message: "Sửa đơn hàng thành công!" }
+            });
         }, 1000);
     };
 
@@ -276,20 +270,24 @@ function EditOrder() {
                 {/* Phương thức thanh toán */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Phương thức thanh toán:<span className="text-red-500 ml-1">*</span></label>
+                        <label className="w-1/4 font-semibold">
+                            Phương thức thanh toán:
+                            <span className="text-red-500 ml-1">*</span>
+                        </label>
                         <select
                             name="phuongThucThanhToan"
                             value={formData.phuongThucThanhToan}
                             onChange={handleChange}
                             className="w-3/4 border border-gray-300 p-2 rounded"
                         >
-                            <option>-- Chọn phương thức --</option>
                             <option>Thanh toán khi nhận hàng</option>
                             <option>Chuyển khoản ngân hàng</option>
                             <option>Ví điện tử</option>
                         </select>
                     </div>
-                    {errors.phuongThucThanhToan && <p className="text-red-500 ml-[25%]">{errors.phuongThucThanhToan}</p>}
+                    {errors.phuongThucThanhToan && (
+                        <p className="text-red-500 ml-[25%]">{errors.phuongThucThanhToan}</p>
+                    )}
                 </div>
 
                 {/* Tổng tiền */}
@@ -343,7 +341,7 @@ function EditOrder() {
                         Sửa
                     </button>
                     <button
-                        type="reset"
+                        type="button"
                         onClick={() => navigate("/admin/don-hang")}
                         className="w-22 h-10 font-bold border hover:border-red-500 hover:text-red-500 text-black rounded transition-all ease-out duration-150"
                     >
