@@ -25,7 +25,7 @@ describe("validateBookName", () => {
   });
 });
 
-// Kiểm thử validateQuantity
+// Kiểm thử validateQuantity 
 describe("validateQuantity", () => {
   it("Số lượng không phải số nguyên → báo lỗi", () => {
     expect(validateQuantity("10.5")).toBe("Số lượng phải là số nguyên");
