@@ -32,53 +32,6 @@ const PlaceOrder = () => {
     address: "",
   });
 
-  const validateFullName = (value) => {
-    if (!value || !value.trim()) 
-      return "Họ tên người nhận không được để trống";
-    const trimmedValue = value.trim();
-    if (!/^[\p{L}\s]+$/u.test(trimmedValue))
-      return "Họ tên người nhận không được chứa kí tự đặc biệt";
-    if (trimmedValue.length < 2 || trimmedValue.length > 50)
-      return "Họ tên người nhận phải có độ dài từ 2 đến 50 ký tự";
-    return "";
-  };
-
-  const validatePhone = (value) => {
-    if (!value || !value.trim()) 
-      return "Số điện thoại không được để trống";
-    const trimmedValue = value.trim();
-    if (!/^\d+$/.test(trimmedValue))
-      return "Số điện thoại chỉ được chứa ký tự số (0–9)";
-    if (!/^0\d{9}$/.test(trimmedValue))
-      return "Số điện thoại phải gồm đúng 10 chữ số và bắt đầu bằng số 0";
-    return "";
-  };
-
-  const validateAddress = (value) => {
-    if (!value || !value.trim()) 
-      return "Địa chỉ không được để trống";
-    const trimmedValue = value.trim();
-    if (!/^[\p{L}0-9\s,.\-\/]+$/u.test(trimmedValue))
-      return "Địa chỉ không hợp lệ, không được chứa ký tự đặc biệt";
-    if (trimmedValue.length < 5 || trimmedValue.length > 255)
-      return "Địa chỉ phải có độ dài từ 5 đến 255 ký tự";
-    return "";
-  };
-
-  const validateCouponCode = (value) => {
-    if (!value || !value.trim())
-      return "";
-    const trimmedValue = value.trim();
-    if (!/^[a-zA-Z0-9]+$/.test(trimmedValue))
-      return "Mã khuyến mãi không hợp lệ, chỉ được chứa chữ và số";
-    if (trimmedValue.length < 3 || trimmedValue.length > 20)
-      return "Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự";
-    const validCoupons = ["SALE2025", "DISCOUNT20", "NEWUSER"];
-    if (!validCoupons.includes(trimmedValue.toUpperCase()))
-      return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
-    return "";
-  };
-
   const validateField = (name, value) => {
     switch (name) {
       case "fullName":
@@ -762,3 +715,50 @@ const PlaceOrder = () => {
 };
 
 export default PlaceOrder;
+
+export const validateFullName = (value) => {
+    if (!value || !value.trim()) 
+      return "Họ tên người nhận không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^[\p{L}\s]+$/u.test(trimmedValue))
+      return "Họ tên người nhận không được chứa kí tự đặc biệt";
+    if (trimmedValue.length < 2 || trimmedValue.length > 50)
+      return "Họ tên người nhận phải có độ dài từ 2 đến 50 ký tự";
+    return "";
+  };
+
+export const validatePhone = (value) => {
+    if (!value || !value.trim()) 
+      return "Số điện thoại không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^\d+$/.test(trimmedValue))
+      return "Số điện thoại chỉ được chứa ký tự số (0–9)";
+    if (!/^0\d{9}$/.test(trimmedValue))
+      return "Số điện thoại phải gồm đúng 10 chữ số và bắt đầu bằng số 0";
+    return "";
+  };
+
+export const validateAddress = (value) => {
+    if (!value || !value.trim()) 
+      return "Địa chỉ không được để trống";
+    const trimmedValue = value.trim();
+    if (!/^[\p{L}0-9\s,.\-\/]+$/u.test(trimmedValue))
+      return "Địa chỉ không hợp lệ, không được chứa ký tự đặc biệt";
+    if (trimmedValue.length < 5 || trimmedValue.length > 255)
+      return "Địa chỉ phải có độ dài từ 5 đến 255 ký tự";
+    return "";
+  };
+
+export const validateCouponCode = (value) => {
+    if (!value || !value.trim())
+      return "";
+    const trimmedValue = value.trim();
+    if (!/^[a-zA-Z0-9]+$/.test(trimmedValue))
+      return "Mã khuyến mãi không hợp lệ, chỉ được chứa chữ và số";
+    if (trimmedValue.length < 3 || trimmedValue.length > 20)
+      return "Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự";
+    const validCoupons = ["SALE2025", "DISCOUNT20", "NEWUSER"];
+    if (!validCoupons.includes(trimmedValue.toUpperCase()))
+      return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
+    return "";
+  };
