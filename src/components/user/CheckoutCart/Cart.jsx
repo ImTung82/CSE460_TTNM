@@ -38,37 +38,6 @@ const Cart = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const validateBookName = (name) => {
-  if (!name || name.trim() === "")
-    return "Tên sách không được để trống";
-  if (name.length > 250)
-    return "Tên sách vượt quá 250 ký tự";
-    const invalidSpecialChars = /[^a-zA-ZÀ-ỹ0-9\s\.\,\-\/]/;
-  if (invalidSpecialChars.test(name))
-    return "Tên sách không hợp lệ";
-  return "";
-};
-
-const validateQuantity = (quantity) => {
-  const numQuantity = Number(quantity);
-  if (!Number.isInteger(numQuantity) || isNaN(numQuantity))
-    return "Số lượng phải là số nguyên";
-  if (numQuantity < 1)
-    return "Số lượng phải lớn hơn hoặc bằng 1";
-  if (numQuantity > 99)
-    return "Số lượng vượt quá giới hạn cho phép";
-  return "";
-};
-
-const validatePrice = (price) => {
-  const numPrice = Number(price);
-  if (isNaN(numPrice))
-    return "Đơn giá phải là số";
-  if (numPrice < 0)
-    return "Đơn giá không được âm";
-  return "";
-};
-
 const validateCartItems = (items) => {
   const errors = [];
   items.forEach((item, index) => {
@@ -377,3 +346,34 @@ const handleCheckout = () => {
 };
 
 export default Cart;
+
+export const validateBookName = (name) => {
+  if (!name || name.trim() === "")
+    return "Tên sách không được để trống";
+  if (name.length > 250)
+    return "Tên sách vượt quá 250 ký tự";
+    const invalidSpecialChars = /[^a-zA-ZÀ-ỹ0-9\s\.\,\-\/\+]/;
+  if (invalidSpecialChars.test(name))
+    return "Tên sách không hợp lệ";
+  return "";
+};
+
+export const validateQuantity = (quantity) => {
+  const numQuantity = Number(quantity);
+  if (!Number.isInteger(numQuantity) || isNaN(numQuantity))
+    return "Số lượng phải là số nguyên";
+  if (numQuantity < 1)
+    return "Số lượng phải lớn hơn hoặc bằng 1";
+  if (numQuantity > 99)
+    return "Số lượng vượt quá giới hạn cho phép";
+  return "";
+};
+
+export const validatePrice = (price) => {
+  const numPrice = Number(price);
+  if (isNaN(numPrice))
+    return "Đơn giá phải là số";
+  if (numPrice < 0)
+    return "Đơn giá không được âm";
+  return "";
+};
