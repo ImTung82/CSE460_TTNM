@@ -28,6 +28,8 @@ function EditDiscount() {
     ngayBatDau: "2025-01-01",
     ngayKetThuc: "2025-01-07",
     soLuong: "1000",
+    nguongHoaDon: "",
+    soLuongSanPham: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -60,8 +62,40 @@ function EditDiscount() {
     "BIRTHDAYCUS",
     "BIRTHDAYSHOP",
   ];
+  const billThresholds = [
+    300000, 500000, 1000000, 1500000, 2000000, 3000000, 5000000,
+  ];
+  const productQuantities = [3, 5, 8, 12, 20];
 
-  const generateDescription = (loaiGiamGia, maGiamGia, dipLe) => {
+  const generateDiscountCode = (
+    loaiGiamGia,
+    dipLe,
+    nguongHoaDon,
+    soLuongSanPham
+  ) => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    if (loaiGiamGia === "Dịp lễ") {
+      return dipLe ? dipLe.toUpperCase() : "";
+    } else if (loaiGiamGia === "Theo hóa đơn") {
+      return nguongHoaDon ? `BILL${nguongHoaDon}` : "";
+    } else if (loaiGiamGia === "Theo số lượng") {
+      return soLuongSanPham ? `QTY${soLuongSanPham}` : "";
+    } else if (loaiGiamGia === "Khuyến mại thường") {
+      return `KM${dd}${mm}${yyyy}`;
+    }
+    return "";
+  };
+
+  const generateDescription = (
+    loaiGiamGia,
+    maGiamGia,
+    dipLe,
+    nguongHoaDon,
+    soLuongSanPham
+  ) => {
     if (loaiGiamGia === "Dịp lễ") {
       const occasionMap = {
         TETDUONG2025: "Giảm giá dịp Tết Dương Lịch",
@@ -82,63 +116,146 @@ function EditDiscount() {
       };
       return occasionMap[dipLe] || "Mô tả tự động cho dịp lễ";
     } else if (loaiGiamGia === "Theo hóa đơn") {
-      return `Giảm giá theo hóa đơn cho mã ${maGiamGia}`;
+      return nguongHoaDon
+        ? `Giảm giá cho hóa đơn từ ${nguongHoaDon.toLocaleString()}đ`
+        : "";
     } else if (loaiGiamGia === "Theo số lượng") {
-      return `Giảm giá theo số lượng cho mã ${maGiamGia}`;
+      return soLuongSanPham
+        ? `Giảm giá khi mua từ ${soLuongSanPham} sản phẩm`
+        : "";
     }
     return formData.moTa;
   };
 
+  const generateDiscountValue = (loaiGiamGia, nguongHoaDon, soLuongSanPham) => {
+    if (loaiGiamGia === "Theo hóa đơn") {
+      if (nguongHoaDon >= 5000000) return 25;
+      if (nguongHoaDon >= 3000000) return 18;
+      if (nguongHoaDon >= 2000000) return 15;
+      if (nguongHoaDon >= 1500000) return 12;
+      if (nguongHoaDon >= 1000000) return 10;
+      if (nguongHoaDon >= 500000) return 7;
+      if (nguongHoaDon >= 300000) return 5;
+    } else if (loaiGiamGia === "Theo số lượng") {
+      if (soLuongSanPham >= 20) return 25;
+      if (soLuongSanPham >= 12) return 18;
+      if (soLuongSanPham >= 8) return 12;
+      if (soLuongSanPham >= 5) return 8;
+      if (soLuongSanPham >= 3) return 5;
+    }
+    return "";
+  };
+
   const validateLoaiGiamGia = (value) => {
-    let error = "";
-    if (!value) return "Vui lòng chọn loại giảm giá";
+    if (!value) return "Vui lòng chọn loại mã giảm giá";
     if (!validDiscountTypes.includes(value))
       return "Loại giảm giá không hợp lệ";
-    return error;
+    return "";
   };
 
   const validateDipLe = (value, loaiGiamGia) => {
-    let error = "";
     if (loaiGiamGia === "Dịp lễ" && !value)
-      return "Vui lòng chọn dịp lễ cho mã giảm giá";
+      return "Vui lòng chọn giá trị áp dụng cho loại khuyến mại đã chọn";
     if (loaiGiamGia === "Dịp lễ" && !occasions.includes(value))
       return "Dịp lễ không hợp lệ";
-    return error;
+    return "";
   };
 
-  const validateMaGiamGia = (value, loaiGiamGia, dipLe) => {
-    let error = "";
-    if (!value || !value.trim()) return "Vui lòng nhập hoặc sinh mã giảm giá";
-    if (!/^[a-zA-Z0-9]+$/.test(value))
-      return "Mã giảm giá chỉ được chứa chữ cái và số";
-    if (value.length > 50) return "Mã giảm giá không được vượt quá 50 ký tự";
-    if (value !== "KM00001" && discountCodes.includes(value))
-      return "Mã giảm giá đã tồn tại trong hệ thống";
-    if (loaiGiamGia === "Dịp lễ" && !dipLe)
-      return "Vui lòng chọn dịp lễ cho mã giảm giá";
-    return error;
+  const validateNguongHoaDon = (value, loaiGiamGia) => {
+    if (loaiGiamGia === "Theo hóa đơn" && !value)
+      return "Vui lòng chọn giá trị áp dụng cho loại khuyến mại đã chọn";
+    if (
+      loaiGiamGia === "Theo hóa đơn" &&
+      !billThresholds.includes(Number(value))
+    )
+      return "Ngưỡng hóa đơn không hợp lệ";
+    return "";
+  };
+
+  const validateSoLuongSanPham = (value, loaiGiamGia) => {
+    if (loaiGiamGia === "Theo số lượng" && !value)
+      return "Vui lòng chọn giá trị áp dụng cho loại khuyến mại đã chọn";
+    if (
+      loaiGiamGia === "Theo số lượng" &&
+      !productQuantities.includes(Number(value))
+    )
+      return "Số lượng sản phẩm không hợp lệ";
+    return "";
+  };
+
+  const validateMaGiamGia = (
+    value,
+    loaiGiamGia,
+    dipLe,
+    nguongHoaDon,
+    soLuongSanPham
+  ) => {
+    if (!value || !value.trim()) return "Vui lòng nhập mã giảm giá";
+    if (value.length < 3 || value.length > 50)
+      return "Mã giảm giá phải có độ dài từ 3 đến 50 ký tự";
+    if (!/^[a-zA-Z0-9_-]+$/.test(value))
+      return "Mã giảm giá chỉ được chứa chữ, số, dấu ‘-’ hoặc ‘_’, không có khoảng trắng";
+    if (
+      value !== formData.maGiamGia &&
+      discountCodes.includes(value.toUpperCase())
+    )
+      return "Mã giảm giá đã tồn tại";
+    const expectedCode = generateDiscountCode(
+      loaiGiamGia,
+      dipLe,
+      nguongHoaDon,
+      soLuongSanPham
+    ).toUpperCase();
+    if (
+      loaiGiamGia !== "Khuyến mại thường" &&
+      value.toUpperCase() !== expectedCode
+    ) {
+      return "Mã giảm giá không hợp lệ cho loại khuyến mại đã chọn";
+    }
+    return "";
+  };
+
+  const validateHinhAnh = (value) => {
+    if (!value) return "Vui lòng chọn hình ảnh đại diện cho mã giảm giá";
+    if (value instanceof File) {
+      const allowed = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"];
+      if (!allowed.includes(value.type)) return "Định dạng ảnh không hợp lệ";
+      if (value.size > 25 * 1024 * 1024) return "Ảnh không được vượt quá 25MB";
+    } else if (typeof value === "string" && value.trim() === "") {
+      return "Vui lòng chọn hình ảnh đại diện cho mã giảm giá";
+    }
+    return "";
   };
 
   const validateMoTa = (value) => {
-    let error = "";
     if (value.length > 500) return "Mô tả không được vượt quá 500 ký tự";
-    if (/[^\p{L}\p{N}\p{P}\p{Z}\n\r]/u.test(value)) {
-      return "Mô tả chứa ký tự không hợp lệ";
-    }
-
-    return error;
+    return "";
   };
 
-  const validateGiaTriGiam = (value) => {
-    let error = "";
-    if (!value || !value.toString().trim()) {
-      error = "Vui lòng nhập hoặc sinh giá trị giảm";
-    } else if (isNaN(value)) {
-      error = "Giá trị giảm phải là số";
-    } else if (parseFloat(value) < 1 || parseFloat(value) > 100) {
-      error = "Giá trị giảm phải từ 1% đến 100%";
+  const validateGiaTriGiam = (
+    value,
+    loaiGiamGia,
+    nguongHoaDon,
+    soLuongSanPham
+  ) => {
+    if (!value || !value.toString().trim())
+      return "Vui lòng nhập hoặc sinh giá trị giảm";
+    if (isNaN(value) || !Number.isInteger(Number(value)))
+      return "Giá trị giảm phải là số nguyên hợp lệ";
+    if (Number(value) < 1 || Number(value) > 100)
+      return "Giá trị giảm phải từ 1% đến 100%";
+    const expectedValue = generateDiscountValue(
+      loaiGiamGia,
+      nguongHoaDon,
+      soLuongSanPham
+    );
+    if (
+      ["Theo hóa đơn", "Theo số lượng"].includes(loaiGiamGia) &&
+      Number(value) !== expectedValue
+    ) {
+      return "Giá trị giảm không hợp lệ cho loại khuyến mại đã chọn";
     }
-    return error;
+    return "";
   };
 
   const validateField = (name, value, formData = {}) => {
@@ -147,35 +264,70 @@ function EditDiscount() {
         return validateLoaiGiamGia(value);
       case "dipLe":
         return validateDipLe(value, formData.loaiGiamGia);
+      case "nguongHoaDon":
+        return validateNguongHoaDon(value, formData.loaiGiamGia);
+      case "soLuongSanPham":
+        return validateSoLuongSanPham(value, formData.loaiGiamGia);
       case "maGiamGia":
-        return validateMaGiamGia(value, formData.loaiGiamGia, formData.dipLe);
+        return validateMaGiamGia(
+          value,
+          formData.loaiGiamGia,
+          formData.dipLe,
+          formData.nguongHoaDon,
+          formData.soLuongSanPham
+        );
+      case "hinhAnh":
+        return validateHinhAnh(value || formData.hinhAnh);
       case "moTa":
         return validateMoTa(value);
       case "giaTriGiam":
-        return validateGiaTriGiam(value);
+        return validateGiaTriGiam(
+          value,
+          formData.loaiGiamGia,
+          formData.nguongHoaDon,
+          formData.soLuongSanPham
+        );
       case "ngayBatDau":
         if (!value) return "Vui lòng chọn ngày bắt đầu";
-        if (isNaN(Date.parse(value))) return "Định dạng ngày không hợp lệ";
+        if (isNaN(Date.parse(value)))
+          return "Định dạng ngày không hợp lệ. Vui lòng chọn lại";
+        if (Date.parse(value) < Date.parse(today))
+          return "Không thể chọn ngày trong quá khứ";
         return "";
       case "ngayKetThuc":
         if (!value) return "Vui lòng chọn ngày kết thúc";
-        if (isNaN(Date.parse(value))) return "Định dạng ngày không hợp lệ";
+        if (isNaN(Date.parse(value)))
+          return "Định dạng ngày không hợp lệ. Vui lòng chọn lại";
+        if (Date.parse(value) < Date.parse(today))
+          return "Không thể chọn ngày trong quá khứ";
         if (
           formData.ngayBatDau &&
           Date.parse(value) <= Date.parse(formData.ngayBatDau)
         ) {
-          return "Ngày kết thúc phải lớn hơn ngày bắt đầu";
+          return "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu";
         }
         return "";
-      case "soLuong":
-        if (!value || !value.toString().trim()) {
-          return "Số lượng phát hành không được bỏ trống";
-        } else if (!/^\d+$/.test(value)) {
-          return "Số lượng phải là số nguyên dương";
-        } else if (parseInt(value, 10) < 1) {
-          return "Số lượng phải lớn hơn hoặc bằng 1";
+      case "soLuong": {
+        let rawValue = value;
+        if (typeof rawValue === "object" && rawValue !== null) {
+          if (rawValue.target && rawValue.target.value !== undefined) {
+            rawValue = rawValue.target.value;
+          } else {
+            return "Giá trị số lượng không hợp lệ";
+          }
         }
+        const strVal = String(rawValue).trim();
+        if (strVal === "") return "Vui lòng nhập số lượng phát hành";
+        if (!/^\d+$/.test(strVal))
+          return "Số lượng phát hành phải là số nguyên hợp lệ";
+        const num = Number(strVal);
+        if (Number.isNaN(num))
+          return "Số lượng phát hành phải là số nguyên hợp lệ";
+        if (num < 1 || num > 9999)
+          return "Số lượng phát hành phải từ 1 đến 9999";
+        if (num === 0) return "Mã giảm giá đã hết lượt sử dụng";
         return "";
+      }
       default:
         return "";
     }
@@ -184,25 +336,40 @@ function EditDiscount() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => {
-      const newFormData = { ...prev, [name]: value };
-      if (name === "loaiGiamGia" && value !== "Dịp lễ") {
-        newFormData.dipLe = "";
-      }
-      if (name === "loaiGiamGia" || name === "dipLe") {
-        newFormData.maGiamGia =
-          name === "dipLe" && value ? value : prev.maGiamGia;
+      const newFormData = {
+        ...prev,
+        [name]: value,
+        loaiGiamGia: prev.loaiGiamGia || "Khuyến mại thường",
+      };
+      if (name === "loaiGiamGia" && value !== "Dịp lễ") newFormData.dipLe = "";
+      if (name === "loaiGiamGia" && value !== "Theo hóa đơn")
+        newFormData.nguongHoaDon = "";
+      if (name === "loaiGiamGia" && value !== "Theo số lượng")
+        newFormData.soLuongSanPham = "";
+      if (
+        name === "loaiGiamGia" ||
+        name === "dipLe" ||
+        name === "nguongHoaDon" ||
+        name === "soLuongSanPham"
+      ) {
+        newFormData.maGiamGia = generateDiscountCode(
+          newFormData.loaiGiamGia,
+          newFormData.dipLe,
+          newFormData.nguongHoaDon,
+          newFormData.soLuongSanPham
+        );
         newFormData.moTa = generateDescription(
           newFormData.loaiGiamGia,
           newFormData.maGiamGia,
-          newFormData.dipLe
+          newFormData.dipLe,
+          newFormData.nguongHoaDon,
+          newFormData.soLuongSanPham
         );
-        newFormData.giaTriGiam = [
-          "Dịp lễ",
-          "Theo số lượng",
-          "Theo hóa đơn",
-        ].includes(newFormData.loaiGiamGia)
-          ? "10"
-          : prev.giaTriGiam;
+        newFormData.giaTriGiam = generateDiscountValue(
+          newFormData.loaiGiamGia,
+          newFormData.nguongHoaDon,
+          newFormData.soLuongSanPham
+        );
       }
       return newFormData;
     });
@@ -211,12 +378,16 @@ function EditDiscount() {
   };
 
   const handleImageChange = (e) => {
+    if (e.target.files.length > 1) {
+      setErrors((prev) => ({
+        ...prev,
+        hinhAnh: "Chỉ được tải lên 1 hình ảnh đại diện duy nhất",
+      }));
+      return;
+    }
     const file = e.target.files[0];
-    setFormData((prev) => ({
-      ...prev,
-      hinhAnh: file || prev.hinhAnh,
-    }));
-    setFileName(file ? file.name : "");
+    setFormData((prev) => ({ ...prev, hinhAnh: file || prev.hinhAnh }));
+    setFileName(file ? file.name : formData.hinhAnh);
     const error = validateField("hinhAnh", file || formData.hinhAnh);
     setErrors((prev) => ({ ...prev, hinhAnh: error }));
   };
@@ -226,34 +397,23 @@ function EditDiscount() {
     const newErrors = {};
     const updatedFormData = {
       ...formData,
+      maGiamGia: formData.maGiamGia.toUpperCase(),
       trangThai: determineStatus(
         formData.ngayBatDau,
         formData.ngayKetThuc,
         formData.soLuong
       ),
     };
-
     Object.entries(updatedFormData).forEach(([key, value]) => {
       if (key !== "trangThai") {
         const error = validateField(key, value, updatedFormData);
         if (error) newErrors[key] = error;
       }
     });
-
-    if (!newErrors.ngayBatDau && !newErrors.ngayKetThuc) {
-      const start = Date.parse(updatedFormData.ngayBatDau);
-      const end = Date.parse(updatedFormData.ngayKetThuc);
-      if (start >= end) {
-        newErrors.ngayBatDau = "Ngày bắt đầu phải nhỏ hơn ngày kết thúc";
-        newErrors.ngayKetThuc = "Ngày kết thúc phải lớn hơn ngày bắt đầu";
-      }
-    }
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
     toast.success("Sửa mã giảm giá thành công!");
     setTimeout(() => {
       navigate("/admin/giam-gia", {
@@ -319,6 +479,56 @@ function EditDiscount() {
             )}
           </div>
         )}
+        {formData.loaiGiamGia === "Theo hóa đơn" && (
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <label className="w-1/4 font-semibold">
+                Ngưỡng hóa đơn:<span className="text-red-500 ml-1">*</span>
+              </label>
+              <select
+                name="nguongHoaDon"
+                value={formData.nguongHoaDon}
+                onChange={handleChange}
+                className="w-3/4 border border-gray-300 p-2 rounded"
+              >
+                <option value="">-- Chọn ngưỡng hóa đơn --</option>
+                {billThresholds.map((threshold) => (
+                  <option key={threshold} value={threshold}>
+                    {threshold.toLocaleString()}đ
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.nguongHoaDon && (
+              <p className="text-red-500 ml-[25%]">{errors.nguongHoaDon}</p>
+            )}
+          </div>
+        )}
+        {formData.loaiGiamGia === "Theo số lượng" && (
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <label className="w-1/4 font-semibold">
+                Số lượng sản phẩm:<span className="text-red-500 ml-1">*</span>
+              </label>
+              <select
+                name="soLuongSanPham"
+                value={formData.soLuongSanPham}
+                onChange={handleChange}
+                className="w-3/4 border border-gray-300 p-2 rounded"
+              >
+                <option value="">-- Chọn số lượng sản phẩm --</option>
+                {productQuantities.map((quantity) => (
+                  <option key={quantity} value={quantity}>
+                    {quantity} sản phẩm
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.soLuongSanPham && (
+              <p className="text-red-500 ml-[25%]">{errors.soLuongSanPham}</p>
+            )}
+          </div>
+        )}
 
         {/* Mã giảm giá */}
         <div className="flex flex-col">
@@ -371,7 +581,7 @@ function EditDiscount() {
             <img
               src={
                 typeof formData.hinhAnh === "string"
-                  ? `/uploads/${formData.hinhAnh}`
+                  ? `/Uploads/${formData.hinhAnh}`
                   : URL.createObjectURL(formData.hinhAnh)
               }
               alt="Preview"
@@ -419,7 +629,7 @@ function EditDiscount() {
               max="100"
               className="w-3/4 border border-gray-300 p-2 rounded"
               placeholder="Nhập giá trị giảm (1 - 100)"
-              readOnly={["Dịp lễ", "Theo số lượng", "Theo hóa đơn"].includes(
+              readOnly={["Theo số lượng", "Theo hóa đơn"].includes(
                 formData.loaiGiamGia
               )}
             />

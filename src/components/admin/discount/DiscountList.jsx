@@ -24,6 +24,8 @@ const DiscountList = () => {
       id: "KM00001",
       loaiGiamGia: "Dịp lễ",
       dipLe: "TETDUONG2025",
+      nguongHoaDon: "",
+      soLuongSanPham: "",
       image: "/assets/admin/sach_2.jpg",
       description: "Giảm 20% tổng đơn hàng nhân dịp năm mới",
       percent: "20%",
@@ -36,6 +38,8 @@ const DiscountList = () => {
       id: "KM00002",
       loaiGiamGia: "Theo hóa đơn",
       dipLe: "",
+      nguongHoaDon: 500000,
+      soLuongSanPham: "",
       image: "/assets/admin/sach_2.jpg",
       description: "Giảm 7% cho đơn từ 500K trở lên",
       percent: "7%",
@@ -48,6 +52,8 @@ const DiscountList = () => {
       id: "KM00003",
       loaiGiamGia: "Theo số lượng",
       dipLe: "",
+      nguongHoaDon: "",
+      soLuongSanPham: 8,
       image: "/assets/admin/sach_2.jpg",
       description: "Giảm 12% khi mua từ 8 đầu sách trở lên",
       percent: "12%",
@@ -60,6 +66,8 @@ const DiscountList = () => {
       id: "KM00004",
       loaiGiamGia: "Khuyến mại thường",
       dipLe: "",
+      nguongHoaDon: "",
+      soLuongSanPham: "",
       image: "/assets/admin/sach_2.jpg",
       description: "Mỗi sách đều được giảm 40%",
       percent: "40%",
@@ -72,6 +80,8 @@ const DiscountList = () => {
       id: "KM00005",
       loaiGiamGia: "Dịp lễ",
       dipLe: "NOEL2512",
+      nguongHoaDon: "",
+      soLuongSanPham: "",
       image: "/assets/admin/sach_2.jpg",
       description: "Giảm 25% toàn đơn – Mua sách làm quà Noel",
       percent: "25%",
@@ -84,6 +94,8 @@ const DiscountList = () => {
       id: "KM00006",
       loaiGiamGia: "Theo số lượng",
       dipLe: "",
+      nguongHoaDon: "",
+      soLuongSanPham: 20,
       image: "/assets/admin/sach_2.jpg",
       description: "Giảm 25% khi mua từ 20 đầu sách trở lên",
       percent: "25%",
@@ -142,6 +154,8 @@ const DiscountList = () => {
             <th className="px-4 py-2">Mã giảm giá</th>
             <th className="px-4 py-2">Loại giảm giá</th>
             <th className="px-4 py-2">Dịp lễ</th>
+            <th className="px-4 py-2">Ngưỡng hóa đơn</th>
+            <th className="px-4 py-2">Số lượng SP</th>
             <th className="px-4 py-2">Hình ảnh</th>
             <th className="px-4 py-2">Mô tả</th>
             <th className="px-4 py-2">Phần trăm</th>
@@ -170,6 +184,14 @@ const DiscountList = () => {
               </td>
               <td className="border-t border-gray-300 px-4 py-4">
                 {discount.dipLe || "-"}
+              </td>
+              <td className="border-t border-gray-300 px-4 py-4">
+                {discount.nguongHoaDon
+                  ? discount.nguongHoaDon.toLocaleString() + "đ"
+                  : "-"}
+              </td>
+              <td className="border-t border-gray-300 px-4 py-4">
+                {discount.soLuongSanPham || "-"}
               </td>
               <td className="border-t border-gray-300 px-4 py-4">
                 <div className="flex justify-center items-center">
