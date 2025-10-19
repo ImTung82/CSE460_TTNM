@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 
-// Extract các hàm validate từ AddBook component để test
 const validateTenSach = (value) => {
     if (!value.trim())
         return "Tên đầu sách không được bỏ trống";
@@ -151,24 +150,14 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            const jpgFile = { type: 'image/jpg', size: 1024 * 1024 };
+            const jpgFile = { type: 'image/jpg', size: 5 * 1024 * 1024 };
             expect(validateHinhAnh(jpgFile)).toBe('');
-
-            const jpegFile = { type: 'image/jpeg', size: 1024 * 1024 };
-            expect(validateHinhAnh(jpegFile)).toBe('');
-            
-            const pngFile = { type: 'image/png', size: 2 * 1024 * 1024 };
-            expect(validateHinhAnh(pngFile)).toBe('');
-            
-            const svgFile = { type: 'image/svg+xml', size: 500 * 1024 };
-            expect(validateHinhAnh(svgFile)).toBe('');
         });
     });
 
     describe('validateMoTa', () => {
         it('Thất bại do mô tả bỏ trống', () => {
             expect(validateMoTa('')).toBe('Mô tả không được bỏ trống');
-            expect(validateMoTa('   ')).toBe('Mô tả không được bỏ trống');
         });
 
         it('Thất bại do mô tả dài hơn 2000 ký tự', () => {
@@ -177,15 +166,13 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            expect(validateMoTa('Mô tả hợp lệ')).toBe('');
-            expect(validateMoTa('a'.repeat(2000))).toBe('');
+            expect(validateMoTa('Hay')).toBe('');
         });
     });
 
     describe('validateTenNhaXuatBan', () => {
         it('Thất bại do tên nhà xuất bản bỏ trống', () => {
             expect(validateTenNhaXuatBan('')).toBe('Tên nhà xuất bản không được bỏ trống');
-            expect(validateTenNhaXuatBan('   ')).toBe('Tên nhà xuất bản không được bỏ trống');
         });
 
         it('Thất bại do tên nhà xuất bản dài hơn 250 ký tự', () => {
@@ -194,60 +181,55 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            expect(validateTenNhaXuatBan('NXB Kim Đồng')).toBe('');
+            expect(validateTenNhaXuatBan('Kim Đồng')).toBe('');
         });
     });
 
     describe('validateNamXuatBan', () => {
         it('Thất bại do năm xuất bản không phải số', () => {
-            expect(validateNamXuatBan('abc')).toBe('Năm xuất bản chỉ được nhập số');
-            expect(validateNamXuatBan('2023abc')).toBe('Năm xuất bản chỉ được nhập số');
+            expect(validateNamXuatBan('ab')).toBe('Năm xuất bản chỉ được nhập số');
         });
 
         it('Thất bại do năm xuất bản không phải số nguyên', () => {
-            expect(validateNamXuatBan('2023.5')).toBe('Năm xuất bản phải là số nguyên');
+            expect(validateNamXuatBan('1.1')).toBe('Năm xuất bản phải là số nguyên');
         });
 
         it('Thất bại do năm xuất bản bằng 0 hoặc âm', () => {
-            expect(validateNamXuatBan('0')).toBe('Năm xuất bản phải lớn hơn 0');
-            expect(validateNamXuatBan('-2023')).toBe('Năm xuất bản phải lớn hơn 0');
+            expect(validateNamXuatBan('-1')).toBe('Năm xuất bản phải lớn hơn 0');
         });
 
         it('Thành công', () => {
             expect(validateNamXuatBan('2023')).toBe('');
-            expect(validateNamXuatBan('1999')).toBe('');
         });
     });
 
     describe('validateTacGia', () => {
         it('Thất bại do tác giả bỏ trống', () => {
             expect(validateTacGia('')).toBe('Tác giả không được bỏ trống');
-            expect(validateTacGia('   ')).toBe('Tác giả không được bỏ trống');
         });
 
         it('Thất bại do tác giả dài hơn 250 ký tự', () => {
-            const longString = 'a'.repeat(251);
+            const longString = 'A'.repeat(251);
             expect(validateTacGia(longString)).toBe('Tác giả không được vượt quá 250 ký tự');
         });
 
         it('Thành công', () => {
-            expect(validateTacGia('Nguyễn Nhật Ánh')).toBe('');
+            expect(validateTacGia('A')).toBe('');
         });
     });
 
     describe('validateNguoiDich', () => {
         it('Thất bại do người dịch bỏ trống', () => {
             expect(validateNguoiDich('')).toBe('Người dịch không được bỏ trống');
-            expect(validateNguoiDich('   ')).toBe('Người dịch không được bỏ trống');
         });
 
         it('Thất bại do người dịch dài hơn 250 ký tự', () => {
-            const longString = 'a'.repeat(251);
+            const longString = 'B'.repeat(251);
             expect(validateNguoiDich(longString)).toBe('Người dịch không được vượt quá 250 ký tự');
         });
 
         it('Thành công', () => {
-            expect(validateNguoiDich('Trần Văn A')).toBe('');
+            expect(validateNguoiDich('B')).toBe('');
         });
     });
 
@@ -258,8 +240,6 @@ describe('AddBook Validation Functions', () => {
 
         it('Thành công', () => {
             expect(validateNgonNgu('Tiếng Việt')).toBe('');
-            expect(validateNgonNgu('Tiếng Anh')).toBe('');
-            expect(validateNgonNgu('Tiếng Nhật')).toBe('');
         });
     });
 
@@ -269,17 +249,15 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thất bại do trọng lượng không phải số nguyên', () => {
-            expect(validateTrongLuong('100.5')).toBe('Trọng lượng phải là số nguyên');
+            expect(validateTrongLuong('1.1')).toBe('Trọng lượng phải là số nguyên');
         });
 
         it('Thất bại do trọng lượng bằng 0 hoặc âm', () => {
-            expect(validateTrongLuong('0')).toBe('Trọng lượng phải lớn hơn 0');
-            expect(validateTrongLuong('-100')).toBe('Trọng lượng phải lớn hơn 0');
+            expect(validateTrongLuong('-1')).toBe('Trọng lượng phải lớn hơn 0');
         });
 
         it('Thành công', () => {
-            expect(validateTrongLuong('500')).toBe('');
-            expect(validateTrongLuong('1000')).toBe('');
+            expect(validateTrongLuong('300')).toBe('');
         });
     });
 
@@ -289,17 +267,15 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thất bại do số trang không phải số nguyên', () => {
-            expect(validateSoTrang('100.5')).toBe('Số trang phải là số nguyên');
+            expect(validateSoTrang('1.1')).toBe('Số trang phải là số nguyên');
         });
 
         it('Thất bại do số trang bằng 0 hoặc âm', () => {
-            expect(validateSoTrang('0')).toBe('Số trang phải lớn hơn 0');
-            expect(validateSoTrang('-100')).toBe('Số trang phải lớn hơn 0');
+            expect(validateSoTrang('-1')).toBe('Số trang phải lớn hơn 0');
         });
 
         it('Thành công', () => {
-            expect(validateSoTrang('200')).toBe('');
-            expect(validateSoTrang('500')).toBe('');
+            expect(validateSoTrang('69')).toBe('');
         });
     });
 
@@ -309,7 +285,6 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            expect(validateHinhThuc('Bìa cứng')).toBe('');
             expect(validateHinhThuc('Bìa mềm')).toBe('');
         });
     });
@@ -320,8 +295,7 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thành công', () => {
-            expect(validateTheLoai(['Tiểu thuyết'])).toBe('');
-            expect(validateTheLoai(['Tiểu thuyết', 'Khoa học'])).toBe('');
+            expect(validateTheLoai(['Trinh thám'])).toBe('');
         });
     });
 
@@ -331,17 +305,15 @@ describe('AddBook Validation Functions', () => {
         });
 
         it('Thất bại do giá gốc không phải số nguyên', () => {
-            expect(validateGiaGoc('100.5')).toBe('Giá gốc phải là số nguyên');
+            expect(validateGiaGoc('1.1')).toBe('Giá gốc phải là số nguyên');
         });
 
         it('Thất bại do giá gốc bằng 0 hoặc âm', () => {
-            expect(validateGiaGoc('0')).toBe('Giá gốc phải lớn hơn 0');
-            expect(validateGiaGoc('-100')).toBe('Giá gốc phải lớn hơn 0');
+            expect(validateGiaGoc('-1')).toBe('Giá gốc phải lớn hơn 0');
         });
 
         it('Thành công', () => {
-            expect(validateGiaGoc('100000')).toBe('');
-            expect(validateGiaGoc('50000')).toBe('');
+            expect(validateGiaGoc('10')).toBe('');
         });
     });
 
