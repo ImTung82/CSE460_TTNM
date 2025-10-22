@@ -76,8 +76,18 @@ describe("validateAddress", () => {
   });
 });
 
+// Mock ngày hiện tại để test ổn định
+const mockDate = (dateString) => {
+  const fixedDate = new Date(dateString);
+  vi.useFakeTimers();
+  vi.setSystemTime(fixedDate);
+};
 // validateCouponCode
 describe("validateCouponCode", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("trả về rỗng khi để trống", () => {
     expect(validateCouponCode("")).toBe("");
   });
@@ -87,21 +97,45 @@ describe("validateCouponCode", () => {
   });
 
   it("trả lỗi khi độ dài < 3", () => {
-    expect(validateCouponCode("AB")).toBe("Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự");
+    expect(validateCouponCode("AB")).toBe("Mã khuyến mãi phải có độ dài từ 3 đến 50 ký tự");
   });
 
-  it("trả lỗi khi độ dài > 20", () => {
-    const longCode = "A".repeat(21);
-    expect(validateCouponCode(longCode)).toBe("Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự");
+  it("trả lỗi khi độ dài > 50", () => {
+    const longCode = "A".repeat(51);
+    expect(validateCouponCode(longCode)).toBe("Mã khuyến mãi phải có độ dài từ 3 đến 50 ký tự");
   });
 
   it("trả lỗi khi mã không tồn tại", () => {
     expect(validateCouponCode("HELLO2025")).toBe("Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng");
   });
 
-  it("không trả lỗi khi mã hợp lệ", () => {
+  it("trả lỗi khi mã chưa đến ngày áp dụng", () => {
+    mockDate("2025-10-01"); // trước ngày NEWUSER bắt đầu
+    expect(validateCouponCode("NEWUSER")).toBe("Mã khuyến mãi chưa đến ngày áp dụng");
+  });
+
+  it("trả lỗi khi mã đã hết hạn", () => {
+    mockDate("2024-01-01"); // sau khi GIANGSINH2023 hết hạn
+    expect(validateCouponCode("GIANGSINH2023")).toBe("Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng");
+  });
+
+  it("trả lỗi khi mã hết lượt sử dụng", () => {
+    mockDate("2025-05-01");
+    expect(validateCouponCode("DISCOUNT20")).toBe("Mã khuyến mãi đã hết lượt sử dụng");
+  });
+
+  it("trả lỗi khi không đủ điều kiện giá trị tối thiểu", () => {
+    mockDate("2025-05-01");
+    expect(validateCouponCode("HOADON200", 100)).toBe("Không đủ điều kiện áp dụng mã khuyến mãi");
+  });
+
+  it("không trả lỗi khi mã hợp lệ (SALE2025)", () => {
+    mockDate("2025-05-01");
     expect(validateCouponCode("SALE2025")).toBe("");
-    expect(validateCouponCode("discount20")).toBe("");
+  });
+
+  it("không trả lỗi khi mã hợp lệ viết thường (newuser) và đủ ngày", () => {
+    mockDate("2025-11-10"); // trong thời gian hiệu lực
     expect(validateCouponCode("newuser")).toBe("");
   });
 });

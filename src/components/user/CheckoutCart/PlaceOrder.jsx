@@ -749,16 +749,35 @@ export const validateAddress = (value) => {
     return "";
   };
 
-export const validateCouponCode = (value) => {
-    if (!value || !value.trim())
-      return "";
-    const trimmedValue = value.trim();
-    if (!/^[a-zA-Z0-9]+$/.test(trimmedValue))
-      return "Mã khuyến mãi không hợp lệ, chỉ được chứa chữ và số";
-    if (trimmedValue.length < 3 || trimmedValue.length > 20)
-      return "Mã khuyến mãi phải có độ dài từ 3 đến 20 ký tự";
-    const validCoupons = ["SALE2025", "DISCOUNT20", "NEWUSER"];
-    if (!validCoupons.includes(trimmedValue.toUpperCase()))
-      return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
+export const validateCouponCode = (value, tongHoaDon = 0) => {
+  if (!value || !value.trim()) 
     return "";
+  const trimmedValue = value.trim();
+  if (!/^[a-zA-Z0-9\-_]+$/.test(trimmedValue))
+    return "Mã khuyến mãi không hợp lệ, chỉ được chứa chữ và số";
+  if (trimmedValue.length < 3 || trimmedValue.length > 50)
+    return "Mã khuyến mãi phải có độ dài từ 3 đến 50 ký tự";
+  const danhSachMa = {
+    SALE2025: { ngayBatDau: "2025-01-01", ngayKetThuc: "2025-12-31", soLuongConLai: 100, giaTriToiThieu: 0 },
+    DISCOUNT20: { ngayBatDau: "2024-01-01", ngayKetThuc: "2025-06-30", soLuongConLai: 0, giaTriToiThieu: 0},
+    NEWUSER: { ngayBatDau: "2025-11-01", ngayKetThuc: "2025-12-31", soLuongConLai: 50, giaTriToiThieu: 0},
+    HOADON200: { ngayBatDau: "2025-01-01", ngayKetThuc: "2025-12-31", soLuongConLai: 10, giaTriToiThieu: 200},
+    GIANGSINH2023: { ngayBatDau: "2023-01-01", ngayKetThuc: "2023-12-31", soLuongConLai: 5, giaTriToiThieu: 0}
   };
+  const maVietHoa = trimmedValue.toUpperCase();
+  const thongTinMa = danhSachMa[maVietHoa];
+  const ngayHienTai = new Date();
+  if (!thongTinMa) 
+    return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
+  const ngayBatDau = new Date(thongTinMa.ngayBatDau);
+  const ngayKetThuc = new Date(thongTinMa.ngayKetThuc);
+  if (ngayHienTai < ngayBatDau) 
+    return "Mã khuyến mãi chưa đến ngày áp dụng";
+  if (ngayHienTai > ngayKetThuc)
+    return "Mã khuyến mãi không tồn tại hoặc đã hết hạn sử dụng";
+  if (thongTinMa.soLuongConLai <= 0)
+    return "Mã khuyến mãi đã hết lượt sử dụng";
+  if (tongHoaDon < thongTinMa.giaTriToiThieu)
+    return "Không đủ điều kiện áp dụng mã khuyến mãi";
+  return "";
+};
