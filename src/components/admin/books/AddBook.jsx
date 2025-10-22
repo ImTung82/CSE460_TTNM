@@ -22,12 +22,12 @@ function AddBook() {
         soTrang: '',
         theLoai: [],
         giaGoc: '',
-        khuyenMai: '',
+        tyLeLai: '', // đổi tên trường
     });
 
     const giaGocNumber = parseFloat(formData.giaGoc) || 0;
-    const khuyenMaiNumber = parseFloat(formData.khuyenMai) || 0;
-    const giaBan = giaGocNumber * (1 - khuyenMaiNumber / 100);
+    const tyLeLaiNumber = parseFloat(formData.tyLeLai) || 0;
+    const giaBan = giaGocNumber * (1 + tyLeLaiNumber / 100); // công thức mới
 
     useEffect(() => {
         if (window.MultiSelectTag) {
@@ -164,11 +164,11 @@ function AddBook() {
         return "";
     };
 
-    const validateKhuyenMai = (value) => {
+    const validateTyLeLai = (value) => {
         if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
-            return "Khuyến mãi chỉ được nhập số";
-        else if (parseFloat(value) < 0 || parseFloat(value) > 100)
-            return "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
+            return "Tỷ lệ lãi chỉ được nhập số";
+        else if (parseFloat(value) < 0)
+            return "Tỷ lệ lãi phải lớn hơn hoặc bằng 0";
         return "";
     };
 
@@ -200,8 +200,8 @@ function AddBook() {
                 return validateTheLoai(value);
             case "giaGoc":
                 return validateGiaGoc(value);
-            case "khuyenMai":
-                return validateKhuyenMai(value);
+            case "tyLeLai":
+                return validateTyLeLai(value);
             default:
                 return "";
         }
@@ -503,20 +503,20 @@ function AddBook() {
                     {errors.giaGoc && <p className="text-red-500 ml-[25%]">{errors.giaGoc}</p>}
                 </div>
 
-                {/* Khuyến mãi */}
+                {/* Tỷ lệ lãi */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Khuyến mãi:<span className="text-red-500 ml-1">*</span></label>
+                        <label className="w-1/4 font-semibold">Tỷ lệ lãi:<span className="text-red-500 ml-1">*</span></label>
                         <input
-                            name="khuyenMai"
-                            value={formData.khuyenMai}
+                            name="tyLeLai"
+                            value={formData.tyLeLai}
                             onChange={handleChange}
                             type="text"
                             className="w-3/4 border border-gray-300 p-2 rounded"
-                            placeholder="Nhập khuyến mãi (%)"
+                            placeholder="Nhập tỷ lệ lãi (%)"
                         />
                     </div>
-                    {errors.khuyenMai && <p className="text-red-500 ml-[25%]">{errors.khuyenMai}</p>}
+                    {errors.tyLeLai && <p className="text-red-500 ml-[25%]">{errors.tyLeLai}</p>}
                 </div>
 
                 {/* Giá bán */}

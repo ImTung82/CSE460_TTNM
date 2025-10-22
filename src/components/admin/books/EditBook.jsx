@@ -12,7 +12,7 @@ function EditBook() {
         hinhAnh: "tham_tu_lung_danh_tizen_tap_69.jpg",
         tacGia: 'Gosho Aoyama',
         nguoiDich: 'Hương Giang',
-        moTa: 'Kudo Tizen là một cậu thám tử học sinh năng nổ với biệt tài suy luận có thể sánh ngang với Sherlock Holmes! Một ngày nọ, khi mải đuổi theo những kẻ khả nghi, cậu đã bị chúng cho uống một loại thuốc kì lạ khiến cho cơ thể bị teo nhỏ. Vậy là một thám tử tí hon xuất hiện với cái tên giả: Edogawa Tizen!!',
+        moTa: 'Kudo Tizen là một học sinh trung học thông minh với khả năng suy luận phi thường. Cùng với những người bạn của mình, cậu thường xuyên giải quyết các vụ án phức tạp mà cảnh sát không thể phá giải. Trong tập 69 này, Tizen sẽ đối mặt với một kẻ thù mới đầy nguy hiểm và những tình tiết bất ngờ sẽ khiến bạn không thể rời mắt khỏi trang sách!',
         tenNhaXuatBan: 'Kim Đồng',
         namXuatBan: '2025',
         hinhThuc: 'Bìa mềm',
@@ -22,12 +22,12 @@ function EditBook() {
         soTrang: '180',
         theLoai: ["Tiểu thuyết", "Trinh thám"],
         giaGoc: '30000',
-        khuyenMai: '20',
+        tyLeLai: '100',
     });
 
     const giaGocNumber = parseFloat(formData.giaGoc) || 0;
-    const khuyenMaiNumber = parseFloat(formData.khuyenMai) || 0;
-    const giaBan = giaGocNumber * (1 - khuyenMaiNumber / 100);
+    const tyLeLaiNumber = parseFloat(formData.tyLeLai) || 0;
+    const giaBan = giaGocNumber * (1 + tyLeLaiNumber / 100); // công thức mới
 
     useEffect(() => {
         if (window.MultiSelectTag) {
@@ -164,11 +164,11 @@ function EditBook() {
         return "";
     };
 
-    const validateKhuyenMai = (value) => {
+    const validateTyLeLai = (value) => {
         if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
-            return "Khuyến mãi chỉ được nhập số";
-        else if (parseFloat(value) < 0 || parseFloat(value) > 100)
-            return "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
+            return "Tỷ lệ lãi chỉ được nhập số";
+        else if (parseFloat(value) < 0)
+            return "Tỷ lệ lãi phải lớn hơn hoặc bằng 0";
         return "";
     };
 
@@ -200,8 +200,11 @@ function EditBook() {
                 return validateTheLoai(value);
             case "giaGoc":
                 return validateGiaGoc(value);
+            case "tyLeLai":
+                return validateTyLeLai(value);
             case "khuyenMai":
-                return validateKhuyenMai(value);
+                // Xóa validate khuyenMai
+                return "";
             default:
                 return "";
         }
@@ -504,20 +507,20 @@ function EditBook() {
                     {errors.giaGoc && <p className="text-red-500 ml-[25%]">{errors.giaGoc}</p>}
                 </div>
 
-                {/* Khuyến mãi */}
+                {/* Tỷ lệ lãi */}
                 <div className="flex flex-col">
                     <div className="flex items-center">
-                        <label className="w-1/4 font-semibold">Khuyến mãi:<span className="text-red-500 ml-1">*</span></label>
+                        <label className="w-1/4 font-semibold">Tỷ lệ lãi:<span className="text-red-500 ml-1">*</span></label>
                         <input
-                            name="khuyenMai"
-                            value={formData.khuyenMai}
+                            name="tyLeLai"
+                            value={formData.tyLeLai}
                             onChange={handleChange}
                             type="text"
                             className="w-3/4 border border-gray-300 p-2 rounded"
-                            placeholder="Nhập khuyến mãi (%)"
+                            placeholder="Nhập tỷ lệ lãi (%)"
                         />
                     </div>
-                    {errors.khuyenMai && <p className="text-red-500 ml-[25%]">{errors.khuyenMai}</p>}
+                    {errors.tyLeLai && <p className="text-red-500 ml-[25%]">{errors.tyLeLai}</p>}
                 </div>
 
                 {/* Giá bán */}
