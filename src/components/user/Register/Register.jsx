@@ -3,111 +3,92 @@ import { useNavigate } from 'react-router-dom'
 
 function Register() {
     const [passwordShowed, setPasswordShowed] = useState('false')
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
-    const [usernameError, setUsernameError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [phoneError, setPhoneError] = useState('')
-    const [addressError, setAddressError] = useState('')
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+        address: ''
+    })
+    const [errors, setErrors] = useState({})
     const navigate = useNavigate()
 
+    const validateUsername = (value) => {
+        if (!value.trim())
+            return 'Tên người dùng không được để trống.'
+        if (!/^.{1,50}$/.test(value.trim()))
+            return 'Tên người dùng không vượt quá 50 ký tự.'
+        return ''
+    }
+    const validatePassword = (value) => {
+        if (!value.trim())
+            return 'Mật khẩu không được để trống.'
+        else if (value.length < 8)
+            return 'Mật khẩu phải có ít nhất 8 ký tự.'
+        return ''
+    }
+    const validateEmail = (value) => {
+        if (!value.trim())
+            return 'Email không được để trống.'
+        else if (value.length > 150)
+            return 'Email không được vượt quá 150 ký tự.'
+        else if (!/^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(value))
+            return 'Email không hợp lệ.'
+        return ''
+    }
+    const validatePhone = (value) => {
+        if (!value.trim())
+            return 'Số điện thoại không được để trống.'
+        else if (!/^0\d{9}$/.test(value))
+            return 'Số điện thoại phải đủ 10 số và bắt đầu bằng số 0.'
+        return ''
+    }
+    const validateAddress = (value) => {
+        if (!value.trim())
+            return 'Địa chỉ không được để trống.'
+        else if (!/^.{1,150}$/.test(value.trim()))
+            return 'Địa chỉ không vượt quá 150 ký tự.'
+        return ''
+    }
+
     const validateField = (name, value) => {
-        let error = "";
         switch (name) {
-            case "username":
-                if (!value.trim()) 
-                    error = "Tên người dùng không được để trống.";
-                break;
-            case "password":
-                if (!value.trim()) {
-                    error = "Mật khẩu không được để trống.";
-                } else if (value.length < 8) {
-                    error = "Mật khẩu phải có ít nhất 8 ký tự.";
-                }
-                break;
-            case "email":
-                if (!value.trim()) 
-                    error = "Email không được để trống.";
-                break;
-            case "phone":
-                if (!value.trim()) {
-                    error = "Số điện thoại không được để trống.";
-                } else if (!/^0\d{9}$/.test(value)) {
-                    error = "Số điện thoại phải đủ 10 số và bắt đầu bằng số 0.";
-                }
-                break;
-            case "address":
-                if (!value.trim()) 
-                    error = "Địa chỉ không được để trống.";
-                break;
+            case 'username':
+                return validateUsername(value)
+            case 'password':
+                return validatePassword(value)
+            case 'email':
+                return validateEmail(value)
+            case 'phone':
+                return validatePhone(value)
+            case 'address':
+                return validateAddress(value)
             default:
-                break;
+                return ''
         }
-        return error;
-    };
-
-    const handleUsernameChange = (e) => {
-        const value = e.target.value
-        setUsername(value)
-        const error = validateField("username", value);
-        setUsernameError(error);
     }
 
-    const handlePasswordChange = (e) => {
-        const value = e.target.value
-        setPassword(value)
-        const error = validateField("password", value);
-        setPasswordError(error);
-    }
-
-    const handleEmailChange = (e) => {
-        const value = e.target.value
-        setEmail(value)
-        const error = validateField("email", value);
-        setEmailError(error);
-    }
-
-    const handlePhoneChange = (e) => {
-        const value = e.target.value
-        setPhone(value)
-        const error = validateField("phone", value);
-        setPhoneError(error);
-    }
-
-    const handleAddressChange = (e) => {
-        const value = e.target.value
-        setAddress(value)
-        const error = validateField("address", value);
-        setAddressError(error);
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+        const error = validateField(name, value)
+        setErrors(prev => ({ ...prev, [name]: error }))
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
-        const newErrors = {};
-        const formFields = { username, password, email, phone, address };
-        
-        Object.entries(formFields).forEach(([key, value]) => {
-            const error = validateField(key, value);
-            if (error) newErrors[key] = error;
-        });
-
+        const newErrors = {}
+        Object.keys(formData).forEach(key => {
+            const error = validateField(key, formData[key])
+            if (error) newErrors[key] = error
+        })
         if (Object.keys(newErrors).length > 0) {
-            setUsernameError(newErrors.username || '');
-            setPasswordError(newErrors.password || '');
-            setEmailError(newErrors.email || '');
-            setPhoneError(newErrors.phone || '');
-            setAddressError(newErrors.address || '');
-            return;
+            setErrors(newErrors)
+            return
         }
-
         navigate("/dang-nhap", {
             state: { message: "Đăng ký thành công!" }
-        });
+        })
     }
 
     return (
@@ -118,23 +99,25 @@ function Register() {
                     {/* Username */}
                     <div>
                         <input
+                            name="username"
                             type="text"
                             placeholder="Tên người dùng"
-                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${usernameError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
-                            value={username}
-                            onChange={handleUsernameChange}
+                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${errors.username ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
+                            value={formData.username}
+                            onChange={handleChange}
                         />
-                        {usernameError && <div className="text-red-500 text-xs mt-1">{usernameError}</div>}
+                        {errors.username && <div className="text-red-500 text-xs mt-1">{errors.username}</div>}
                     </div>
                     {/* Password */}
                     <div>
                         <div className="relative">
                             <input
+                                name="password"
                                 type={passwordShowed === 'true' ? 'text' : 'password'}
                                 placeholder="Mật khẩu"
-                                className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 pr-12 ${passwordError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
-                                value={password}
-                                onChange={handlePasswordChange}
+                                className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 pr-12 ${errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
+                                value={formData.password}
+                                onChange={handleChange}
                             />
                             <button
                                 type="button"
@@ -156,40 +139,43 @@ function Register() {
                                 )}
                             </button>
                         </div>
-                        {passwordError && <div className="text-red-500 text-xs mt-1">{passwordError}</div>}
+                        {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
                     </div>
                     {/* Email */}
                     <div>
                         <input
+                            name="email"
                             type="email"
                             placeholder="Email"
-                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${emailError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
-                            value={email}
-                            onChange={handleEmailChange}
+                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
+                            value={formData.email}
+                            onChange={handleChange}
                         />
-                        {emailError && <div className="text-red-500 text-xs mt-1">{emailError}</div>}
+                        {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
                     </div>
                     {/* Phone */}
                     <div>
                         <input
+                            name="phone"
                             type="tel"
                             placeholder="Số điện thoại"
-                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${phoneError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
-                            value={phone}
-                            onChange={handlePhoneChange}
+                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
+                            value={formData.phone}
+                            onChange={handleChange}
                         />
-                        {phoneError && <div className="text-red-500 text-xs mt-1">{phoneError}</div>}
+                        {errors.phone && <div className="text-red-500 text-xs mt-1">{errors.phone}</div>}
                     </div>
                     {/* Address */}
                     <div>
                         <input
+                            name="address"
                             type="text"
                             placeholder="Địa chỉ"
-                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${addressError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
-                            value={address}
-                            onChange={handleAddressChange}
+                            className={`w-full rounded-full px-4 py-3 border outline-none focus:ring-1 ${errors.address ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-black'}`}
+                            value={formData.address}
+                            onChange={handleChange}
                         />
-                        {addressError && <div className="text-red-500 text-xs mt-1">{addressError}</div>}
+                        {errors.address && <div className="text-red-500 text-xs mt-1">{errors.address}</div>}
                     </div>
                     {/* Submit */}
                     <button

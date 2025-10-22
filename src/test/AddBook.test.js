@@ -108,11 +108,11 @@ const validateGiaGoc = (value) => {
     return "";
 };
 
-const validateKhuyenMai = (value) => {
+const validateTyLeLai = (value) => {
     if (!/^-?\d+(\.\d+)?$/.test(value.trim()))
-        return "Khuyến mãi chỉ được nhập số";
-    else if (parseFloat(value) < 0 || parseFloat(value) > 100)
-        return "Khuyến mãi phải nằm trong khoảng từ 0 đến 100";
+        return "Tỷ lệ lãi chỉ được nhập số";
+    else if (parseFloat(value) < 0)
+        return "Tỷ lệ lãi phải lớn hơn hoặc bằng 0";
     return "";
 };
 
@@ -317,21 +317,17 @@ describe('AddBook Validation Functions', () => {
         });
     });
 
-    describe('validateKhuyenMai', () => {
-        it('Thất bại do khuyến mãi không phải số', () => {
-            expect(validateKhuyenMai('abc')).toBe('Khuyến mãi chỉ được nhập số');
+    describe('validateTyLeLai', () => {
+        it('Thất bại do tỷ lệ lãi không phải số', () => {
+            expect(validateTyLeLai('a')).toBe('Tỷ lệ lãi chỉ được nhập số');
         });
 
-        it('Thất bại do khuyến mãi ngoài khoảng 0-100', () => {
-            expect(validateKhuyenMai('-5')).toBe('Khuyến mãi phải nằm trong khoảng từ 0 đến 100');
-            expect(validateKhuyenMai('105')).toBe('Khuyến mãi phải nằm trong khoảng từ 0 đến 100');
+        it('Thất bại do tỷ lệ lãi âm', () => {
+            expect(validateTyLeLai('-1')).toBe('Tỷ lệ lãi phải lớn hơn hoặc bằng 0');
         });
 
         it('Thành công', () => {
-            expect(validateKhuyenMai('0')).toBe('');
-            expect(validateKhuyenMai('50')).toBe('');
-            expect(validateKhuyenMai('100')).toBe('');
-            expect(validateKhuyenMai('25.5')).toBe('');
+            expect(validateTyLeLai('100')).toBe('');
         });
     });
 });
