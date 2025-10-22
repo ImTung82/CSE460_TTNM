@@ -16,7 +16,7 @@ function Register() {
     const validateUsername = (value) => {
         if (!value.trim())
             return 'Tên người dùng không được để trống.'
-        if (!/^.{1,50}$/.test(value.trim()))
+        if (value.length > 50)
             return 'Tên người dùng không vượt quá 50 ký tự.'
         return ''
     }
